@@ -55,3 +55,14 @@ li {
 body {
   background-color: var(--body-color);
 }
+
+h1,
+h2,
+h3,
+h4,
+p,
+span,
+b,
+div {
+  color: var(--main-font-color);
+}

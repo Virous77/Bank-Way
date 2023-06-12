@@ -7,9 +7,6 @@ export const AuthValidate = async (req, res, next) => {
         name: joi.string().trim().required(),
         email: joi.string().trim().required(),
         password: joi.string().trim().required(),
-        birth: joi.string().trim().required(),
-        gender: joi.string().trim().required(),
-        country: joi.string().trim().required(),
       })
       .options({ stripUnknown: true });
 

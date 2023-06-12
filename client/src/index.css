@@ -19,6 +19,15 @@ button {
 
 input {
   outline: none;
+  border: none;
+  width: 100%;
+  background-color: var(--card-color);
+  color: var(--modal-font-color);
+  border: 1px solid transparent;
+}
+
+input:focus {
+  border: 1px solid var(--main-font-color);
 }
 
 img {
@@ -35,6 +44,7 @@ li {
   --main-font-color: #27374d;
   --box-shadow: 0px 2px 8px #9cb1bf33;
   --modal-color: #526d82;
+  --modal-font-color: #dde6ed;
   --card-color: #9db2bf;
   --primary-font-size: 30px;
   --secondary-font-size: 22px;
@@ -50,6 +60,7 @@ li {
   --primary-font-size: 30px;
   --secondary-font-size: 22px;
   --third-font-size: 18px;
+  --modal-font-color: #dde6ed;
 }
 
 body {

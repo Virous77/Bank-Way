@@ -23,6 +23,7 @@ export const ModalContent = styled.main<{ $modalSize?: string }>`
   border-radius: 10px;
   overflow-y: scroll;
   z-index: 200;
+  color: var(--body-color) !important;
 
   &::-webkit-scrollbar {
     display: none;
@@ -44,7 +45,7 @@ export const ModalHead = styled.header`
 export const MediumHeading = styled.h2`
   font-weight: 500;
   font-size: var(--secondary-font-size);
-  color: var(--main-font-color);
+  color: var(--modal-font-color) !important;
 `;
 
 export const Button = styled.button`
@@ -55,7 +56,7 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--main-font-color);
+  color: var(--modal-font-color) !important;
 
   &:hover {
     background-color: var(--card-color);

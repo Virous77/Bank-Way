@@ -6,7 +6,7 @@ type notificationType = {
 };
 
 type stateType = {
-  show: boolean;
+  show: string;
 };
 
 type GlobalType = {
@@ -23,7 +23,7 @@ const stateInitialValue = {
 };
 
 const stateInitialValueTwo: stateType = {
-  show: false,
+  show: "",
 };
 
 const initialValue: GlobalType = {

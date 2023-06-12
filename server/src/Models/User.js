@@ -18,30 +18,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    gender: {
-      type: String,
-      required: true,
-    },
-    birth: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
+
     isAdmin: {
       type: Boolean,
       default: false,
-    },
-    state: {
-      type: String,
-    },
-    pinCode: {
-      type: String,
-    },
-    city: {
-      type: String,
     },
   },
   {

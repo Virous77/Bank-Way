@@ -60,3 +60,20 @@ export const Theme = styled.div<{ $displayCenter: string }>`
     background-color: var(--body-color);
   }
 `;
+
+export const Button = styled.button<{
+  $primary?: string;
+  $color?: string;
+  $width?: string;
+}>`
+  background: ${(props) => (props.$primary ? props.$primary : "transparent")};
+  font-size: 1em;
+  padding: ${(props) => (props.$primary ? "8px 20px" : "0")};
+  border-radius: ${(props) => (props.$primary ? "30px" : "0")};
+  color: ${(props) => (props.$color ? props.$color : "var(--main-font-color)")};
+  width: ${(props) => (props.$width ? props.$width : "fit-content")}
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;

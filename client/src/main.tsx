@@ -7,6 +7,7 @@ import { GlobalContextProvider } from "./Store/globalContext.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { AuthContextProvider } from "./Store/AuthContext.tsx";
 
 const queryClient = new QueryClient();
 const client = new ApolloClient({
@@ -20,8 +21,10 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <GlobalContextProvider>
         <ApolloProvider client={client}>
           <QueryClientProvider client={queryClient}>
-            <App />
-            <ReactQueryDevtools />
+            <AuthContextProvider>
+              <App />
+              <ReactQueryDevtools />
+            </AuthContextProvider>
           </QueryClientProvider>
         </ApolloProvider>
       </GlobalContextProvider>

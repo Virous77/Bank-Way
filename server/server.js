@@ -5,8 +5,10 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
-import UserRouts from "./src/Routes/userRoutes.js";
 dotenv.config();
+import { graphqlHTTP } from "express-graphql";
+import { schema } from "./src/GraphqlSchema/User.js";
+import { root } from "./src/Controller/user.js";
 
 const app = express();
 
@@ -18,20 +20,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
-app.use("/api/v1", UserRouts);
-
-//Handle app Error
-app.use((err, req, res, next) => {
-  const errorStatus = err.status || 500;
-  const errorMessage = err.message || "Something went wrong, Try again!";
-
-  return res.status(errorStatus).json({
-    status: errorStatus,
-    message: errorMessage,
-    stack: err.stack,
-    success: false,
-  });
-});
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
 
 const PORT = 4000 || process.env.PORT;
 mongoose

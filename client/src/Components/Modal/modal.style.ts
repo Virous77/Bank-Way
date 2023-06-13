@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import "../Common/variable.scss";
 
 export const Main = styled.main`
   background-color: rgba(17, 17, 17, 0.4);

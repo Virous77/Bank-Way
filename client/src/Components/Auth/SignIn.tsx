@@ -4,7 +4,8 @@ import { Button } from "../Layout/navbar.style";
 import { useAuthContext } from "../../Store/AuthContext";
 
 const SignIn = () => {
-  const { handleChange, formData, handleCreateUser } = useAuthContext();
+  const { handleChange, formData, handleCreateUser, loading } =
+    useAuthContext();
   return (
     <Main>
       <Heading>BankWay</Heading>
@@ -35,7 +36,7 @@ const SignIn = () => {
           $primary="var(--body-color)"
           onClick={handleCreateUser}
         >
-          Sign Up
+          {loading ? "Processing..." : "Sign Up"}
         </Button>
       </Form>
     </Main>

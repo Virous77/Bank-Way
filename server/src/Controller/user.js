@@ -1,5 +1,6 @@
 import User from "../Models/User.js";
 import { AuthValidate } from "../Middleware/validate.js";
+import { createError, createResult } from "../Utils/utility.js";
 
 export const root = {
   getUser: async ({ id }) => {
@@ -24,10 +25,22 @@ export const root = {
     try {
       const { error } = AuthValidate.validate(input);
       if (error) {
-        throw new Error(error.details[0].message);
+        return createError({
+          message: error.details[0].message,
+          status: 400,
+        });
       }
-      const user = await User.create(input);
-      return user;
+
+      // throw new Error(error.details[0].message);
+
+      const user = new User(input);
+      await user.save();
+
+      return createResult({
+        data: user,
+        message: "User created Successfully",
+        status: 201,
+      });
     } catch (error) {
       throw new Error(error.message);
     }

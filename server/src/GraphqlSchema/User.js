@@ -5,7 +5,7 @@ export const schema = buildSchema(`
     id: ID!
     name: String!
     email: String!
-    password: String
+    password: String!
     image: String
     isAdmin: Boolean
     createdAt: String
@@ -13,9 +13,9 @@ export const schema = buildSchema(`
   }
 
   input CreateUserInput {
-    name: String
-    email: String
-    password: String
+    name: String!
+    email: String!
+    password: String!
     image: String
     isAdmin: Boolean
   }
@@ -34,8 +34,14 @@ export const schema = buildSchema(`
     getAllUsers: [User]
   }
 
+  type Response{
+    data: User
+    message: String
+    status: Int
+  }
+
   type Mutation {
-    createUser(input: CreateUserInput!): User
+    createUser(input: CreateUserInput!): Response
     updateUser(input: UpdateUserInput!): User
     deleteUser(id: ID!): User
   }

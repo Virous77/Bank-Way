@@ -5,3 +5,4 @@ export const AuthValidate = joi.object({
   email: joi.string().trim().required(),
   password: joi.string().trim().required(),
 });
+// .options({ stripUnknown: true });

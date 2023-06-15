@@ -4,3 +4,13 @@ export const createError = ({ status, message }) => {
 
   return err;
 };
+
+export const createResult = ({ data, message, status }) => {
+  const newData = {
+    message,
+    status,
+    data: data || "",
+  };
+
+  return newData;
+};

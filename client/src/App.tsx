@@ -6,6 +6,7 @@ import {
   PrivateRoutes,
   PublicRoutes,
 } from "./Components/Private/PtotectedRoutes";
+import Notification from "./Components/Notification/Notification";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <PrivateRoutes>
         <Home />
       </PrivateRoutes>
+      <Notification />
     </React.Fragment>
   );
 };

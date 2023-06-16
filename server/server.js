@@ -26,9 +26,6 @@ app.use(
     schema: schema,
     rootValue: root,
     graphiql: true,
-    formatError: (err) => {
-      console.log(err);
-    },
   })
 );
 

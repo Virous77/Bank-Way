@@ -1,5 +1,8 @@
+import { useAuthContext } from "../../Store/AuthContext";
+
 const Home = () => {
-  return <div>Home</div>;
+  const { handleUpdateUser } = useAuthContext();
+  return <div onClick={handleUpdateUser}>Home cool</div>;
 };
 
 export default Home;

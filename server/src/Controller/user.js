@@ -1,6 +1,6 @@
 import User from "../Models/User.js";
 import { AuthValidate } from "../Middleware/validate.js";
-import { createError, createResult } from "../Utils/utility.js";
+import { createResult } from "../Utils/utility.js";
 
 export const root = {
   getUser: async ({ id }) => {
@@ -25,13 +25,8 @@ export const root = {
     try {
       const { error } = AuthValidate.validate(input);
       if (error) {
-        return createError({
-          message: error.details[0].message,
-          status: 400,
-        });
+        throw new Error(error.details[0].message);
       }
-
-      // throw new Error(error.details[0].message);
 
       const user = new User(input);
       await user.save();
@@ -42,7 +37,7 @@ export const root = {
         status: 201,
       });
     } catch (error) {
-      throw new Error(error.message);
+      throw error || "Failed to create user";
     }
   },
 
@@ -50,16 +45,29 @@ export const root = {
     try {
       const { id, ...update } = input;
       const user = await User.findByIdAndUpdate(id, update, { new: true });
-      return user;
+
+      if (!user) {
+        throw new Error("User not exists");
+      }
+
+      return createResult({
+        data: user,
+        message: "User updated Successfully",
+        status: 200,
+      });
     } catch (error) {
-      throw new Error("Failed to update user");
+      throw error || "Failed to update user";
     }
   },
 
   deleteUser: async ({ id }) => {
     try {
       const user = await User.findByIdAndDelete(id);
-      return user;
+      return createResult({
+        data: user,
+        message: user ? "User deleted Successfully" : "User don't exists",
+        status: 200,
+      });
     } catch (error) {
       throw new Error("Failed to delete user");
     }

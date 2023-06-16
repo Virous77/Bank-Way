@@ -42,7 +42,7 @@ export const schema = buildSchema(`
 
   type Mutation {
     createUser(input: CreateUserInput!): Response
-    updateUser(input: UpdateUserInput!): User
-    deleteUser(id: ID!): User
+    updateUser(input: UpdateUserInput!): Response
+    deleteUser(id: ID!): Response
   }
 `);

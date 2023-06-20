@@ -14,8 +14,22 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const LOGIN_USER = gql`
+  mutation LoginUser($input: LoginUserInput!) {
+    loginUser(input: $input) {
+      data {
+        id
+        name
+        image
+      }
+      message
+      status
+    }
+  }
+`;
+
 export const UPDATE_USER = gql`
-  mutation updateUser($input: UpdateUserInput!) {
+  mutation UpdateUser($input: UpdateUserInput!) {
     updateUser(input: $input) {
       data {
         id
@@ -27,8 +41,8 @@ export const UPDATE_USER = gql`
 `;
 
 export const DELETE_USER = gql`
-  mutation updateUser($input: UpdateUserInput!) {
-    updateUser(input: $input) {
+  mutation DeleteUser($id: ID!) {
+    deleteUser(id: $id) {
       data {
         id
       }

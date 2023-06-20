@@ -29,31 +29,17 @@ export const getLocalData = (name: string) => {
   return result ? JSON.parse(result) : undefined;
 };
 
-type errorType = {
-  message: string;
-  status: string;
-};
-
 type actionType = {
   action: any;
   formData: any;
-  handleError: ({ message, status }: errorType) => void;
 };
 
-export const handleAction = ({ action, formData, handleError }: actionType) => {
-  try {
-    action({
-      variables: {
-        input: {
-          ...formData,
-        },
+export const handleAction = ({ action, formData }: actionType) => {
+  action({
+    variables: {
+      input: {
+        ...formData,
       },
-    });
-  } catch (error: any) {
-    console.log(error);
-    handleError({
-      message: error.message || "Something went wrong,Try agin",
-      status: "error",
-    });
-  }
+    },
+  });
 };

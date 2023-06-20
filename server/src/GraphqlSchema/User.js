@@ -29,6 +29,11 @@ export const schema = buildSchema(`
     isAdmin: Boolean
   }
 
+  input LoginUserInput{
+    email: String
+    password: String
+  }
+
   type Query {
     getUser(id: ID!): User
     getAllUsers: [User]
@@ -44,5 +49,6 @@ export const schema = buildSchema(`
     createUser(input: CreateUserInput!): Response
     updateUser(input: UpdateUserInput!): Response
     deleteUser(id: ID!): Response
+    loginUser(input: LoginUserInput!): Response
   }
 `);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER, UPDATE_USER } from "../graphql/user";
@@ -78,64 +79,36 @@ export const AuthContextProvider = ({
   };
 
   const handleCreateUser = () => {
-    handleSetNotification({
-      message: "Something went wrong,Try agin",
-      status: "error",
-    });
-
-    handleAction({
-      action: createUser,
-      formData: formData,
-      handleError: handleSetNotification,
-    });
-    // try {
-    //   createUser({
-    //     variables: {
-    //       input: {
-    //         ...formData,
-    //       },
-    //     },
-    //   });
-    // } catch (error: any) {
-    //   handleSetNotification({
-    //     message: error.message || "Something went wrong,Try agin",
-    //     status: "error",
-    //   });
-    // }
+    try {
+      handleAction({
+        action: createUser,
+        formData: formData,
+      });
+    } catch (error: any) {
+      handleSetNotification({
+        message: error.message || "Something went wrong,Try agin",
+        status: "error",
+      });
+    }
   };
 
   const handleUpdateUser = () => {
-    handleSetNotification({
-      message: "Something went wrong,Try agin",
-      status: "error",
-    });
-
     const data = {
-      id: "648c0025e6c5c99e0af2acae",
+      id: "64911d53ff7f90efac091610",
       name: "Monu Kumar",
     };
 
-    handleAction({
-      action: updateUser,
-      formData: data,
-      handleError: handleSetNotification,
-    });
-
-    // try {
-    //   updateUser({
-    //     variables: {
-    //       input: {
-    //         id: "648c0025e6c5c99e0af2acae",
-    //         name: "Rahul Kumar",
-    //       },
-    //     },
-    //   });
-    // } catch (error: any) {
-    //   handleSetNotification({
-    //     message: error.message || "Something went wrong,Try agin",
-    //     status: "error",
-    //   });
-    // }
+    try {
+      handleAction({
+        action: updateUser,
+        formData: data,
+      });
+    } catch (error: any) {
+      handleSetNotification({
+        message: error.message || "Something went wrong,Try agin",
+        status: "error",
+      });
+    }
   };
 
   return (

@@ -4,12 +4,9 @@ import App from "./App.tsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { GlobalContextProvider } from "./Store/globalContext.tsx";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { AuthContextProvider } from "./Store/AuthContext.tsx";
 
-const queryClient = new QueryClient();
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
@@ -20,12 +17,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <GlobalContextProvider>
         <ApolloProvider client={client}>
-          <QueryClientProvider client={queryClient}>
-            <AuthContextProvider>
-              <App />
-              <ReactQueryDevtools />
-            </AuthContextProvider>
-          </QueryClientProvider>
+          <AuthContextProvider>
+            <App />
+          </AuthContextProvider>
         </ApolloProvider>
       </GlobalContextProvider>
     </BrowserRouter>

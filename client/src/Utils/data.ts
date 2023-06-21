@@ -2,12 +2,13 @@
 import { BiHomeSmile } from "react-icons/bi";
 import { TbReportMoney } from "react-icons/tb";
 import { FiSettings } from "react-icons/fi";
+import { MdOutlineAccountCircle } from "react-icons/md";
 
 export const navLink = [
   {
     id: 1,
     name: "Home",
-    link: "/",
+    link: "/dashboard",
     icon: BiHomeSmile,
   },
   {
@@ -18,6 +19,12 @@ export const navLink = [
   },
   {
     id: 3,
+    name: "Account",
+    link: "/account",
+    icon: MdOutlineAccountCircle,
+  },
+  {
+    id: 4,
     name: "Settings",
     link: "/settings",
     icon: FiSettings,

@@ -4,8 +4,19 @@ import img from "../../assets/react.svg";
 import ThemeProvider from "../../Theme/ThemeProvider";
 import { PrivateLinks, PublicLinks } from "../Private/PtotectedRoutes";
 import NavAuth from "./NavAuth";
+import { Button } from "./navbar.style";
+import { getLocalData } from "../../Utils/data";
+import { useGlobalContext } from "../../Store/globalContext";
 
 const Navbar = () => {
+  const { setState, state } = useGlobalContext();
+  const active = getLocalData("bankId");
+
+  const handleLogout = () => {
+    localStorage.removeItem("bankId");
+    setState({ ...state, isLoggedIn: false });
+  };
+
   return (
     <NavbarMain $displayCenter={displayCenter}>
       <Logo>BankWay</Logo>
@@ -19,9 +30,17 @@ const Navbar = () => {
           </Circle>
         </PrivateLinks>
 
-        <PublicLinks>
-          <NavAuth />
-        </PublicLinks>
+        {!active && !state.isLoggedIn && (
+          <PublicLinks>
+            <NavAuth />
+          </PublicLinks>
+        )}
+
+        <PrivateLinks>
+          <Button $primary="var(--body-color)" onClick={handleLogout}>
+            Logout
+          </Button>
+        </PrivateLinks>
       </RightContainer>
     </NavbarMain>
   );

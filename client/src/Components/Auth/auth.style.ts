@@ -24,3 +24,18 @@ export const Input = styled.input`
   padding: 10px;
   border-radius: 10px;
 `;
+
+export const P = styled.p`
+  margin-top: -1rem;
+  font-size: 14px;
+  text-align: end;
+`;
+
+export const Link = styled.span`
+  color: var(--link-color) !important;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;

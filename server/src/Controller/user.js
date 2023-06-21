@@ -39,8 +39,20 @@ export const root = {
   },
 
   loginUser: async ({ input }) => {
+    const { email, password } = input;
     try {
-      console.log(input);
+      const user = await User.findOne({ email: email.toLowerCase() });
+
+      if (!user) throw new Error("User not exists, Email is incorrect");
+
+      const pass = await bcrypt.compare(password, user.password);
+      if (!pass) throw new Error("Password is incorrect");
+
+      return createResult({
+        data: user,
+        message: "User Logged in Successfully",
+        status: 201,
+      });
     } catch (error) {
       throw error || "Failed to login user";
     }

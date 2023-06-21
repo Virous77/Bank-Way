@@ -3,6 +3,7 @@ import { Main, Form, Input, Heading } from "./auth.style";
 import { displayCol } from "../Common/variable.style";
 import { Button } from "../Layout/navbar.style";
 import { useAuthContext } from "../../Store/AuthContext";
+import Action from "./Action";
 
 type AuthFormType = {
   title: string;
@@ -41,6 +42,7 @@ const AuthForm: React.FC<AuthFormType> = ({ title, loading, handleAction }) => {
           value={formData.password}
           onChange={handleChange}
         />
+        <Action title={title} />
 
         <Button
           $width="100%"

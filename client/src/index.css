@@ -49,6 +49,7 @@ li {
   --primary-font-size: 30px;
   --secondary-font-size: 22px;
   --third-font-size: 18px;
+  --link-color: rgb(52, 52, 254);
 }
 
 .darkTheme {
@@ -61,6 +62,7 @@ li {
   --secondary-font-size: 22px;
   --third-font-size: 18px;
   --modal-font-color: #dde6ed;
+  --link-color: rgb(52, 52, 254);
 }
 
 body {
@@ -73,7 +75,6 @@ h3,
 h4,
 p,
 span,
-b,
 div {
   color: var(--main-font-color);
 }

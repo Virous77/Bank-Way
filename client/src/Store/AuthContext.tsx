@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER, UPDATE_USER } from "../graphql/user";
+import { CREATE_USER, UPDATE_USER, LOGIN_USER } from "../graphql/user";
 import { useGlobalContext } from "./globalContext";
 import { useNavigate } from "react-router-dom";
 import { handleAction } from "../Utils/data";
@@ -20,6 +20,8 @@ type contextType = {
   handleCreateUser: () => void;
   loading: boolean;
   handleUpdateUser: () => void;
+  handleLoginUser: () => void;
+  loginLoading: boolean;
 };
 
 const initialState = {
@@ -36,6 +38,8 @@ const contextState: contextType = {
   handleCreateUser: () => {},
   loading: false,
   handleUpdateUser: () => {},
+  handleLoginUser: () => {},
+  loginLoading: false,
 };
 
 export const AuthContext = createContext(contextState);
@@ -55,6 +59,18 @@ export const AuthContextProvider = ({
     },
     onCompleted: (data) => {
       localStorage.setItem("bankId", JSON.stringify(data.createUser.data.id));
+      setState((prev) => ({ ...prev, show: "", isLoggedIn: true }));
+      setFormData(initialState);
+      navigate("/");
+    },
+  });
+
+  const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_USER, {
+    onError: (error) => {
+      handleSetNotification({ message: error.message, status: "error" });
+    },
+    onCompleted: (data) => {
+      localStorage.setItem("bankId", JSON.stringify(data.loginUser.data.id));
       setState((prev) => ({ ...prev, show: "", isLoggedIn: true }));
       setFormData(initialState);
       navigate("/");
@@ -111,6 +127,25 @@ export const AuthContextProvider = ({
     }
   };
 
+  const handleLoginUser = () => {
+    const data = {
+      password: formData.password,
+      email: formData.email,
+    };
+
+    try {
+      handleAction({
+        action: loginUser,
+        formData: data,
+      });
+    } catch (error: any) {
+      handleSetNotification({
+        message: error.message || "Something went wrong,Try agin",
+        status: "error",
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -120,6 +155,8 @@ export const AuthContextProvider = ({
         handleCreateUser,
         loading,
         handleUpdateUser,
+        handleLoginUser,
+        loginLoading,
       }}
     >
       {children}

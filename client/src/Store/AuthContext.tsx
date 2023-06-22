@@ -5,6 +5,7 @@ import { CREATE_USER, UPDATE_USER, LOGIN_USER } from "../graphql/user";
 import { useGlobalContext } from "./globalContext";
 import { useNavigate } from "react-router-dom";
 import { handleAction } from "../Utils/data";
+import { User } from "../Interface/interface";
 
 type formDataType = {
   name: string;
@@ -22,6 +23,7 @@ type contextType = {
   handleUpdateUser: () => void;
   handleLoginUser: () => void;
   loginLoading: boolean;
+  data: User;
 };
 
 const initialState = {
@@ -40,6 +42,7 @@ const contextState: contextType = {
   handleUpdateUser: () => {},
   handleLoginUser: () => {},
   loginLoading: false,
+  data: {} as User,
 };
 
 export const AuthContext = createContext(contextState);
@@ -57,23 +60,21 @@ export const AuthContextProvider = ({
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
     },
-    onCompleted: (data) => {
-      localStorage.setItem("bankId", JSON.stringify(data.createUser.data.id));
-      setState((prev) => ({ ...prev, show: "", isLoggedIn: true }));
+    onCompleted: () => {
+      setState((prev) => ({ ...prev, show: "" }));
       setFormData(initialState);
-      navigate("/");
     },
   });
 
-  const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_USER, {
+  const [loginUser, { loading: loginLoading, data }] = useMutation(LOGIN_USER, {
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
     },
     onCompleted: (data) => {
       localStorage.setItem("bankId", JSON.stringify(data.loginUser.data.id));
       setState((prev) => ({ ...prev, show: "", isLoggedIn: true }));
+      navigate("/dashboard");
       setFormData(initialState);
-      navigate("/");
     },
   });
 
@@ -157,6 +158,7 @@ export const AuthContextProvider = ({
         handleUpdateUser,
         handleLoginUser,
         loginLoading,
+        data,
       }}
     >
       {children}

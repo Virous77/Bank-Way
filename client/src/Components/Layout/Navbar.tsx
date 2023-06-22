@@ -7,10 +7,12 @@ import NavAuth from "./NavAuth";
 import { Button } from "./navbar.style";
 import { getLocalData } from "../../Utils/data";
 import { useGlobalContext } from "../../Store/globalContext";
+import { useAuthContext } from "../../Store/AuthContext";
 
 const Navbar = () => {
   const { setState, state } = useGlobalContext();
   const active = getLocalData("bankId");
+  const { data } = useAuthContext();
 
   const handleLogout = () => {
     localStorage.removeItem("bankId");

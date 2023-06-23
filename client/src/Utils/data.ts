@@ -8,7 +8,7 @@ export const navLink = [
   {
     id: 1,
     name: "Home",
-    link: "/dashboard",
+    link: "/",
     icon: BiHomeSmile,
   },
   {

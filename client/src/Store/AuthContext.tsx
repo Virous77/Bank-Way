@@ -73,7 +73,8 @@ export const AuthContextProvider = ({
     onCompleted: (data) => {
       localStorage.setItem("bankId", JSON.stringify(data.loginUser.data.id));
       setState((prev) => ({ ...prev, show: "", isLoggedIn: true }));
-      navigate("/dashboard");
+      navigate("/");
+      window.location.reload();
       setFormData(initialState);
     },
   });

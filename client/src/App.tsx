@@ -11,7 +11,6 @@ const App = () => {
       <PublicRoutes>
         <Router />
       </PublicRoutes>
-
       <Notification />
     </React.Fragment>
   );

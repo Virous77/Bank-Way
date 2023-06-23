@@ -15,7 +15,7 @@ export const PublicRoutes = ({ children }: { children: React.ReactNode }) => {
   const active = getLocalData("bankId");
 
   if (!active || !state.isLoggedIn) return children;
-  return <Navigate to={"/dashboard"} />;
+  return <Navigate to={"/"} />;
 };
 
 export const PrivateLinks = ({ children }: { children: React.ReactNode }) => {

@@ -78,3 +78,7 @@ span,
 div {
   color: var(--main-font-color);
 }
+
+.shimmer-title-line {
+  height: 10px !important;
+}

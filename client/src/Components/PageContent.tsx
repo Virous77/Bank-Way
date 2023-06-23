@@ -10,7 +10,7 @@ const PageContent = () => {
   return (
     <React.Fragment>
       <Routes>
-        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="/" element={<DashboardPage />} />
         <Route path="transaction" element={<TransactionPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="account" element={<UserPage />} />

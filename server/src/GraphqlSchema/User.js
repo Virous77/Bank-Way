@@ -34,16 +34,18 @@ export const schema = buildSchema(`
     password: String
   }
 
-  type Query {
-    getUser(id: ID!): User
-    getAllUsers: [User]
-  }
-
-  type Response{
+   type Response{
     data: User
     message: String
     status: Int
   }
+
+  type Query {
+    getUser(id: ID!): Response
+    getAllUsers: [User]
+  }
+
+ 
 
   type Mutation {
     createUser(input: CreateUserInput!): Response

@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createContext, useContext, useState } from "react";
-import { useMutation } from "@apollo/client";
-import { CREATE_USER, UPDATE_USER, LOGIN_USER } from "../graphql/user";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  CREATE_USER,
+  UPDATE_USER,
+  LOGIN_USER,
+  GET_USER,
+} from "../graphql/user";
 import { useGlobalContext } from "./globalContext";
 import { useNavigate } from "react-router-dom";
-import { handleAction } from "../Utils/data";
+import { getLocalData, handleAction } from "../Utils/data";
 import { User } from "../Interface/interface";
 
 type formDataType = {
@@ -23,7 +28,7 @@ type contextType = {
   handleUpdateUser: () => void;
   handleLoginUser: () => void;
   loginLoading: boolean;
-  data: User;
+  userData: User | undefined;
 };
 
 const initialState = {
@@ -42,7 +47,7 @@ const contextState: contextType = {
   handleUpdateUser: () => {},
   handleLoginUser: () => {},
   loginLoading: false,
-  data: {} as User,
+  userData: {} as User,
 };
 
 export const AuthContext = createContext(contextState);
@@ -55,6 +60,19 @@ export const AuthContextProvider = ({
   const [formData, setFormData] = useState(initialState);
   const { handleSetNotification, setState } = useGlobalContext();
   const navigate = useNavigate();
+  const id = getLocalData("bankId");
+  const [userData, setData] = useState<User | undefined>(undefined);
+
+  const { refetch } = useQuery(GET_USER, {
+    variables: { id },
+    onError: (error) => {
+      handleSetNotification({ message: error.message, status: "error" });
+    },
+    fetchPolicy: "standby",
+    onCompleted: (data) => {
+      setData(data.getUser.data);
+    },
+  });
 
   const [createUser, { loading }] = useMutation(CREATE_USER, {
     onError: (error) => {
@@ -66,12 +84,13 @@ export const AuthContextProvider = ({
     },
   });
 
-  const [loginUser, { loading: loginLoading, data }] = useMutation(LOGIN_USER, {
+  const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_USER, {
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
     },
     onCompleted: (data) => {
       localStorage.setItem("bankId", JSON.stringify(data.loginUser.data.id));
+      refetch();
       setState((prev) => ({ ...prev, show: "", isLoggedIn: true }));
       navigate("/");
       window.location.reload();
@@ -148,6 +167,12 @@ export const AuthContextProvider = ({
     }
   };
 
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -159,7 +184,7 @@ export const AuthContextProvider = ({
         handleUpdateUser,
         handleLoginUser,
         loginLoading,
-        data,
+        userData,
       }}
     >
       {children}

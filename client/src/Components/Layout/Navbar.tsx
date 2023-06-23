@@ -1,6 +1,5 @@
-import { NavbarMain, Logo, RightContainer, Circle } from "./navbar.style";
-import { displayCenter } from "../Common/variable.style";
-import img from "../../assets/react.svg";
+import { NavbarMain, Logo, RightContainer, Circle, Img } from "./navbar.style";
+import { displayAllCenter, displayCenter } from "../Common/variable.style";
 import ThemeProvider from "../../Theme/ThemeProvider";
 import { PrivateLinks, PublicLinks } from "../Private/PtotectedRoutes";
 import NavAuth from "./NavAuth";
@@ -8,11 +7,12 @@ import { Button } from "./navbar.style";
 import { getLocalData } from "../../Utils/data";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
+import { CircleShimmer } from "../Shimmers/TextShimmer";
 
 const Navbar = () => {
   const { setState, state } = useGlobalContext();
   const active = getLocalData("bankId");
-  const { data } = useAuthContext();
+  const { userData } = useAuthContext();
 
   const handleLogout = () => {
     localStorage.removeItem("bankId");
@@ -27,8 +27,12 @@ const Navbar = () => {
         <ThemeProvider />
 
         <PrivateLinks>
-          <Circle>
-            <img src={img} alt="img" />
+          <Circle $style={displayAllCenter}>
+            {userData?.image ? (
+              <Img src={userData?.image} alt="img" />
+            ) : (
+              <CircleShimmer size={85} />
+            )}
           </Circle>
         </PrivateLinks>
 

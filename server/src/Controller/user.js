@@ -63,9 +63,7 @@ export const root = {
       const { id, ...update } = input;
       const user = await User.findByIdAndUpdate(id, update, { new: true });
 
-      if (!user) {
-        throw new Error("User not exists");
-      }
+      if (!user) throw new Error("User not exists");
 
       return createResult({
         data: user,
@@ -80,20 +78,28 @@ export const root = {
   deleteUser: async ({ id }) => {
     try {
       const user = await User.findByIdAndDelete(id);
+      if (!user) throw new Error("User not exists");
+
       return createResult({
         data: user,
         message: user ? "User deleted Successfully" : "User don't exists",
         status: 200,
       });
     } catch (error) {
-      throw new Error("Failed to delete user");
+      throw error || "Failed to delete user";
     }
   },
 
   getUser: async ({ id }) => {
     try {
       const user = await User.findById(id);
-      return user;
+      if (!user) throw new Error("User not exits");
+
+      return createResult({
+        data: user,
+        message: "User fetched successfully",
+        status: 200,
+      });
     } catch (error) {
       throw new Error("Failed to fetch user");
     }

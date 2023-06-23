@@ -37,12 +37,13 @@ export const RightContainer = styled.div<{ $displayCenter: string }>`
   }
 `;
 
-export const Circle = styled.div`
+export const Circle = styled.div<{ $style: string }>`
   width: 45px;
   height: 45px;
   border-radius: 100%;
   overflow: hidden;
   border: 2px solid var(--modal-color);
+  ${(props) => props.$style};
 
   @media (max-width: 768px) {
     width: 40px;
@@ -76,4 +77,9 @@ export const Button = styled.button<{
   &:hover {
     opacity: 0.9;
   }
+`;
+
+export const Img = styled.img`
+  object-fit: cover;
+  height: 100%;
 `;

@@ -50,6 +50,8 @@ li {
   --secondary-font-size: 22px;
   --third-font-size: 18px;
   --link-color: rgb(52, 52, 254);
+  --exact-font-color: #27374d;
+  --exact-white-color: #dde6ed;
 }
 
 .darkTheme {
@@ -63,6 +65,8 @@ li {
   --third-font-size: 18px;
   --modal-font-color: #dde6ed;
   --link-color: rgb(52, 52, 254);
+  --exact-font-color: #27374d;
+  --exact-white-color: #dde6ed;
 }
 
 body {

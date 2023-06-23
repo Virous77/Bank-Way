@@ -20,7 +20,7 @@ export const LOGIN_USER = gql`
       data {
         id
         name
-        image
+        email
       }
       message
       status
@@ -45,6 +45,21 @@ export const DELETE_USER = gql`
     deleteUser(id: $id) {
       data {
         id
+      }
+      message
+      status
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      data {
+        id
+        name
+        email
+        image
       }
       message
       status

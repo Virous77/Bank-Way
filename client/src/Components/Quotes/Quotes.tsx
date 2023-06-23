@@ -49,7 +49,7 @@ const Quotes = () => {
           ) : (
             <UL $style={displayCol}>
               {quotes.quotesAll?.slice(0, 5)?.map((quote, idx) => (
-                <li key={idx}>
+                <li key={idx} style={{ color: "var(--exact-font-color)" }}>
                   <Span>({idx + 1})</Span> {quote.content}
                 </li>
               ))}

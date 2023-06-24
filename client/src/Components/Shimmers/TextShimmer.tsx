@@ -1,5 +1,9 @@
 import React from "react";
-import { ShimmerTitle, ShimmerCircularImage } from "react-shimmer-effects";
+import {
+  ShimmerTitle,
+  ShimmerCircularImage,
+  ShimmerSectionHeader,
+} from "react-shimmer-effects";
 
 type TextShimmerType = {
   gap?: number;
@@ -12,4 +16,8 @@ export const TextShimmer: React.FC<TextShimmerType> = ({ line, gap }) => {
 
 export const CircleShimmer = ({ size }: { size: number }) => {
   return <ShimmerCircularImage size={size} />;
+};
+
+export const HeadingShimmer = () => {
+  return <ShimmerSectionHeader />;
 };

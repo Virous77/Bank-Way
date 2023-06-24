@@ -17,6 +17,7 @@ type formDataType = {
   email: string;
   password: string;
   image: string;
+  bio: string;
 };
 
 type contextType = {
@@ -36,6 +37,7 @@ const initialState = {
   email: "",
   password: "",
   image: "",
+  bio: "",
 };
 
 const contextState: contextType = {

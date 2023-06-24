@@ -8,8 +8,10 @@ export const schema = buildSchema(`
     password: String!
     image: String
     isAdmin: Boolean
+    bio: String
     createdAt: String
     updatedAt: String
+    
   }
 
   input CreateUserInput {
@@ -18,6 +20,7 @@ export const schema = buildSchema(`
     password: String!
     image: String
     isAdmin: Boolean
+    bio: String
   }
 
   input UpdateUserInput {
@@ -27,6 +30,7 @@ export const schema = buildSchema(`
     password: String
     image: String
     isAdmin: Boolean
+    bio: String
   }
 
   input LoginUserInput{

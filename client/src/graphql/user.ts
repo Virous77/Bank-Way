@@ -7,6 +7,7 @@ export const CREATE_USER = gql`
         id
         name
         image
+        bio
       }
       message
       status
@@ -60,6 +61,7 @@ export const GET_USER = gql`
         name
         email
         image
+        bio
       }
       message
       status

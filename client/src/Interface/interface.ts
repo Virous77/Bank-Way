@@ -3,6 +3,7 @@ export interface User {
   image: string;
   _id: string;
   email: string;
+  bio: string;
 }
 
 export interface QuotesType {

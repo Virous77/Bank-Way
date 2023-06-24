@@ -86,3 +86,7 @@ div {
 .shimmer-title-line {
   height: 10px !important;
 }
+
+.mb-40 {
+  margin-bottom: 10px !important;
+}

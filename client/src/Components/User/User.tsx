@@ -1,4 +1,3 @@
-import { useAuthContext } from "../../Store/AuthContext";
 import {
   ProfileSection,
   UserImage,

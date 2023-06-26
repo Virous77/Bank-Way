@@ -37,3 +37,33 @@ export const Img = styled.img`
 export const P = styled.p`
   margin-top: 10px;
 `;
+
+export const Form = styled.form`
+  width: 100%;
+`;
+
+export const Wrap = styled.div`
+  position: relative;
+  width: fit-content;
+`;
+
+export const Input = styled.input``;
+
+export const Label = styled.label<{ $style: string }>`
+  position: absolute;
+  bottom: -22%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  background-color: var(--main-font-color);
+  color: var(--body-color);
+  ${(props) => props.$style};
+  border-radius: 100%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--body-color);
+    color: var(--main-font-color);
+  }
+`;

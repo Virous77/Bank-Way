@@ -23,6 +23,18 @@ const UserProfile = () => {
   const [editUserData, setEditUserData] = useState<User | undefined>(undefined);
   const { formData, setFormData } = useAuthContext();
 
+  const handleEdituser = (user: User | undefined) => {
+    if (!user) return;
+
+    setFormData({
+      ...formData,
+      name: user?.name,
+      email: user?.email,
+      image: user.image,
+      bio: user.bio,
+    });
+  };
+
   return (
     <React.Fragment>
       <ProfileSection>
@@ -31,13 +43,7 @@ const UserProfile = () => {
           <Button
             onClick={() => {
               setEditUserData(userData);
-              setFormData = {
-                ...formData,
-                name: userData?.name,
-                image: userData?.image,
-                email: userData?.email,
-                bio: userData?.bio,
-              };
+              handleEdituser(userData);
             }}
           >
             Edit

@@ -16,7 +16,7 @@ type formDataType = {
   name: string;
   email: string;
   password: string;
-  image: string;
+  image: any;
   bio: string;
 };
 
@@ -36,7 +36,7 @@ const initialState = {
   name: "",
   email: "",
   password: "",
-  image: "",
+  image: null,
   bio: "",
 };
 

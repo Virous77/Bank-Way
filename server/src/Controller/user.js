@@ -1,5 +1,5 @@
 import User from "../Models/User.js";
-import { AuthValidate } from "../Middleware/validate.js";
+import { AuthValidate, UserUpdateValidate } from "../Middleware/validate.js";
 import { createResult } from "../Utils/utility.js";
 import bcrypt from "bcrypt";
 
@@ -60,6 +60,8 @@ export const root = {
 
   updateUser: async ({ input }) => {
     try {
+      const { error } = UserUpdateValidate.validate(input);
+      if (error) throw new Error(error.details[0].message);
       const { id, ...update } = input;
       const user = await User.findByIdAndUpdate(id, update, { new: true });
 

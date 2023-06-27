@@ -30,7 +30,6 @@ const UserProfile = () => {
       ...formData,
       name: user?.name,
       email: user?.email,
-      image: user.image,
       bio: user.bio,
     });
   };
@@ -63,7 +62,7 @@ const UserProfile = () => {
             ) : (
               <HeadingShimmer />
             )}
-            {userData && <P>Email: {userData?.email}</P>}
+            <P>Email: {userData?.email}</P>
             {userData && <P>Bio: {userData?.bio}</P>}
           </UserInformation>
         </ProfileWrap>

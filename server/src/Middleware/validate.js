@@ -7,3 +7,11 @@ export const AuthValidate = joi
     password: joi.string().trim().required(),
   })
   .options({ stripUnknown: true });
+
+export const UserUpdateValidate = joi
+  .object({
+    name: joi.string().trim().required(),
+    email: joi.string().trim().required(),
+    image: joi.string().trim().required(),
+  })
+  .options({ stripUnknown: true });

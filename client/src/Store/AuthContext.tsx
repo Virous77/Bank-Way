@@ -15,6 +15,7 @@ import {
   contextState,
   initialState,
 } from "../contextSuggestionType/contextType";
+import axios from "axios";
 
 export const AuthContext = createContext(contextState);
 
@@ -103,18 +104,53 @@ export const AuthContextProvider = ({
     }
   };
 
-  const handleUpdateUser = () => {
+  const handleUpdateUser = async () => {
     const id = getLocalData("bankId");
-    const data = {
-      id,
-      ...formData,
-    };
-
+    const { image, ...rest } = formData;
     try {
-      handleAction({
-        action: updateUser,
-        formData: data,
-      });
+      if (image) {
+        const uploadImage = new FormData();
+        uploadImage.append("image", image);
+
+        const fileName = editUserData?.image.split("/");
+
+        await axios.delete(
+          `http://localhost:4000/uploads/${
+            fileName && fileName[fileName.length - 1]
+          }`
+        );
+
+        const res = await axios.post(
+          "http://localhost:4000/api/upload",
+          uploadImage
+        );
+
+        const data = {
+          id,
+          image: res.data.image,
+          ...rest,
+        };
+
+        if (res.data.image) {
+          handleAction({
+            action: updateUser,
+            formData: data,
+          });
+        }
+      }
+
+      if (!image) {
+        const data = {
+          id,
+          image: editUserData?.image,
+          ...rest,
+        };
+
+        handleAction({
+          action: updateUser,
+          formData: data,
+        });
+      }
     } catch (error: any) {
       handleError(error.message);
     }

@@ -9,17 +9,19 @@ dotenv.config();
 import { graphqlHTTP } from "express-graphql";
 import { schema } from "./src/GraphqlSchema/User.js";
 import { root } from "./src/Controller/user.js";
+import UploadImage from "./src/Middleware/uploadImage.js";
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
-app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
+app.use(UploadImage);
 app.use(
   "/graphql",
   graphqlHTTP({

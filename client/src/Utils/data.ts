@@ -50,3 +50,24 @@ export const handleAction = ({ action, formData }: actionType) => {
     },
   });
 };
+
+export const Tabs = [
+  {
+    id: 1,
+    name: "Home Settings",
+    value: "homeConfig",
+    message: "Configure your home setting as you like.",
+  },
+  {
+    id: 2,
+    name: "Password Change",
+    value: "password",
+    message: "Change your password easily and keep your account safe.",
+  },
+  {
+    id: 3,
+    name: "Theme Settings",
+    value: "theme",
+    message: "Set Theme according to your system setting or auto.",
+  },
+];

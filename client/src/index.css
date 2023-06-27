@@ -46,6 +46,7 @@ li {
   --modal-color: #526d82;
   --modal-font-color: #dde6ed;
   --card-color: #9db2bf;
+  --secondary-font-color: #537082;
   --primary-font-size: 30px;
   --secondary-font-size: 22px;
   --third-font-size: 18px;
@@ -66,6 +67,7 @@ li {
   --modal-font-color: #dde6ed;
   --link-color: rgb(52, 52, 254);
   --exact-font-color: #27374d;
+  --secondary-font-color: #6aa1c4;
   --exact-white-color: #dde6ed;
 }
 

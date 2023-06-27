@@ -38,16 +38,19 @@ export const P = styled.p`
   margin-top: 10px;
 `;
 
-export const Form = styled.form`
+export const Form = styled.form<{ $style: string }>`
   width: 100%;
+  ${(props) => props.$style};
+  gap: 1rem;
 `;
 
 export const Wrap = styled.div`
   position: relative;
   width: fit-content;
+  margin-bottom: 1rem;
 `;
 
-export const Input = styled.input``;
+export const ImageInput = styled.input``;
 
 export const Label = styled.label<{ $style: string }>`
   position: absolute;

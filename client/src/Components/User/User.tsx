@@ -12,7 +12,7 @@ import { Button } from "../Layout/navbar.style";
 import { displayFlex } from "../Common/variable.style";
 import ModalHeader from "../Modal/ModalHeader";
 import { Modal } from "../Modal/Modal";
-import React, { useState } from "react";
+import React from "react";
 import { User } from "../../Interface/interface";
 import EditUser from "./EditUser";
 import { CircleShimmer, HeadingShimmer } from "../Shimmers/TextShimmer";
@@ -20,10 +20,10 @@ import { useAuthContext } from "../../Store/AuthContext";
 
 const UserProfile = () => {
   const { userData } = useAuthContext();
-  const [editUserData, setEditUserData] = useState<User | undefined>(undefined);
-  const { formData, setFormData } = useAuthContext();
+  const { formData, setFormData, editUserData, setEditUserData } =
+    useAuthContext();
 
-  const handleEdituser = (user: User | undefined) => {
+  const handleEditUser = (user: User | undefined) => {
     if (!user) return;
 
     setFormData({
@@ -43,7 +43,7 @@ const UserProfile = () => {
           <Button
             onClick={() => {
               setEditUserData(userData);
-              handleEdituser(userData);
+              handleEditUser(userData);
             }}
           >
             Edit

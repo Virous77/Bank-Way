@@ -11,46 +11,10 @@ import { useGlobalContext } from "./globalContext";
 import { useNavigate } from "react-router-dom";
 import { getLocalData, handleAction } from "../Utils/data";
 import { User } from "../Interface/interface";
-
-type formDataType = {
-  name: string;
-  email: string;
-  password: string;
-  image: any;
-  bio: string;
-};
-
-type contextType = {
-  formData: formDataType;
-  setFormData: React.Dispatch<React.SetStateAction<formDataType>>;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleCreateUser: () => void;
-  loading: boolean;
-  handleUpdateUser: () => void;
-  handleLoginUser: () => void;
-  loginLoading: boolean;
-  userData: User | undefined;
-};
-
-const initialState = {
-  name: "",
-  email: "",
-  password: "",
-  image: null,
-  bio: "",
-};
-
-const contextState: contextType = {
-  formData: initialState,
-  setFormData: () => {},
-  handleChange: () => {},
-  handleCreateUser: () => {},
-  loading: false,
-  handleUpdateUser: () => {},
-  handleLoginUser: () => {},
-  loginLoading: false,
-  userData: {} as User,
-};
+import {
+  contextState,
+  initialState,
+} from "../contextSuggestionType/contextType";
 
 export const AuthContext = createContext(contextState);
 
@@ -64,7 +28,9 @@ export const AuthContextProvider = ({
   const navigate = useNavigate();
   const id = getLocalData("bankId");
   const [userData, setData] = useState<User | undefined>(undefined);
+  const [editUserData, setEditUserData] = useState<User | undefined>(undefined);
 
+  // * All the DB related services are below
   const { refetch } = useQuery(GET_USER, {
     variables: { id },
     onError: (error) => {
@@ -109,6 +75,8 @@ export const AuthContextProvider = ({
         message: data.updateUser.message,
         status: "success",
       });
+      setEditUserData(undefined);
+      refetch();
     },
   });
 
@@ -117,6 +85,13 @@ export const AuthContextProvider = ({
     setFormData({ ...formData, [name]: value });
   };
 
+  // * All the Action related Auth are below
+  const handleError = (error: string) => {
+    handleSetNotification({
+      message: error || "Something went wrong,Try agin",
+      status: "error",
+    });
+  };
   const handleCreateUser = () => {
     try {
       handleAction({
@@ -124,17 +99,15 @@ export const AuthContextProvider = ({
         formData: formData,
       });
     } catch (error: any) {
-      handleSetNotification({
-        message: error.message || "Something went wrong,Try agin",
-        status: "error",
-      });
+      handleError(error.message);
     }
   };
 
   const handleUpdateUser = () => {
+    const id = getLocalData("bankId");
     const data = {
-      id: "64911d53ff7f90efac091610",
-      name: "Monu Kumar",
+      id,
+      ...formData,
     };
 
     try {
@@ -143,10 +116,7 @@ export const AuthContextProvider = ({
         formData: data,
       });
     } catch (error: any) {
-      handleSetNotification({
-        message: error.message || "Something went wrong,Try agin",
-        status: "error",
-      });
+      handleError(error.message);
     }
   };
 
@@ -162,10 +132,7 @@ export const AuthContextProvider = ({
         formData: data,
       });
     } catch (error: any) {
-      handleSetNotification({
-        message: error.message || "Something went wrong,Try agin",
-        status: "error",
-      });
+      handleError(error.message);
     }
   };
 
@@ -187,6 +154,9 @@ export const AuthContextProvider = ({
         handleLoginUser,
         loginLoading,
         userData,
+        updateLoading,
+        editUserData,
+        setEditUserData,
       }}
     >
       {children}

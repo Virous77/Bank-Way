@@ -1,5 +1,9 @@
 import User from "../Models/User.js";
-import { AuthValidate, UserUpdateValidate } from "../Middleware/validate.js";
+import {
+  AuthValidate,
+  PasswordValidate,
+  UserUpdateValidate,
+} from "../Middleware/validate.js";
 import { createResult } from "../Utils/utility.js";
 import bcrypt from "bcrypt";
 
@@ -92,6 +96,31 @@ export const root = {
     }
   },
 
+  changePassword: async ({ input }) => {
+    const { error } = PasswordValidate.validate(input);
+    if (error) throw new Error(error.details[0].message);
+    try {
+      const user = await User.findById(input.id);
+      if (!user) throw new Error("User not exists");
+
+      const pass = await bcrypt.compare(input.password, user.password);
+      if (!pass) throw new Error("Old password is wrong");
+
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(input.newPassword, salt);
+
+      user.password = hash;
+      await user.save();
+      return createResult({
+        data: user,
+        message: "Password changed successfully",
+        status: 200,
+      });
+    } catch (error) {
+      throw error || "Failed to update password";
+    }
+  },
+
   getUser: async ({ id }) => {
     try {
       const user = await User.findById(id);
@@ -103,7 +132,7 @@ export const root = {
         status: 200,
       });
     } catch (error) {
-      throw new Error("Failed to fetch user");
+      throw error || "Failed to fetch user";
     }
   },
 

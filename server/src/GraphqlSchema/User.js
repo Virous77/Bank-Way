@@ -33,6 +33,12 @@ export const schema = buildSchema(`
     bio: String
   }
 
+  input ChangePassword{
+     id: ID!
+    password: String!
+    newPassword: String!
+  }
+
   input LoginUserInput{
     email: String
     password: String
@@ -43,6 +49,7 @@ export const schema = buildSchema(`
     message: String
     status: Int
   }
+
 
   type Query {
     getUser(id: ID!): Response
@@ -56,5 +63,6 @@ export const schema = buildSchema(`
     updateUser(input: UpdateUserInput!): Response
     deleteUser(id: ID!): Response
     loginUser(input: LoginUserInput!): Response
+    changePassword(input: ChangePassword!): Response
   }
 `);

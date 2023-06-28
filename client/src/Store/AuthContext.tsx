@@ -112,13 +112,15 @@ export const AuthContextProvider = ({
         const uploadImage = new FormData();
         uploadImage.append("image", image);
 
-        const fileName = editUserData?.image.split("/");
+        if (editUserData?.image) {
+          const fileName = editUserData?.image?.split("/");
 
-        await axios.delete(
-          `http://localhost:4000/uploads/${
-            fileName && fileName[fileName.length - 1]
-          }`
-        );
+          await axios.delete(
+            `http://localhost:4000/uploads/${
+              fileName && fileName[fileName.length - 1]
+            }`
+          );
+        }
 
         const res = await axios.post(
           "http://localhost:4000/api/upload",

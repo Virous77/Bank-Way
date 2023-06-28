@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { Main, Wrap } from "./settings.style";
 import TabList from "./TabList";
 import { Tabs } from "../../Utils/data";
 import ModalHeader from "../Modal/ModalHeader";
 import { Modal } from "../Modal/Modal";
 import PasswordModal from "./PasswordModal";
-import { useState } from "react";
+import ThemeSetting from "./ThemeSetting";
+import HomeSetting from "./HomeSetting";
 
 const Settings = () => {
   const [active, setActive] = useState<string | undefined>(undefined);
@@ -19,12 +21,36 @@ const Settings = () => {
       </Wrap>
 
       {active === "password" && (
-        <Modal isOpen="isOpen" onClose={() => setActive(undefined)}>
+        <Modal
+          isOpen="isOpen"
+          onClose={() => setActive(undefined)}
+          size="400px"
+        >
           <ModalHeader
-            name="Password Change"
+            name="Password Setting"
             onClose={() => setActive(undefined)}
           />
-          <PasswordModal />
+          <PasswordModal setActive={setActive} />
+        </Modal>
+      )}
+
+      {active === "theme" && (
+        <Modal isOpen="isOpen" onClose={() => setActive(undefined)}>
+          <ModalHeader
+            name="Theme Setting"
+            onClose={() => setActive(undefined)}
+          />
+          <ThemeSetting />
+        </Modal>
+      )}
+
+      {active === "homeConfig" && (
+        <Modal isOpen="isOpen" onClose={() => setActive(undefined)}>
+          <ModalHeader
+            name="Home Setting"
+            onClose={() => setActive(undefined)}
+          />
+          <HomeSetting />
         </Modal>
       )}
     </Main>

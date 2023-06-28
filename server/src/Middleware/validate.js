@@ -15,3 +15,9 @@ export const UserUpdateValidate = joi
     image: joi.string().trim().required(),
   })
   .options({ stripUnknown: true });
+
+export const PasswordValidate = joi.object({
+  id: joi.string().trim().required(),
+  password: joi.string().trim().required(),
+  newPassword: joi.string().trim().required(),
+});

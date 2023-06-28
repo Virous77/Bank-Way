@@ -68,3 +68,15 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const PASSWORD_CHANGE = gql`
+  mutation ChangePassword($input: ChangePassword!) {
+    changePassword(input: $input) {
+      data {
+        id
+      }
+      message
+      status
+    }
+  }
+`;

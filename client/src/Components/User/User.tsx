@@ -69,7 +69,11 @@ const UserProfile = () => {
       </ProfileSection>
 
       {editUserData && (
-        <Modal isOpen="isOpen" onClose={() => setEditUserData(undefined)}>
+        <Modal
+          isOpen="isOpen"
+          onClose={() => setEditUserData(undefined)}
+          size="500px"
+        >
           <ModalHeader
             name="Edit Profile"
             onClose={() => setEditUserData(undefined)}

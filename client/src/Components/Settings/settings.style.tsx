@@ -33,3 +33,18 @@ export const List = styled.div`
     border: 2px solid var(--main-font-color);
   }
 `;
+
+export const Section = styled.section`
+  margin-top: 1rem;
+`;
+
+export const FieldSet = styled.fieldset`
+  border: none;
+
+  label {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+`;

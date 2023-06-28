@@ -35,7 +35,11 @@ const Settings = () => {
       )}
 
       {active === "theme" && (
-        <Modal isOpen="isOpen" onClose={() => setActive(undefined)}>
+        <Modal
+          isOpen="isOpen"
+          onClose={() => setActive(undefined)}
+          size="450px"
+        >
           <ModalHeader
             name="Theme Setting"
             onClose={() => setActive(undefined)}

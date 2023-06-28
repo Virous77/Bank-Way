@@ -8,11 +8,13 @@ import { getLocalData } from "../../Utils/data";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
 import { CircleShimmer } from "../Shimmers/TextShimmer";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { setState, state } = useGlobalContext();
   const active = getLocalData("bankId");
   const { userData } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("bankId");
@@ -27,7 +29,10 @@ const Navbar = () => {
         <ThemeProvider />
 
         <PrivateLinks>
-          <Circle $style={displayAllCenter}>
+          <Circle
+            $style={displayAllCenter}
+            onClick={() => navigate("/account")}
+          >
             {userData?.image ? (
               <Img src={userData?.image} alt="img" />
             ) : (

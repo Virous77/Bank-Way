@@ -8,6 +8,7 @@ type notificationType = {
 type stateType = {
   show: string;
   isLoggedIn: boolean;
+  active: string;
 };
 
 type GlobalType = {
@@ -26,6 +27,7 @@ const stateInitialValue = {
 const stateInitialValueTwo: stateType = {
   show: "",
   isLoggedIn: false,
+  active: "",
 };
 
 const initialValue: GlobalType = {

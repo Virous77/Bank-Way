@@ -44,6 +44,7 @@ export const Circle = styled.div<{ $style: string }>`
   overflow: hidden;
   border: 2px solid var(--modal-color);
   ${(props) => props.$style};
+  cursor: pointer;
 
   @media (max-width: 768px) {
     width: 40px;

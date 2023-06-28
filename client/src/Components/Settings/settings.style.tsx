@@ -48,3 +48,30 @@ export const FieldSet = styled.fieldset`
     font-weight: 600;
   }
 `;
+
+export const Check = styled.div<{ $style: string }>`
+  ${(props) => props.$style};
+  gap: 10px;
+
+  span {
+    color: var(--exact-white-color) !important;
+  }
+
+  p {
+    width: 22px;
+    height: 22px;
+    color: var(--exact-white-color) !important;
+    border: 2px solid var(--exact-white-color) !important;
+    ${(props) => props.$style};
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+`;
+
+export const CheckList = styled.div<{ $style: string }>`
+  ${(props) => props.$style};
+  gap: 3rem;
+  margin-top: 2rem;
+`;

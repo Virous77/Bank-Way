@@ -74,7 +74,7 @@ export const Button = styled.button<{
   border-radius: ${(props) => (props.$primary ? "30px" : "0")};
   color: ${(props) =>
     props.$color ? props.$color : "var(--main-font-color)"} !important;
-  width: ${(props) => (props.$width ? props.$width : "fit-content")}
+  width: ${(props) => (props.$width ? props.$width : "fit-content")};
 
   &:hover {
     opacity: 0.8;

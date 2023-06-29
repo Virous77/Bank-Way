@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-export const Head = styled.header`
+export const Head = styled.header<{ $style: string }>`
   padding: 1rem;
   background-color: var(--main-font-color);
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
+  ${(props) => props.$style};
 
   div {
     display: flex;

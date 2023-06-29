@@ -71,3 +71,19 @@ export const Tabs = [
     message: "Set Theme according to your system setting or auto.",
   },
 ];
+
+export const currentMoment = (date: Date) => {
+  const hours = date.getHours();
+
+  let currentMoments;
+
+  if (hours >= 5 && hours <= 11) {
+    currentMoments = "Good Morning";
+  } else if (hours >= 12 && hours <= 17) {
+    currentMoments = "Good Afternoon";
+  } else {
+    currentMoments = "Good Evening";
+  }
+
+  return currentMoments;
+};

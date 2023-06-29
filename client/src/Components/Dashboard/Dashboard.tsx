@@ -1,5 +1,13 @@
+import Header from "./Header";
+import Graph from "./Graph";
+
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <Header />
+      <Graph />
+    </div>
+  );
 };
 
 export default Dashboard;

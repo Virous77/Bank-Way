@@ -5,9 +5,10 @@ import { BrowserRouter } from "react-router-dom";
 import { GlobalContextProvider } from "./Store/globalContext.tsx";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { AuthContextProvider } from "./Store/AuthContext.tsx";
+import { ActivityContextProvider } from "./Store/ActivityContext.tsx";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: `${import.meta.env.VITE_BACKEND_URL}/graphql`,
   cache: new InMemoryCache(),
 });
 
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <GlobalContextProvider>
       <ApolloProvider client={client}>
         <AuthContextProvider>
-          <App />
+          <ActivityContextProvider>
+            <App />
+          </ActivityContextProvider>
         </AuthContextProvider>
       </ApolloProvider>
     </GlobalContextProvider>

@@ -87,3 +87,28 @@ export const currentMoment = (date: Date) => {
 
   return currentMoments;
 };
+
+export const month = [
+  "Jan",
+  "Feb",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export const formatDate = (date: Date) => {
+  const currentMonth = date?.getMonth();
+  const currentDat = date?.getDate();
+
+  const newDate =
+    month[currentMonth] + " " + currentDat + ", " + date?.getFullYear();
+
+  return newDate;
+};

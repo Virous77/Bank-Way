@@ -116,14 +116,14 @@ export const AuthContextProvider = ({
           const fileName = editUserData?.image?.split("/");
 
           await axios.delete(
-            `http://localhost:4000/uploads/${
+            `${import.meta.env.VITE_BACKEND_URL}/uploads/${
               fileName && fileName[fileName.length - 1]
             }`
           );
         }
 
         const res = await axios.post(
-          "http://localhost:4000/api/upload",
+          `${import.meta.env.VITE_BACKEND_URL}/api/upload`,
           uploadImage
         );
 

@@ -11,7 +11,6 @@ export const schema = buildSchema(`
     bio: String
     createdAt: String
     updatedAt: String
-    
   }
 
   input CreateUserInput {

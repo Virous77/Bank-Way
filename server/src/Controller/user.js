@@ -7,7 +7,7 @@ import {
 import { createResult } from "../Utils/utility.js";
 import bcrypt from "bcrypt";
 
-export const root = {
+export const UserRoot = {
   createUser: async ({ input }) => {
     try {
       const { error } = AuthValidate.validate(input);

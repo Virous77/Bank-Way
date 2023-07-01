@@ -1,4 +1,7 @@
+import { useMutation } from "@apollo/client";
 import { createContext, useState, useContext } from "react";
+import { CREATE_ACTIVITY } from "../graphql/activity";
+import { useGlobalContext } from "./globalContext";
 
 type ActivityType = {
   name: string;
@@ -40,14 +43,39 @@ export const ActivityContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [activityData, setActivityData] = useState(initialState);
+  const { handleSetNotification } = useGlobalContext();
+
+  const [createActivity, { loading }] = useMutation(CREATE_ACTIVITY, {
+    onError: (error) => {
+      handleSetNotification({ message: error.message, status: "error" });
+    },
+    onCompleted: () => {
+      setActivityData(initialState);
+    },
+    context: {
+      clientName: "endpoint2",
+    },
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setActivityData({ ...activityData, [name]: value });
   };
 
-  const handleCreateData = (type: string) => {
-    console.log(type, activityData);
+  const handleCreateData = (typeName: string) => {
+    const { type, other, ...rest } = activityData;
+    const data = {
+      type: other ? other : type,
+      ...rest,
+      type_name: typeName,
+    };
+    createActivity({
+      variables: {
+        input: {
+          ...data,
+        },
+      },
+    });
   };
 
   return (

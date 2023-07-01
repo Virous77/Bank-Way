@@ -1,3 +1,4 @@
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type notificationType = {
@@ -9,6 +10,7 @@ type stateType = {
   show: string;
   isLoggedIn: boolean;
   active: string;
+  link: string;
 };
 
 type GlobalType = {
@@ -28,6 +30,7 @@ const stateInitialValueTwo: stateType = {
   show: "",
   isLoggedIn: false,
   active: "",
+  link: "user",
 };
 
 const initialValue: GlobalType = {

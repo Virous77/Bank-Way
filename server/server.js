@@ -8,8 +8,10 @@ import morgan from "morgan";
 dotenv.config();
 import { graphqlHTTP } from "express-graphql";
 import { schema } from "./src/GraphqlSchema/User.js";
-import { root } from "./src/Controller/user.js";
+import { ActivitySchema } from "./src/GraphqlSchema/Activity.js";
+import { UserRoot } from "./src/Controller/user.js";
 import UploadImage from "./src/Middleware/uploadImage.js";
+import { ActivityRoot } from "./src/Controller/activity.js";
 
 const app = express();
 
@@ -22,11 +24,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
 app.use(UploadImage);
+
 app.use(
-  "/graphql",
+  "/user",
   graphqlHTTP({
     schema: schema,
-    rootValue: root,
+    rootValue: UserRoot,
+    graphiql: true,
+  })
+);
+
+app.use(
+  "/activity",
+  graphqlHTTP({
+    schema: ActivitySchema,
+    rootValue: ActivityRoot,
     graphiql: true,
   })
 );

@@ -1,10 +1,11 @@
 import MainForm from "./MainForm";
 import { Main } from "./activity.style";
+import { expenseType } from "../../../Utils/activity";
 
 const Expense = () => {
   return (
     <Main>
-      <MainForm />
+      <MainForm types={expenseType} title="Expense" />
     </Main>
   );
 };

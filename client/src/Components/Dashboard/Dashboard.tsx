@@ -18,7 +18,11 @@ const Dashboard: React.FC<DashboardType> = ({ Compo, title }) => {
       <Graph />
 
       {state.show === title && (
-        <Modal isOpen="isOpen" onClose={() => setState({ ...state, show: "" })}>
+        <Modal
+          isOpen="isOpen"
+          onClose={() => setState({ ...state, show: "" })}
+          size="450px"
+        >
           <ModalHeader
             name={title}
             onClose={() => setState({ ...state, show: "" })}

@@ -92,3 +92,9 @@ div {
 .mb-40 {
   margin-bottom: 10px !important;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

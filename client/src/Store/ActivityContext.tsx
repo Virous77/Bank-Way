@@ -6,6 +6,7 @@ type ActivityType = {
   amount: number;
   note: string;
   date: string;
+  other: string;
 };
 
 const initialState: ActivityType = {
@@ -14,18 +15,21 @@ const initialState: ActivityType = {
   amount: 0,
   note: "",
   date: "",
+  other: "",
 };
 
 type ContextType = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   activityData: ActivityType;
   setActivityData: React.Dispatch<React.SetStateAction<ActivityType>>;
+  handleCreateData: (type: string) => void;
 };
 
 const contextInitialState: ContextType = {
   handleChange: () => {},
   activityData: {} as ActivityType,
   setActivityData: () => {},
+  handleCreateData: () => {},
 };
 
 const ActivityContext = createContext(contextInitialState);
@@ -42,9 +46,13 @@ export const ActivityContextProvider = ({
     setActivityData({ ...activityData, [name]: value });
   };
 
+  const handleCreateData = (type: string) => {
+    console.log(type, activityData);
+  };
+
   return (
     <ActivityContext.Provider
-      value={{ handleChange, activityData, setActivityData }}
+      value={{ handleChange, activityData, setActivityData, handleCreateData }}
     >
       {children}
     </ActivityContext.Provider>

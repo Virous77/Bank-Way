@@ -1,5 +1,13 @@
+import { incomeType } from "../../../Utils/activity";
+import { Main } from "./activity.style";
+import MainForm from "./MainForm";
+
 const Income = () => {
-  return <div>Income</div>;
+  return (
+    <Main>
+      <MainForm types={incomeType} title="Income" />
+    </Main>
+  );
 };
 
 export default Income;

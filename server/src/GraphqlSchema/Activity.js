@@ -7,6 +7,7 @@ type Activity {
     type: String!
     type_name: String!
     amount: Int!
+    user_id: String
     date: String!
     is_edited: Boolean
     note: String
@@ -21,6 +22,7 @@ type Activity {
     amount: Int!
     date: String!
     note: String
+    user_id: String!
   }
 
   input UpdateUserInput {
@@ -40,10 +42,21 @@ type Activity {
     status: Int
   }
 
+  type ResultAll{
+    data: [Activity]
+     message: String
+    status: Int
+  }
+
+  input ActivityAllType{
+    id: ID!
+    count: Int
+  }
+
 
   type Query {
     getActivity(id: ID!): Result
-    getAllActivity: [Activity]
+    getAllActivity(input: ActivityAllType!): ResultAll
   }
 
   type Mutation {

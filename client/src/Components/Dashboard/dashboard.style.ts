@@ -39,3 +39,20 @@ export const ChartBox = styled.div`
     font-size: var(--secondary-font-size);
   }
 `;
+
+export const Aside = styled.aside`
+  header {
+    background-color: var(--main-font-color);
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  p {
+    color: var(--body-color);
+    text-align: end;
+    padding-right: 10px;
+    font-weight: bold;
+  }
+`;
+
+export const List = styled.ul``;

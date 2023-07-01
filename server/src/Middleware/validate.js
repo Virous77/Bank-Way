@@ -21,3 +21,12 @@ export const PasswordValidate = joi.object({
   password: joi.string().trim().required(),
   newPassword: joi.string().trim().required(),
 });
+
+export const ActivityValidate = joi
+  .object({
+    type: joi.string().trim().required(),
+    type_name: joi.string().trim().required(),
+    amount: joi.number().required().greater(0),
+    date: joi.string().trim().required(),
+  })
+  .options({ stripUnknown: true });

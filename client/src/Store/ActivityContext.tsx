@@ -2,6 +2,8 @@ import { useMutation } from "@apollo/client";
 import { createContext, useState, useContext } from "react";
 import { CREATE_ACTIVITY } from "../graphql/activity";
 import { useGlobalContext } from "./globalContext";
+import { getLocalData } from "../Utils/data";
+import { UPDATE_USER } from "../graphql/user";
 
 type ActivityType = {
   name: string;
@@ -19,6 +21,11 @@ const initialState: ActivityType = {
   note: "",
   date: "",
   other: "",
+};
+
+type input = {
+  id: string;
+  count: number;
 };
 
 type ContextType = {
@@ -43,7 +50,8 @@ export const ActivityContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [activityData, setActivityData] = useState(initialState);
-  const { handleSetNotification } = useGlobalContext();
+  const { handleSetNotification, setState, state } = useGlobalContext();
+  const id = getLocalData("bankId");
 
   const [createActivity, { loading }] = useMutation(CREATE_ACTIVITY, {
     onError: (error) => {
@@ -57,17 +65,35 @@ export const ActivityContextProvider = ({
     },
   });
 
+  const [updateActivity, { loading: updateLoading }] = useMutation(
+    UPDATE_USER,
+    {
+      onError: (error) => {
+        handleSetNotification({ message: error.message, status: "error" });
+      },
+      onCompleted: (data) => {
+        handleSetNotification({
+          message: data.updateUser.message,
+          status: "success",
+        });
+        setState({ ...state, fetch: "five" });
+      },
+    }
+  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setActivityData({ ...activityData, [name]: value });
   };
 
   const handleCreateData = (typeName: string) => {
-    const { type, other, ...rest } = activityData;
+    const { type, other, amount, ...rest } = activityData;
     const data = {
       type: other ? other : type,
       ...rest,
       type_name: typeName,
+      amount: Number(amount),
+      user_id: id,
     };
     createActivity({
       variables: {
@@ -80,7 +106,12 @@ export const ActivityContextProvider = ({
 
   return (
     <ActivityContext.Provider
-      value={{ handleChange, activityData, setActivityData, handleCreateData }}
+      value={{
+        handleChange,
+        activityData,
+        setActivityData,
+        handleCreateData,
+      }}
     >
       {children}
     </ActivityContext.Provider>

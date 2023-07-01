@@ -10,7 +10,7 @@ type stateType = {
   show: string;
   isLoggedIn: boolean;
   active: string;
-  link: string;
+  fetch: string;
 };
 
 type GlobalType = {
@@ -30,7 +30,7 @@ const stateInitialValueTwo: stateType = {
   show: "",
   isLoggedIn: false,
   active: "",
-  link: "user",
+  fetch: "",
 };
 
 const initialValue: GlobalType = {

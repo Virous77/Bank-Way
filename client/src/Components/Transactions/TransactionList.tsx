@@ -6,7 +6,6 @@ type TransactionListType = {
 };
 
 const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
-  console.log(transaction);
   return <LI>TransactionList</LI>;
 };
 

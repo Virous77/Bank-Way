@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { createContext, useState, useContext } from "react";
-import { CREATE_ACTIVITY } from "../graphql/activity";
+import { CREATE_ACTIVITY, GET_ALL_ACTIVITY } from "../graphql/activity";
 import { useGlobalContext } from "./globalContext";
 import { getLocalData, handleAction } from "../Utils/data";
 import { UPDATE_USER } from "../graphql/user";
+import { Transaction } from "../Interface/interface";
 
 type ActivityType = {
   name: string;
@@ -24,9 +25,12 @@ const initialState: ActivityType = {
   other: "",
 };
 
-type input = {
-  id: string;
-  count: number;
+type Result = {
+  getAllActivity: {
+    data: Transaction[];
+    message: string;
+    status: number;
+  };
 };
 
 type ContextType = {
@@ -35,6 +39,8 @@ type ContextType = {
   setActivityData: React.Dispatch<React.SetStateAction<ActivityType>>;
   handleCreateData: (type: string) => void;
   isLoading: boolean;
+  data: Result | undefined;
+  loading: boolean;
 };
 
 const contextInitialState: ContextType = {
@@ -43,6 +49,8 @@ const contextInitialState: ContextType = {
   setActivityData: () => {},
   handleCreateData: () => {},
   isLoading: false,
+  data: {} as Result,
+  loading: false,
 };
 
 const ActivityContext = createContext(contextInitialState);
@@ -53,8 +61,20 @@ export const ActivityContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [activityData, setActivityData] = useState(initialState);
-  const { handleSetNotification, setState, state } = useGlobalContext();
+  const { handleSetNotification } = useGlobalContext();
   const id = getLocalData("bankId");
+
+  const input = {
+    id,
+    count: 5,
+  };
+  const { refetch, data, loading } = useQuery<Result>(GET_ALL_ACTIVITY, {
+    variables: { input },
+    onError: (error) => {
+      handleSetNotification({ message: error.message, status: "error" });
+    },
+    context: { clientName: "endpoint2" },
+  });
 
   const [createActivity, { loading: isLoading }] = useMutation(
     CREATE_ACTIVITY,
@@ -64,7 +84,7 @@ export const ActivityContextProvider = ({
       },
       onCompleted: () => {
         setActivityData(initialState);
-        setState({ ...state, fetch: "five" });
+        refetch();
       },
       context: {
         clientName: "endpoint2",
@@ -83,7 +103,7 @@ export const ActivityContextProvider = ({
           message: data.updateUser.message,
           status: "success",
         });
-        setState({ ...state, fetch: "five" });
+        refetch();
       },
     }
   );
@@ -128,6 +148,8 @@ export const ActivityContextProvider = ({
         setActivityData,
         handleCreateData,
         isLoading,
+        data,
+        loading,
       }}
     >
       {children}

@@ -5,6 +5,16 @@ import { useGlobalContext } from "../../Store/globalContext";
 import { getLocalData } from "../../Utils/data";
 import { useEffect } from "react";
 import { Aside, List } from "./dashboard.style";
+import { Transaction } from "../../Interface/interface";
+import TransactionList from "../Transactions/TransactionList";
+
+type Result = {
+  getAllActivity: {
+    data: Transaction[];
+    message: string;
+    status: number;
+  };
+};
 
 const Sidebar = () => {
   const { handleSetNotification, state } = useGlobalContext();
@@ -13,7 +23,7 @@ const Sidebar = () => {
     id,
     count: 5,
   };
-  const { refetch, data, loading } = useQuery(GET_ALL_ACTIVITY, {
+  const { refetch, data, loading } = useQuery<Result>(GET_ALL_ACTIVITY, {
     variables: { input },
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
@@ -33,7 +43,11 @@ const Sidebar = () => {
         <p>{formatDate(new Date())}</p>
       </header>
 
-      <List></List>
+      <List>
+        {data?.getAllActivity.data?.map((transaction) => (
+          <TransactionList key={transaction.id} transaction={transaction} />
+        ))}
+      </List>
     </Aside>
   );
 };

@@ -1,4 +1,3 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type notificationType = {

@@ -26,7 +26,7 @@ export const ActivityRoot = {
 
       return createResult({
         data: transactions,
-        message: "Activity created successfully",
+        message: "Activity fetched successfully",
         status: 201,
       });
     } catch (error) {

@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation } from "@apollo/client";
 import { createContext, useState, useContext } from "react";
 import { CREATE_ACTIVITY } from "../graphql/activity";
 import { useGlobalContext } from "./globalContext";
-import { getLocalData } from "../Utils/data";
+import { getLocalData, handleAction } from "../Utils/data";
 import { UPDATE_USER } from "../graphql/user";
 
 type ActivityType = {
@@ -33,6 +34,7 @@ type ContextType = {
   activityData: ActivityType;
   setActivityData: React.Dispatch<React.SetStateAction<ActivityType>>;
   handleCreateData: (type: string) => void;
+  isLoading: boolean;
 };
 
 const contextInitialState: ContextType = {
@@ -40,6 +42,7 @@ const contextInitialState: ContextType = {
   activityData: {} as ActivityType,
   setActivityData: () => {},
   handleCreateData: () => {},
+  isLoading: false,
 };
 
 const ActivityContext = createContext(contextInitialState);
@@ -53,17 +56,21 @@ export const ActivityContextProvider = ({
   const { handleSetNotification, setState, state } = useGlobalContext();
   const id = getLocalData("bankId");
 
-  const [createActivity, { loading }] = useMutation(CREATE_ACTIVITY, {
-    onError: (error) => {
-      handleSetNotification({ message: error.message, status: "error" });
-    },
-    onCompleted: () => {
-      setActivityData(initialState);
-    },
-    context: {
-      clientName: "endpoint2",
-    },
-  });
+  const [createActivity, { loading: isLoading }] = useMutation(
+    CREATE_ACTIVITY,
+    {
+      onError: (error) => {
+        handleSetNotification({ message: error.message, status: "error" });
+      },
+      onCompleted: () => {
+        setActivityData(initialState);
+        setState({ ...state, fetch: "five" });
+      },
+      context: {
+        clientName: "endpoint2",
+      },
+    }
+  );
 
   const [updateActivity, { loading: updateLoading }] = useMutation(
     UPDATE_USER,
@@ -86,22 +93,31 @@ export const ActivityContextProvider = ({
     setActivityData({ ...activityData, [name]: value });
   };
 
+  const handleError = (error: string) => {
+    handleSetNotification({
+      message: error || "Something went wrong,Try agin",
+      status: "error",
+    });
+  };
+
   const handleCreateData = (typeName: string) => {
     const { type, other, amount, ...rest } = activityData;
     const data = {
       type: other ? other : type,
       ...rest,
-      type_name: typeName,
+      type_name: typeName.toLowerCase(),
       amount: Number(amount),
       user_id: id,
     };
-    createActivity({
-      variables: {
-        input: {
-          ...data,
-        },
-      },
-    });
+
+    try {
+      handleAction({
+        action: createActivity,
+        formData: data,
+      });
+    } catch (error: any) {
+      handleError(error.message);
+    }
   };
 
   return (
@@ -111,6 +127,7 @@ export const ActivityContextProvider = ({
         activityData,
         setActivityData,
         handleCreateData,
+        isLoading,
       }}
     >
       {children}

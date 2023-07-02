@@ -12,7 +12,8 @@ export type MainFormType = {
 };
 
 const MainForm: React.FC<MainFormType> = ({ types, title }) => {
-  const { handleChange, activityData, handleCreateData } = useActivity();
+  const { handleChange, activityData, handleCreateData, isLoading } =
+    useActivity();
   const { name, amount, note, date, other, type } = activityData;
 
   return (
@@ -56,7 +57,7 @@ const MainForm: React.FC<MainFormType> = ({ types, title }) => {
         />
 
         <Button onClick={() => handleCreateData(title || "")}>
-          Add {title}
+          {isLoading ? "Processing" : `Add ${title}`}
         </Button>
       </Form>
     </div>

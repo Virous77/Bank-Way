@@ -112,3 +112,13 @@ export const formatDate = (date: Date) => {
 
   return newDate;
 };
+
+export const dateFormat = (date: any) => {
+  const splitDate = date?.split("-");
+
+  const modifiedDate =
+    splitDate &&
+    month[splitDate[1] - 1] + " " + splitDate[0] + ", " + splitDate[2];
+
+  return modifiedDate;
+};

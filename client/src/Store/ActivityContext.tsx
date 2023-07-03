@@ -16,6 +16,16 @@ type ActivityType = {
   other: string;
 };
 
+type EditActivityType = {
+  name: string;
+  type: string;
+  amount: number;
+  note: string;
+  date: string;
+  other: string;
+  type_name: string;
+};
+
 const initialState: ActivityType = {
   name: "",
   type: "",
@@ -23,6 +33,16 @@ const initialState: ActivityType = {
   note: "",
   date: "",
   other: "",
+};
+
+const EditInitialState = {
+  name: "",
+  type: "",
+  amount: 0,
+  note: "",
+  date: "",
+  other: "",
+  type_name: "",
 };
 
 type Result = {
@@ -41,6 +61,12 @@ type ContextType = {
   isLoading: boolean;
   data: Result | undefined;
   loading: boolean;
+  editData: EditActivityType | undefined;
+  setEditData: React.Dispatch<
+    React.SetStateAction<EditActivityType | undefined>
+  >;
+  updateLoading: boolean;
+  handleUpdateData: () => void;
 };
 
 const contextInitialState: ContextType = {
@@ -51,6 +77,10 @@ const contextInitialState: ContextType = {
   isLoading: false,
   data: {} as Result,
   loading: false,
+  editData: {} as EditActivityType,
+  setEditData: () => {},
+  updateLoading: false,
+  handleUpdateData: () => {},
 };
 
 const ActivityContext = createContext(contextInitialState);
@@ -61,6 +91,9 @@ export const ActivityContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [activityData, setActivityData] = useState(initialState);
+  const [editData, setEditData] = useState<EditActivityType | undefined>(
+    EditInitialState
+  );
   const { handleSetNotification } = useGlobalContext();
   const id = getLocalData("bankId");
 
@@ -140,6 +173,8 @@ export const ActivityContextProvider = ({
     }
   };
 
+  const handleUpdateData = () => {};
+
   return (
     <ActivityContext.Provider
       value={{
@@ -150,6 +185,10 @@ export const ActivityContextProvider = ({
         isLoading,
         data,
         loading,
+        editData,
+        setEditData,
+        updateLoading,
+        handleUpdateData,
       }}
     >
       {children}

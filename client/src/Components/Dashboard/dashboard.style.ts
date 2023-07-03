@@ -55,4 +55,8 @@ export const Aside = styled.aside`
   }
 `;
 
-export const List = styled.ul``;
+export const List = styled.ul<{ $style: string }>`
+  gap: 1rem;
+  margin-top: 1rem;
+  ${(props) => props.$style};
+`;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ImUserTie } from "react-icons/im";
 import {
   MdSportsKabaddi,
@@ -34,7 +35,13 @@ import travel from "../assets/icon/travel.jpeg";
 import rent from "../assets/icon/rent.jpeg";
 import recharge from "../assets/icon/recharge.jpeg";
 
-export const handleIcon = {
+type SvgIconType = {
+  [key: string]: {
+    value: any;
+  };
+};
+
+export const SvgIcon: SvgIconType = {
   salary: { value: GiMoneyStack },
   investing: { value: GiTakeMyMoney },
   freelancing: { value: ImUserTie },
@@ -52,7 +59,13 @@ export const handleIcon = {
   recharge: { value: FaBatteryFull },
 };
 
-export const handleImageIcon = {
+type ImageIconType = {
+  [key: string]: {
+    value: string;
+  };
+};
+
+export const ImageIcon: ImageIconType = {
   salary: { value: transactionIcon },
   investing: { value: investing },
   freelancing: { value: freelancing },

@@ -11,9 +11,23 @@ export type MainFormType = {
   title?: string;
 };
 
-const MainForm: React.FC<MainFormType> = ({ types, title }) => {
-  const { handleChange, activityData, handleCreateData, isLoading } =
-    useActivity();
+type AddFormType = {
+  handleCreateData: (type: string) => void;
+  isLoading: boolean;
+  types: {
+    id: number;
+    name: string;
+  }[];
+  title?: string;
+};
+
+const MainForm: React.FC<AddFormType> = ({
+  types,
+  title,
+  handleCreateData,
+  isLoading,
+}) => {
+  const { handleChange, activityData } = useActivity();
   const { name, amount, note, date, other, type } = activityData;
 
   return (

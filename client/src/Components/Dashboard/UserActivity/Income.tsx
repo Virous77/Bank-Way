@@ -4,7 +4,7 @@ import MainForm from "./MainForm";
 import { useActivity } from "../../../Store/ActivityContext";
 
 const Income = () => {
-  const { handleCreateData, isLoading } = useActivity();
+  const { handleCreateData, isLoading, activityData } = useActivity();
 
   return (
     <Main>
@@ -13,6 +13,7 @@ const Income = () => {
         title="Income"
         isLoading={isLoading}
         handleCreateData={handleCreateData}
+        activityData={activityData}
       />
     </Main>
   );

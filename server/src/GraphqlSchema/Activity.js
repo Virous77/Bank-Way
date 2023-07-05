@@ -25,7 +25,7 @@ type Activity {
     user_id: String!
   }
 
-  input UpdateUserInput {
+  input UpdateActivityInput {
     id: ID!
    name: String
     type: String!
@@ -34,6 +34,7 @@ type Activity {
     date: String!
     note: String
     is_edited: Boolean
+    user_id: String!
   }
 
    type Result{
@@ -61,7 +62,7 @@ type Activity {
 
   type Mutation {
     createActivity(input: CreateActivityInput!): Result
-    updateActivity(input: UpdateUserInput!): Result
+    updateActivity(input: UpdateActivityInput!): Result
     deleteActivity(id: ID!): Result
   }
 `);

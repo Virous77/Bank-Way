@@ -4,14 +4,20 @@ import { expenseType, incomeType } from "../../Utils/activity";
 
 const EditTransaction = () => {
   const { editData, updateLoading, handleUpdateData } = useActivity();
+
+  if (!editData) return;
+  const { type_name, id, ...rest } = editData;
   return (
     <MainForm
       title={editData?.type_name}
       handleCreateData={handleUpdateData}
       isLoading={updateLoading}
       types={
-        editData?.type.toLowerCase() === "expense" ? expenseType : incomeType
+        editData?.type_name.toLowerCase() === "expense"
+          ? expenseType
+          : incomeType
       }
+      activityData={rest}
     />
   );
 };

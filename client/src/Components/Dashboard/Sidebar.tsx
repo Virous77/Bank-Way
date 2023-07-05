@@ -8,8 +8,7 @@ import { Modal } from "../Modal/Modal";
 import EditTransaction from "../Transactions/EditTransaction";
 
 const Sidebar = () => {
-  const { data, setEditData, editData, updateLoading, handleCreateData } =
-    useActivity();
+  const { data, setEditData, editData } = useActivity();
 
   return (
     <Aside>
@@ -23,7 +22,7 @@ const Sidebar = () => {
         ))}
       </List>
 
-      {editData?.type && (
+      {editData?.amount && (
         <Modal isOpen="isOpen" onClose={() => setEditData(undefined)}>
           <ModalHeader
             name="Edit Transaction"

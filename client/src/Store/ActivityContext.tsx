@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery } from "@apollo/client";
 import { createContext, useState, useContext } from "react";
-import { CREATE_ACTIVITY, GET_ALL_ACTIVITY } from "../graphql/activity";
+import {
+  CREATE_ACTIVITY,
+  GET_ALL_ACTIVITY,
+  UPDATE_ACTIVITY,
+} from "../graphql/activity";
 import { useGlobalContext } from "./globalContext";
 import { getLocalData, handleAction } from "../Utils/data";
 import { UPDATE_USER } from "../graphql/user";
 import { Transaction } from "../Interface/interface";
+import { expenseType, incomeType } from "../Utils/activity";
 
-type ActivityType = {
+export type ActivityType = {
   name: string;
   type: string;
   amount: number;
@@ -17,6 +22,7 @@ type ActivityType = {
 };
 
 type EditActivityType = {
+  id: string;
   name: string;
   type: string;
   amount: number;
@@ -36,6 +42,7 @@ const initialState: ActivityType = {
 };
 
 const EditInitialState = {
+  id: "",
   name: "",
   type: "",
   amount: 0,
@@ -99,7 +106,7 @@ export const ActivityContextProvider = ({
 
   const input = {
     id,
-    count: 5,
+    count: 10,
   };
   const { refetch, data, loading } = useQuery<Result>(GET_ALL_ACTIVITY, {
     variables: { input },
@@ -126,7 +133,7 @@ export const ActivityContextProvider = ({
   );
 
   const [updateActivity, { loading: updateLoading }] = useMutation(
-    UPDATE_USER,
+    UPDATE_ACTIVITY,
     {
       onError: (error) => {
         handleSetNotification({ message: error.message, status: "error" });
@@ -138,12 +145,20 @@ export const ActivityContextProvider = ({
         });
         refetch();
       },
+      context: {
+        clientName: "endpoint2",
+      },
     }
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setActivityData({ ...activityData, [name]: value });
+    if (editData?.amount) {
+      const { name, value } = e.target;
+      setEditData({ ...editData, [name]: value });
+    } else {
+      const { name, value } = e.target;
+      setActivityData({ ...activityData, [name]: value });
+    }
   };
 
   const handleError = (error: string) => {
@@ -173,7 +188,30 @@ export const ActivityContextProvider = ({
     }
   };
 
-  const handleUpdateData = () => {};
+  const handleUpdateData = () => {
+    if (!editData) return;
+    const { type, other, amount, type_name, ...rest } = editData;
+    const transType = type_name === "expense" ? expenseType : incomeType;
+    const isOther =
+      type !== "others" && transType.find((id) => id.name === type);
+
+    const data = {
+      type: isOther ? isOther.name : other,
+      ...rest,
+      amount: Number(amount),
+      user_id: id,
+      type_name,
+    };
+
+    try {
+      handleAction({
+        action: updateActivity,
+        formData: data,
+      });
+    } catch (error: any) {
+      handleError(error.message);
+    }
+  };
 
   return (
     <ActivityContext.Provider

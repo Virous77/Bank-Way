@@ -4,7 +4,7 @@ import { expenseType } from "../../../Utils/activity";
 import { useActivity } from "../../../Store/ActivityContext";
 
 const Expense = () => {
-  const { handleCreateData, isLoading } = useActivity();
+  const { handleCreateData, isLoading, activityData } = useActivity();
   return (
     <Main>
       <MainForm
@@ -12,6 +12,7 @@ const Expense = () => {
         title="Expense"
         handleCreateData={handleCreateData}
         isLoading={isLoading}
+        activityData={activityData}
       />
     </Main>
   );

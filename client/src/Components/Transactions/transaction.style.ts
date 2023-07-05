@@ -6,7 +6,7 @@ export const LI = styled.li<{ $style: string }>`
   transition: all 300ms ease-in-out;
   cursor: pointer;
   border-left: 2px solid
-    ${(props) => (props.$style === "Expense" ? "red" : "green")};
+    ${(props) => (props.$style === "expense" ? "red" : "green")};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
 
   h4 {

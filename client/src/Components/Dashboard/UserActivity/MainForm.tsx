@@ -1,4 +1,4 @@
-import { useActivity } from "../../../Store/ActivityContext";
+import { ActivityType, useActivity } from "../../../Store/ActivityContext";
 import { displayCol } from "../../Common/variable.style";
 import { Form, Input, Button } from "./activity.style";
 import Select from "./Select";
@@ -9,6 +9,7 @@ export type MainFormType = {
     name: string;
   }[];
   title?: string;
+  activityData: ActivityType;
 };
 
 type AddFormType = {
@@ -19,6 +20,7 @@ type AddFormType = {
     name: string;
   }[];
   title?: string;
+  activityData: ActivityType;
 };
 
 const MainForm: React.FC<AddFormType> = ({
@@ -26,14 +28,15 @@ const MainForm: React.FC<AddFormType> = ({
   title,
   handleCreateData,
   isLoading,
+  activityData,
 }) => {
-  const { handleChange, activityData } = useActivity();
+  const { handleChange, editData } = useActivity();
   const { name, amount, note, date, other, type } = activityData;
 
   return (
     <div>
       <Form onSubmit={(e) => e.preventDefault()} $style={displayCol}>
-        <Select types={types} title={title} />
+        <Select types={types} title={title} activityData={activityData} />
         {type === "others" && (
           <Input
             type="text"
@@ -71,7 +74,9 @@ const MainForm: React.FC<AddFormType> = ({
         />
 
         <Button onClick={() => handleCreateData(title || "")}>
-          {isLoading ? "Processing" : `Add ${title}`}
+          {isLoading
+            ? "Processing"
+            : `${editData?.amount ? "Update" : "Add"} ${title}`}
         </Button>
       </Form>
     </div>

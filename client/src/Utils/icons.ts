@@ -18,6 +18,7 @@ import {
 } from "react-icons/gi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FaBatteryFull } from "react-icons/fa";
+import { TbArrowsRandom } from "react-icons/tb";
 
 import investing from "../assets/icon/investing.jpg";
 import education from "../assets/icon/education.jpeg";
@@ -34,6 +35,7 @@ import electronic from "../assets/icon/electronic.jpeg";
 import travel from "../assets/icon/travel.jpeg";
 import rent from "../assets/icon/rent.jpeg";
 import recharge from "../assets/icon/recharge.jpeg";
+import others from "../assets/icon/others.jpeg";
 
 type SvgIconType = {
   [key: string]: {
@@ -57,6 +59,7 @@ export const SvgIcon: SvgIconType = {
   shopping: { value: HiOutlineShoppingBag },
   rent: { value: MdOutlineBedroomParent },
   recharge: { value: FaBatteryFull },
+  others: { value: TbArrowsRandom },
 };
 
 type ImageIconType = {
@@ -81,4 +84,5 @@ export const ImageIcon: ImageIconType = {
   shopping: { value: shopping },
   rent: { value: rent },
   recharge: { value: recharge },
+  others: { value: others },
 };

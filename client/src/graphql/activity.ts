@@ -31,3 +31,15 @@ export const GET_ALL_ACTIVITY = gql`
     }
   }
 `;
+
+export const UPDATE_ACTIVITY = gql`
+  mutation UpdateActivity($input: UpdateActivityInput!) {
+    updateActivity(input: $input) {
+      data {
+        type
+      }
+      message
+      status
+    }
+  }
+`;

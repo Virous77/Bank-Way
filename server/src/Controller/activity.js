@@ -19,21 +19,34 @@ export const ActivityRoot = {
     }
   },
   updateActivity: async ({ input }) => {
-    console.log(input);
-    // try {
-    //   const { error } = ActivityValidate.validate(input);
-    //   if (error) throw new Error(error.details[0].message);
-    //   const activity = new Activity(input);
-    //   await activity.save();
-    //   return createResult({
-    //     data: activity,
-    //     message: "Activity created successfully",
-    //     status: 201,
-    //   });
-    // } catch (error) {
-    //   throw error || "Failed to create activity";
-    // }
+    try {
+      const { error } = ActivityValidate.validate(input);
+      if (error) throw new Error(error.details[0].message);
+
+      const { id, ...rest } = input;
+      const data = {
+        ...rest,
+        is_edited: true,
+      };
+
+      const updatedActivity = await Activity.findByIdAndUpdate(
+        id,
+        {
+          $set: { ...data },
+        },
+        { new: true }
+      );
+
+      return createResult({
+        data: updatedActivity,
+        message: "Activity updated successfully",
+        status: 200,
+      });
+    } catch (error) {
+      throw error || "Failed to create activity";
+    }
   },
+
   getAllActivity: async ({ input }) => {
     try {
       const transactions = await Activity.find({ user_id: input.id })
@@ -43,7 +56,7 @@ export const ActivityRoot = {
       return createResult({
         data: transactions,
         message: "Activity fetched successfully",
-        status: 201,
+        status: 200,
       });
     } catch (error) {
       throw error || "Failed to fetch transaction";

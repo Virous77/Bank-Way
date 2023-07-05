@@ -8,7 +8,6 @@ import {
 } from "../graphql/activity";
 import { useGlobalContext } from "./globalContext";
 import { getLocalData, handleAction } from "../Utils/data";
-import { UPDATE_USER } from "../graphql/user";
 import { Transaction } from "../Interface/interface";
 import { expenseType, incomeType } from "../Utils/activity";
 
@@ -101,7 +100,7 @@ export const ActivityContextProvider = ({
   const [editData, setEditData] = useState<EditActivityType | undefined>(
     EditInitialState
   );
-  const { handleSetNotification } = useGlobalContext();
+  const { handleSetNotification, setState, state } = useGlobalContext();
   const id = getLocalData("bankId");
 
   const input = {
@@ -114,6 +113,7 @@ export const ActivityContextProvider = ({
       handleSetNotification({ message: error.message, status: "error" });
     },
     context: { clientName: "endpoint2" },
+    fetchPolicy: id ? "cache-and-network" : "standby",
   });
 
   const [createActivity, { loading: isLoading }] = useMutation(
@@ -123,6 +123,7 @@ export const ActivityContextProvider = ({
         handleSetNotification({ message: error.message, status: "error" });
       },
       onCompleted: () => {
+        setState({ ...state, show: "" });
         setActivityData(initialState);
         refetch();
       },
@@ -140,9 +141,10 @@ export const ActivityContextProvider = ({
       },
       onCompleted: (data) => {
         handleSetNotification({
-          message: data.updateUser.message,
+          message: data.updateActivity.message,
           status: "success",
         });
+        setEditData(EditInitialState);
         refetch();
       },
       context: {

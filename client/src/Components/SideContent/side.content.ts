@@ -1,4 +1,4 @@
-import styles, { styled } from "styled-components";
+import styled from "styled-components";
 
 export const Aside = styled.aside`
   background-color: var(--card-color);

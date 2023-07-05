@@ -59,4 +59,12 @@ export const List = styled.ul<{ $style: string }>`
   gap: 1rem;
   margin-top: 1rem;
   ${(props) => props.$style};
+  height: 70vh;
+  overflow: scroll;
+
+  &input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;

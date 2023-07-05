@@ -22,15 +22,19 @@ const Sidebar = () => {
         ))}
       </List>
 
-      {editData?.amount && (
-        <Modal isOpen="isOpen" onClose={() => setEditData(undefined)}>
+      {editData?.amount && editData.amount > 0 ? (
+        <Modal
+          isOpen="isOpen"
+          onClose={() => setEditData(undefined)}
+          size="450px"
+        >
           <ModalHeader
             name="Edit Transaction"
             onClose={() => setEditData(undefined)}
           />
           <EditTransaction />
         </Modal>
-      )}
+      ) : null}
     </Aside>
   );
 };

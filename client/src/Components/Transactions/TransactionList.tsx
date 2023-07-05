@@ -13,12 +13,14 @@ import { displayAllCenter, displayFlex } from "../Common/variable.style";
 import { LuFileEdit } from "react-icons/lu";
 import { useActivity } from "../../Store/ActivityContext";
 import { expenseType, incomeType } from "../../Utils/activity";
+import { useState } from "react";
 
 type TransactionListType = {
   transaction: Transaction;
 };
 
 const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
+  const [details, setDetails] = useState("");
   const { editData, setEditData } = useActivity();
   const imgIcon = true;
 
@@ -50,7 +52,15 @@ const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
 
   return (
     <LI $style={transaction.type_name}>
-      <LiWrap>
+      <LiWrap
+        onClick={() => {
+          if (details) {
+            setDetails("");
+          } else {
+            setDetails(transaction.id);
+          }
+        }}
+      >
         <ParentIconDiv $style={displayAllCenter}>
           {imgIcon ? (
             <img
@@ -72,15 +82,17 @@ const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
           <h4>₹{transaction.amount}</h4>
         </TDiv>
       </LiWrap>
-      <TDetails $style={displayFlex}>
-        <div>
-          {transaction.name && <span>Name: {transaction.name}</span>}
-          {transaction.note && <span>Notes: {transaction.note}</span>}
-        </div>
-        <button>
-          <LuFileEdit size={15} onClick={() => handleUpdate(transaction)} />
-        </button>
-      </TDetails>
+      {details === transaction.id && (
+        <TDetails $style={displayFlex}>
+          <div>
+            {transaction.name && <span>Name: {transaction.name}</span>}
+            {transaction.note && <span>Notes: {transaction.note}</span>}
+          </div>
+          <button>
+            <LuFileEdit size={15} onClick={() => handleUpdate(transaction)} />
+          </button>
+        </TDetails>
+      )}
     </LI>
   );
 };

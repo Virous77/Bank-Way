@@ -112,7 +112,6 @@ export const ActivityContextProvider = ({
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
     },
-    context: { clientName: "endpoint2" },
     fetchPolicy: id ? "cache-and-network" : "standby",
   });
 
@@ -127,9 +126,7 @@ export const ActivityContextProvider = ({
         setActivityData(initialState);
         refetch();
       },
-      context: {
-        clientName: "endpoint2",
-      },
+   
     }
   );
 

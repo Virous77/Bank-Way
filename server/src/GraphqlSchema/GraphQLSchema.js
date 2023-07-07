@@ -1,0 +1,124 @@
+import { buildSchema } from "graphql";
+
+export const GraphQLSchema = buildSchema(`
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+    password: String!
+    image: String
+    isAdmin: Boolean
+    bio: String
+    createdAt: String
+    updatedAt: String
+  }
+
+  input CreateUserInput {
+    name: String!
+    email: String!
+    password: String!
+    image: String
+    isAdmin: Boolean
+    bio: String
+  }
+
+  input UpdateUserInput {
+    id: ID!
+    name: String
+    email: String
+    password: String
+    image: String
+    isAdmin: Boolean
+    bio: String
+  }
+
+  input ChangePassword{
+     id: ID!
+    password: String!
+    newPassword: String!
+  }
+
+  input LoginUserInput{
+    email: String
+    password: String
+  }
+
+   type UserResponse{
+    data: User
+    message: String
+    status: Int
+  }
+
+
+type Activity {
+    id: ID!
+    name: String
+    type: String!
+    type_name: String!
+    amount: Int!
+    user_id: String
+    date: String!
+    is_edited: Boolean
+    note: String
+    createdAt: String
+    updatedAt: String
+  }
+
+  input CreateActivityInput {
+     name: String
+    type: String!
+    type_name: String!
+    amount: Int!
+    date: String!
+    note: String
+    user_id: String!
+  }
+
+  input UpdateActivityInput {
+    id: ID!
+   name: String
+    type: String!
+    type_name: String!
+    amount: Int!
+    date: String!
+    note: String
+    is_edited: Boolean
+    user_id: String!
+  }
+
+   type ActivityResult{
+    data: Activity
+    message: String
+    status: Int
+  }
+
+  type ActivityResultAll{
+    data: [Activity]
+     message: String
+    status: Int
+  }
+
+  input ActivityAllType{
+    id: ID!
+    count: Int
+  }
+
+
+    type Query {
+    getActivity(id: ID!): ActivityResult
+    getAllActivity(input: ActivityAllType!): ActivityResultAll
+        getUser(id: ID!): UserResponse
+    getAllUsers: [User]
+  }
+
+  type Mutation {
+    createActivity(input: CreateActivityInput!): ActivityResult
+    updateActivity(input: UpdateActivityInput!): ActivityResult
+    deleteActivity(id: ID!): ActivityResult
+        createUser(input: CreateUserInput!): UserResponse
+    updateUser(input: UpdateUserInput!): UserResponse
+    deleteUser(id: ID!): UserResponse
+    loginUser(input: LoginUserInput!): UserResponse
+    changePassword(input: ChangePassword!): UserResponse
+  }
+`);

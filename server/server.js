@@ -7,11 +7,9 @@ import cors from "cors";
 import morgan from "morgan";
 dotenv.config();
 import { graphqlHTTP } from "express-graphql";
-import { schema } from "./src/GraphqlSchema/User.js";
-import { ActivitySchema } from "./src/GraphqlSchema/Activity.js";
-import { UserRoot } from "./src/Controller/user.js";
 import UploadImage from "./src/Middleware/uploadImage.js";
-import { ActivityRoot } from "./src/Controller/activity.js";
+import { GraphQLSchema } from "./src/GraphqlSchema/GraphQLSchema.js";
+import { resolvers } from "./src/Resolvers.js";
 
 const app = express();
 
@@ -26,19 +24,10 @@ app.use(morgan("dev"));
 app.use(UploadImage);
 
 app.use(
-  "/user",
+  "/graphql",
   graphqlHTTP({
-    schema: schema,
-    rootValue: UserRoot,
-    graphiql: true,
-  })
-);
-
-app.use(
-  "/activity",
-  graphqlHTTP({
-    schema: ActivitySchema,
-    rootValue: ActivityRoot,
+    schema: GraphQLSchema,
+    rootValue: resolvers,
     graphiql: true,
   })
 );

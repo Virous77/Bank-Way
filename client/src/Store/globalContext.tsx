@@ -62,7 +62,7 @@ export const GlobalContextProvider = ({
     setTimeout(() => {
       document.querySelector(".notification")?.classList.remove("active");
       setNotification(stateInitialValue);
-    }, 3000);
+    }, 5000);
   };
 
   return (

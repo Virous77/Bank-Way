@@ -59,12 +59,24 @@ export const List = styled.ul<{ $style: string }>`
   gap: 1rem;
   margin-top: 1rem;
   ${(props) => props.$style};
-  height: 70vh;
+  max-height: 70vh;
+  min-height: fit-content;
   overflow: scroll;
 
   &input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+`;
+
+export const NDiv = styled.div`
+  margin-top: 2rem;
+
+  p {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+    color: var(--exact-font-color);
   }
 `;

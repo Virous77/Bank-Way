@@ -24,8 +24,6 @@ export const ProfileSection = styled.section`
   height: fit-content;
 `;
 
-export const UserImage = styled.div``;
-
 export const UserInformation = styled.div``;
 
 export const Img = styled.img`

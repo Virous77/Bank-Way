@@ -1,6 +1,5 @@
 import {
   ProfileSection,
-  UserImage,
   UserInformation,
   Img,
   Header,
@@ -17,6 +16,7 @@ import { User } from "../../Interface/interface";
 import EditUser from "./EditUser";
 import { CircleShimmer, HeadingShimmer } from "../Shimmers/TextShimmer";
 import { useAuthContext } from "../../Store/AuthContext";
+import defaultUser from "../../assets/user.avif";
 
 const UserProfile = () => {
   const { userData } = useAuthContext();
@@ -49,13 +49,13 @@ const UserProfile = () => {
           </Button>
         </Header>
         <ProfileWrap>
-          <UserImage>
+          <div>
             {userData ? (
-              <Img src={userData?.image} alt={userData?.name} />
+              <Img src={userData?.image || defaultUser} alt={userData?.name} />
             ) : (
               <CircleShimmer size={150} />
             )}
-          </UserImage>
+          </div>
           <UserInformation>
             {userData ? (
               <H1 style={{ fontSize: "2rem" }}>{userData?.name}</H1>

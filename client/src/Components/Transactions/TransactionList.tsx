@@ -14,6 +14,7 @@ import { LuFileEdit } from "react-icons/lu";
 import { useActivity } from "../../Store/ActivityContext";
 import { expenseType, incomeType } from "../../Utils/activity";
 import { useState } from "react";
+import { useGlobalContext } from "../../Store/globalContext";
 
 type TransactionListType = {
   transaction: Transaction;
@@ -22,9 +23,16 @@ type TransactionListType = {
 const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
   const [details, setDetails] = useState("");
   const { editData, setEditData } = useActivity();
+  const { handleSetNotification } = useGlobalContext();
   const imgIcon = true;
 
   const handleUpdate = (data: Transaction) => {
+    if (data.is_edited)
+      return handleSetNotification({
+        message: "Transaction can't edited multiple time.",
+        status: "error",
+      });
+
     const types =
       data.type_name.toLowerCase() === "expense" ? expenseType : incomeType;
     const isOther = types.find((type) => type.name === data.type);
@@ -88,8 +96,8 @@ const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
             {transaction.name && <span>Name: {transaction.name}</span>}
             {transaction.note && <span>Notes: {transaction.note}</span>}
           </div>
-          <button>
-            <LuFileEdit size={15} onClick={() => handleUpdate(transaction)} />
+          <button onClick={() => handleUpdate(transaction)}>
+            <LuFileEdit size={15} />
           </button>
         </TDetails>
       )}

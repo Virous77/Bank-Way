@@ -7,8 +7,8 @@ import { Button } from "./navbar.style";
 import { getLocalData } from "../../Utils/data";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
-import { CircleShimmer } from "../Shimmers/TextShimmer";
 import { useNavigate } from "react-router-dom";
+import defaultUser from "../../assets/user.avif";
 
 const Navbar = () => {
   const { setState, state } = useGlobalContext();
@@ -33,11 +33,7 @@ const Navbar = () => {
             $style={displayAllCenter}
             onClick={() => navigate("/account")}
           >
-            {userData?.image ? (
-              <Img src={userData?.image} alt="img" />
-            ) : (
-              <CircleShimmer size={85} />
-            )}
+            <Img src={userData?.image || defaultUser} alt={userData?.name} />
           </Circle>
         </PrivateLinks>
 

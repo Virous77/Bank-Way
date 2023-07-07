@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { User } from "../../Interface/interface";
-import {
-  Img,
-  Main,
-  UserImage,
-  Form,
-  Wrap,
-  ImageInput,
-  Label,
-} from "./user.style";
+import { Img, Main, Form, Wrap, ImageInput, Label } from "./user.style";
 import { useAuthContext } from "../../Store/AuthContext";
 import { TbEdit } from "react-icons/tb";
 import { displayAllCenter, displayCol } from "../Common/variable.style";
@@ -30,7 +22,7 @@ const EditUser: React.FC<EditUserData> = ({ editData }) => {
 
   return (
     <Main>
-      <UserImage>
+      <div>
         <Form onSubmit={(e) => e.preventDefault()} $style={displayCol}>
           <Wrap>
             <Img src={image || editData?.image} />
@@ -80,7 +72,7 @@ const EditUser: React.FC<EditUserData> = ({ editData }) => {
             {isLoading ? "Updating..." : "Update Profile"}
           </Button>
         </Form>
-      </UserImage>
+      </div>
     </Main>
   );
 };

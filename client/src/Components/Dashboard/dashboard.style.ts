@@ -80,3 +80,8 @@ export const NDiv = styled.div`
     color: var(--exact-font-color);
   }
 `;
+
+export const NLoad = styled.div<{ $style: string }>`
+  margin-top: 1rem;
+  ${(props) => props.$style};
+`;

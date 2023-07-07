@@ -104,21 +104,49 @@ type Activity {
   }
 
 
+  type Settings{
+    id: ID!
+    transaction_icon_type: Boolean
+    home_transaction_duration: String
+    home_transaction_type: String
+    user_id: String
+    createdAt: String
+    updatedAt: String
+  }
+
+  input UpdateSettingInput{
+    id: ID
+    transaction_icon_type: Boolean
+    home_transaction_duration: String
+    home_transaction_type: String
+    user_id: String!
+  }
+
+  type settingResult{
+     data: Settings
+     message: String
+    status: Int
+  }
+
+
     type Query {
     getActivity(id: ID!): ActivityResult
     getAllActivity(input: ActivityAllType!): ActivityResultAll
-        getUser(id: ID!): UserResponse
+    getUser(id: ID!): UserResponse
     getAllUsers: [User]
+    getUserSetting(id: ID!): settingResult
+
   }
 
   type Mutation {
     createActivity(input: CreateActivityInput!): ActivityResult
     updateActivity(input: UpdateActivityInput!): ActivityResult
     deleteActivity(id: ID!): ActivityResult
-        createUser(input: CreateUserInput!): UserResponse
+    createUser(input: CreateUserInput!): UserResponse
     updateUser(input: UpdateUserInput!): UserResponse
     deleteUser(id: ID!): UserResponse
     loginUser(input: LoginUserInput!): UserResponse
     changePassword(input: ChangePassword!): UserResponse
+    updateSetting(input: UpdateSettingInput!): settingResult
   }
 `);

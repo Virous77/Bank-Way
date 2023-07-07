@@ -3,6 +3,7 @@ import {
   ShimmerTitle,
   ShimmerCircularImage,
   ShimmerSectionHeader,
+  ShimmerCategoryItem,
 } from "react-shimmer-effects";
 
 type TextShimmerType = {
@@ -20,4 +21,16 @@ export const CircleShimmer = ({ size }: { size: number }) => {
 
 export const HeadingShimmer = () => {
   return <ShimmerSectionHeader />;
+};
+
+export const TransactionShimmer = () => {
+  return (
+    <ShimmerCategoryItem
+      hasImage
+      imageType="circular"
+      imageWidth={60}
+      imageHeight={40}
+      text
+    />
+  );
 };

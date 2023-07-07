@@ -6,6 +6,7 @@ import {
 } from "../Middleware/validate.js";
 import { createResult } from "../Utils/utility.js";
 import bcrypt from "bcrypt";
+import { SettingRoot } from "./settings.js";
 
 export const UserRoot = {
   createUser: async ({ input }) => {
@@ -31,6 +32,7 @@ export const UserRoot = {
 
       const user = new User(data);
       await user.save();
+      SettingRoot.createSetting({ id: user._id });
 
       return createResult({
         data: user,

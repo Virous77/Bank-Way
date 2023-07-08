@@ -52,7 +52,7 @@ const Settings = () => {
         <Modal
           isOpen="isOpen"
           onClose={() => setActive(undefined)}
-          size="450px"
+          size="570px"
         >
           <ModalHeader
             name="Home Setting"

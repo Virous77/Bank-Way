@@ -90,23 +90,22 @@ export const IconLi = styled.li`
 
   p {
     color: var(--exact-white-color);
-    font-weight: 600;
   }
+`;
 
-  div {
-    background-color: var(--body-color);
-    border-radius: 30px;
-    width: 160px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    place-items: center;
-    gap: 5px;
-  }
+export const IDiv = styled.div`
+  background-color: var(--body-color);
+  border-radius: 30px;
+  width: 160px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+  gap: 5px;
 `;
 
 export const HomeUL = styled.ul<{ $style: string; $liStyle: string }>`
   ${(props) => props.$style};
-  gap: 1rem;
+  gap: 2rem;
 
   li {
     ${(props) => props.$liStyle};
@@ -118,4 +117,9 @@ export const IconButton = styled.button<{ $active: string }>`
     props.$active === "true" ? "var(--main-font-color)" : "transparent"};
   color: ${(props) =>
     props.$active === "true" ? "#47A992" : "var(--main-font-color)"};
+`;
+
+export const TTDiv = styled.div<{ $style: string }>`
+  ${(props) => props.$style};
+  gap: 1rem;
 `;

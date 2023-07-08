@@ -17,7 +17,7 @@ type stateType = {
 };
 
 type settingType = {
-  [key: string]: boolean;
+  [key: string]: boolean | string;
 };
 
 type GlobalType = {

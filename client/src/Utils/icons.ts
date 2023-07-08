@@ -86,3 +86,49 @@ export const ImageIcon: ImageIconType = {
   recharge: { value: recharge },
   others: { value: others },
 };
+
+export const transactionType = [
+  {
+    id: 1,
+    name: "All",
+  },
+  {
+    id: 2,
+    name: "Income",
+  },
+  {
+    id: 3,
+    name: "Expense",
+  },
+];
+
+export const transactionIconType = [
+  {
+    id: 1,
+    name: "Image",
+    value: true,
+  },
+  {
+    id: 2,
+    name: "Svg",
+    value: false,
+  },
+];
+
+export const transactionDuration = [
+  {
+    id: 1,
+    name: "Weekly",
+    value: "weekly",
+  },
+  {
+    id: 2,
+    name: "15 Days",
+    value: "half",
+  },
+  {
+    id: 3,
+    name: "Monthly",
+    value: "monthly",
+  },
+];

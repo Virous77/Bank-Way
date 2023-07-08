@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   CREATE_USER,
@@ -17,6 +17,12 @@ import {
 } from "../contextSuggestionType/contextType";
 import axios from "axios";
 
+type UserResponse = {
+  getUser: {
+    data: User;
+  };
+};
+
 export const AuthContext = createContext(contextState);
 
 export const AuthContextProvider = ({
@@ -25,22 +31,18 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [formData, setFormData] = useState(initialState);
-  const { handleSetNotification, setState } = useGlobalContext();
+  const { handleSetNotification, setState, handleError } = useGlobalContext();
   const navigate = useNavigate();
   const id = getLocalData("bankId");
-  const [userData, setData] = useState<User | undefined>(undefined);
   const [editUserData, setEditUserData] = useState<User | undefined>(undefined);
 
   // * All the DB related services are below
-  const { refetch } = useQuery(GET_USER, {
+  const { data, refetch } = useQuery<UserResponse | undefined>(GET_USER, {
     variables: { id },
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
     },
-    fetchPolicy: "standby",
-    onCompleted: (data) => {
-      setData(data.getUser.data);
-    },
+    fetchPolicy: id ? "cache-and-network" : "standby",
   });
 
   const [createUser, { loading }] = useMutation(CREATE_USER, {
@@ -87,12 +89,6 @@ export const AuthContextProvider = ({
   };
 
   // * All the Action related Auth are below
-  const handleError = (error: string) => {
-    handleSetNotification({
-      message: error || "Something went wrong,Try agin",
-      status: "error",
-    });
-  };
   const handleCreateUser = () => {
     try {
       handleAction({
@@ -174,12 +170,6 @@ export const AuthContextProvider = ({
     }
   };
 
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{
@@ -191,7 +181,7 @@ export const AuthContextProvider = ({
         handleUpdateUser,
         handleLoginUser,
         loginLoading,
-        userData,
+        userData: data?.getUser.data,
         updateLoading,
         editUserData,
         setEditUserData,

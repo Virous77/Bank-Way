@@ -16,6 +16,7 @@ export const Head = styled.header<{ $style: string }>`
   h1 {
     color: var(--body-color);
     font-size: var(--secondary-font-size);
+    white-space: nowrap;
   }
 
   p {

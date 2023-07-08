@@ -27,3 +27,12 @@ export interface Transaction {
   note: string;
   createdAt: string;
 }
+
+export interface Setting {
+  id: string;
+  user_id: string;
+  transaction_icon_type: boolean;
+  home_transaction_duration: string;
+  home_transaction_type: string;
+  updatedAt: string;
+}

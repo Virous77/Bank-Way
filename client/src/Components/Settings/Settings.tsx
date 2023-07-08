@@ -49,7 +49,11 @@ const Settings = () => {
       )}
 
       {active === "homeConfig" && (
-        <Modal isOpen="isOpen" onClose={() => setActive(undefined)}>
+        <Modal
+          isOpen="isOpen"
+          onClose={() => setActive(undefined)}
+          size="450px"
+        >
           <ModalHeader
             name="Home Setting"
             onClose={() => setActive(undefined)}

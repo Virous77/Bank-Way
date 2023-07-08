@@ -23,8 +23,7 @@ type TransactionListType = {
 const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
   const [details, setDetails] = useState("");
   const { editData, setEditData } = useActivity();
-  const { handleSetNotification } = useGlobalContext();
-  const imgIcon = true;
+  const { handleSetNotification, data } = useGlobalContext();
 
   const handleUpdate = (data: Transaction) => {
     if (data.is_edited)
@@ -70,7 +69,7 @@ const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
         }}
       >
         <ParentIconDiv $style={displayAllCenter}>
-          {imgIcon ? (
+          {data?.transaction_icon_type ? (
             <img
               src={ImageIcon[isHaveIcon ? transaction.type : "others"].value}
               alt={transaction.type}

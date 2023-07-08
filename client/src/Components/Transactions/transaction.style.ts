@@ -11,6 +11,7 @@ export const LI = styled.li<{ $style: string }>`
 
   h4 {
     color: var(--body-color) !important;
+    color: var(--exact-font-color) !important;
   }
 
   &:hover {
@@ -54,15 +55,15 @@ export const TDiv = styled.div<{ $style: string }>`
 
     b {
       text-transform: capitalize;
-      color: var(--body-color) !important;
       font-size: 17px;
+      color: var(--exact-font-color) !important;
     }
 
     span {
       font-size: 14px;
       display: inline-block;
       margin-top: 4px;
-      color: var(--body-color) !important;
+      color: var(--exact-font-color) !important;
     }
   }
 `;
@@ -76,6 +77,7 @@ export const TDetails = styled.div<{ $style: string }>`
     display: block;
     font-size: 14px;
     margin-top: 3px;
+    color: var(--exact-font-color) !important;
   }
 
   button {
@@ -87,11 +89,11 @@ export const TDetails = styled.div<{ $style: string }>`
     display: flex;
     justify-content: center;
     border-radius: 30px;
-    color: var(--body-color);
+    color: var(--exact-font-color) !important;
 
     &:hover {
-      background-color: var(--body-color);
-      color: var(--main-font-color);
+      background-color: var(--exact-font-color);
+      color: var(--exact-white-color) !important;
     }
   }
 `;

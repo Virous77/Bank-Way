@@ -63,7 +63,7 @@ const UserProfile = () => {
               <HeadingShimmer />
             )}
             <P>Email: {userData?.email}</P>
-            {userData && <P>Bio: {userData?.bio}</P>}
+            {userData?.bio && <P>Bio: {userData?.bio}</P>}
           </UserInformation>
         </ProfileWrap>
       </ProfileSection>

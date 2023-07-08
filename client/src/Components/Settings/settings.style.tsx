@@ -75,3 +75,47 @@ export const CheckList = styled.div<{ $style: string }>`
   gap: 3rem;
   margin-top: 2rem;
 `;
+
+export const IconLi = styled.li`
+  button {
+    padding: 8px 0;
+    border-radius: 20px;
+    width: 100%;
+    transition: all 300ms ease-in-out;
+
+    &:hover {
+      scale: 1.03;
+    }
+  }
+
+  p {
+    color: var(--exact-white-color);
+    font-weight: 600;
+  }
+
+  div {
+    background-color: var(--body-color);
+    border-radius: 30px;
+    width: 160px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    gap: 5px;
+  }
+`;
+
+export const HomeUL = styled.ul<{ $style: string; $liStyle: string }>`
+  ${(props) => props.$style};
+  gap: 1rem;
+
+  li {
+    ${(props) => props.$liStyle};
+  }
+`;
+
+export const IconButton = styled.button<{ $active: string }>`
+  background-color: ${(props) =>
+    props.$active === "true" ? "var(--main-font-color)" : "transparent"};
+  color: ${(props) =>
+    props.$active === "true" ? "#47A992" : "var(--main-font-color)"};
+`;

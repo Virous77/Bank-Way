@@ -8,20 +8,20 @@ import { AuthContextProvider } from "./Store/AuthContext.tsx";
 import { ActivityContextProvider } from "./Store/ActivityContext.tsx";
 
 const client = new ApolloClient({
-  uri: import.meta.env.VITE_BACKEND_URL,
+  uri: `${import.meta.env.VITE_BACKEND_URL}/graphql`,
   cache: new InMemoryCache(),
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
-    <GlobalContextProvider>
-      <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <GlobalContextProvider>
         <AuthContextProvider>
           <ActivityContextProvider>
             <App />
           </ActivityContextProvider>
         </AuthContextProvider>
-      </ApolloProvider>
-    </GlobalContextProvider>
+      </GlobalContextProvider>
+    </ApolloProvider>
   </BrowserRouter>
 );

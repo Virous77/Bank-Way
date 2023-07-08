@@ -68,7 +68,7 @@ export const UserRoot = {
     try {
       const { error } = UserUpdateValidate.validate(input);
       if (error) throw new Error(error.details[0].message);
-      const { id, ...update } = input;
+      const { id, password, ...update } = input;
       const user = await User.findByIdAndUpdate(id, update, { new: true });
 
       if (!user) throw new Error("User not exists");

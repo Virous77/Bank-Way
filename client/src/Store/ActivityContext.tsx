@@ -100,7 +100,8 @@ export const ActivityContextProvider = ({
   const [editData, setEditData] = useState<EditActivityType | undefined>(
     EditInitialState
   );
-  const { handleSetNotification, setState, state } = useGlobalContext();
+  const { handleSetNotification, setState, state, handleError } =
+    useGlobalContext();
   const id = getLocalData("bankId");
 
   const input = {
@@ -126,7 +127,6 @@ export const ActivityContextProvider = ({
         setActivityData(initialState);
         refetch();
       },
-   
     }
   );
 
@@ -158,13 +158,6 @@ export const ActivityContextProvider = ({
       const { name, value } = e.target;
       setActivityData({ ...activityData, [name]: value });
     }
-  };
-
-  const handleError = (error: string) => {
-    handleSetNotification({
-      message: error || "Something went wrong,Try agin",
-      status: "error",
-    });
   };
 
   const handleCreateData = (typeName: string) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { User } from "../../Interface/interface";
-import { Img, Main, Form, Wrap, ImageInput, Label } from "./user.style";
+import { Img, Main, Form, Wrap, Label } from "./user.style";
 import { useAuthContext } from "../../Store/AuthContext";
 import { TbEdit } from "react-icons/tb";
 import { displayAllCenter, displayCol } from "../Common/variable.style";
@@ -31,7 +31,7 @@ const EditUser: React.FC<EditUserData> = ({ editData }) => {
               <TbEdit size={22} />
             </Label>
 
-            <ImageInput
+            <input
               type="file"
               id="edit"
               onChange={(e) => {

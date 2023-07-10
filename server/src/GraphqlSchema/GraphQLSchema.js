@@ -103,6 +103,11 @@ type Activity {
     count: Int
   }
 
+  input PaginatedActivityInput{
+    pageNumber: Int
+    pageSize: Int
+  }
+
 
   type Settings{
     id: ID!
@@ -135,7 +140,7 @@ type Activity {
     getUser(id: ID!): UserResponse
     getAllUsers: [User]
     getUserSetting(id: ID!): settingResult
-
+    getPaginatedActivity(input: PaginatedActivityInput) : ActivityResultAll
   }
 
   type Mutation {

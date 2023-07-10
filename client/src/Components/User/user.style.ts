@@ -7,14 +7,18 @@ export const Main = styled.main`
 export const Header = styled.header<{ $style: string }>`
   ${(props) => props.$style};
   margin-bottom: 1.5rem;
+
+  h1 {
+    border-bottom: 2px solid var(--main-font-color);
+    width: fit-content;
+    padding-bottom: 3px;
+  }
 `;
 
 export const ProfileWrap = styled.div`
   display: grid;
   grid-template-columns: 190px 1fr;
 `;
-
-export const H1 = styled.h1``;
 
 export const ProfileSection = styled.section`
   padding: 1rem;
@@ -24,7 +28,11 @@ export const ProfileSection = styled.section`
   height: fit-content;
 `;
 
-export const UserInformation = styled.div``;
+export const UserInformation = styled.div`
+  h2 {
+    font-size: 26px;
+  }
+`;
 
 export const Img = styled.img`
   width: 150px;
@@ -47,8 +55,6 @@ export const Wrap = styled.div`
   width: fit-content;
   margin-bottom: 1rem;
 `;
-
-export const ImageInput = styled.input``;
 
 export const Label = styled.label<{ $style: string }>`
   position: absolute;

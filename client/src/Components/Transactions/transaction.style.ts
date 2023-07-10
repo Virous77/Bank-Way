@@ -97,3 +97,25 @@ export const TDetails = styled.div<{ $style: string }>`
     }
   }
 `;
+
+export const Main = styled.main<{ $style: string }>`
+  h2 {
+    border-bottom: 2px solid var(--main-font-color);
+    width: fit-content;
+    padding-bottom: 3px;
+  }
+
+  header {
+    ${(props) => props.$style};
+
+    select {
+      width: 120px;
+      outline: none;
+      padding: 5px;
+      font-weight: 500;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+  }
+`;

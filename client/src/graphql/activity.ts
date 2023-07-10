@@ -43,3 +43,23 @@ export const UPDATE_ACTIVITY = gql`
     }
   }
 `;
+
+export const GET_PAGINATED_ACTIVITY = gql`
+  query GetPaginatedActivity($input: PaginatedActivityInput!) {
+    getPaginatedActivity(input: $input) {
+      data {
+        id
+        name
+        type
+        type_name
+        amount
+        date
+        is_edited
+        note
+        createdAt
+      }
+      message
+      status
+    }
+  }
+`;

@@ -3,6 +3,12 @@ import styled from "styled-components";
 export const Main = styled.main`
   padding: 1rem;
   padding-top: 0;
+
+  h2 {
+    border-bottom: 2px solid var(--main-font-color);
+    width: fit-content;
+    padding-bottom: 3px;
+  }
 `;
 
 export const Wrap = styled.div`

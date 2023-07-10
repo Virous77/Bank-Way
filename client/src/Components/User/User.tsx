@@ -3,7 +3,6 @@ import {
   UserInformation,
   Img,
   Header,
-  H1,
   ProfileWrap,
   P,
 } from "./user.style";
@@ -38,7 +37,7 @@ const UserProfile = () => {
     <React.Fragment>
       <ProfileSection>
         <Header $style={displayFlex}>
-          <H1>Profile</H1>
+          <h1>Profile</h1>
           <Button
             onClick={() => {
               setEditUserData(userData);
@@ -57,12 +56,8 @@ const UserProfile = () => {
             )}
           </div>
           <UserInformation>
-            {userData ? (
-              <H1 style={{ fontSize: "2rem" }}>{userData?.name}</H1>
-            ) : (
-              <HeadingShimmer />
-            )}
-            <P>Email: {userData?.email}</P>
+            {userData ? <h2>{userData?.name}</h2> : <HeadingShimmer />}
+            {userData && <P>Email: {userData?.email}</P>}
             {userData?.bio && <P>Bio: {userData?.bio}</P>}
           </UserInformation>
         </ProfileWrap>

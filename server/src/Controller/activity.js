@@ -62,4 +62,23 @@ export const ActivityRoot = {
       throw error || "Failed to fetch transaction";
     }
   },
+
+  getPaginatedActivity: async ({ input }) => {
+    try {
+      const { pageSize, pageNumber } = input;
+      const skipDocuments = (+pageNumber - 1) * +pageSize;
+      const transactions = await Activity.find()
+        .skip(skipDocuments)
+        .limit(+pageSize)
+        .sort({ createdAt: -1 });
+
+      return createResult({
+        data: transactions,
+        message: "Activity fetched successfully",
+        status: 200,
+      });
+    } catch (error) {
+      throw error || "Failed to fetch transaction";
+    }
+  },
 };

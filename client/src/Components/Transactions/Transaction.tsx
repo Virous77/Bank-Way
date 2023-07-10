@@ -14,6 +14,7 @@ const Transactions = () => {
   const { handleSetNotification } = useGlobalContext();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [transactionType, setTransactionType] = useState("all");
+  const [total, setTotal] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const pageSize = 20;
 
@@ -27,6 +28,7 @@ const Transactions = () => {
     variables: { input },
     onCompleted: (data) => {
       setTransactions(transactions.concat(data.getPaginatedActivity.data));
+      setTotal(data.getPaginatedActivity.total);
     },
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
@@ -46,23 +48,27 @@ const Transactions = () => {
         <Header transactionType={transactionType} handleChange={handleChange} />
       </header>
       <section>
-        <InfiniteScroll
-          dataLength={transactions?.length + 1}
-          next={() => setPageNumber(pageNumber + 1)}
-          hasMore={transactions?.length === 2 ? false : true}
-          loader={transactions.length > 1 && <TransactionShimmer />}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              {transactions?.length > 0 && <b></b>}
-            </p>
-          }
-        >
-          <PUL $style={displayCol}>
-            {transactions.map((tran) => (
-              <PaginatedTransactionList key={tran.id} transaction={tran} />
-            ))}
-          </PUL>
-        </InfiniteScroll>
+        {transactions.length === 0 && loading ? (
+          <TransactionShimmer />
+        ) : (
+          <InfiniteScroll
+            dataLength={transactions?.length + 1}
+            next={() => setPageNumber(pageNumber + 1)}
+            hasMore={transactions?.length === total ? false : true}
+            loader={transactions.length > 1 && <TransactionShimmer />}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                {transactions?.length > 0 && <b></b>}
+              </p>
+            }
+          >
+            <PUL $style={displayCol}>
+              {transactions.map((tran) => (
+                <PaginatedTransactionList key={tran.id} transaction={tran} />
+              ))}
+            </PUL>
+          </InfiniteScroll>
+        )}
       </section>
     </Main>
   );

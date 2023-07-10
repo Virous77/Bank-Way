@@ -105,6 +105,10 @@ export const Main = styled.main<{ $style: string }>`
     padding-bottom: 3px;
   }
 
+  section {
+    margin-top: 1rem;
+  }
+
   header {
     ${(props) => props.$style};
 
@@ -121,7 +125,6 @@ export const Main = styled.main<{ $style: string }>`
 `;
 
 export const PUL = styled.div<{ $style: string }>`
-  margin-top: 1rem;
   background-color: var(--card-color);
   padding: 10px;
   border-radius: 10px;

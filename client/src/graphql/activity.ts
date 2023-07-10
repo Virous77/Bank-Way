@@ -60,6 +60,7 @@ export const GET_PAGINATED_ACTIVITY = gql`
       }
       message
       status
+      total
     }
   }
 `;

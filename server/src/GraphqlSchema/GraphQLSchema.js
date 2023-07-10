@@ -98,6 +98,13 @@ type Activity {
     status: Int
   }
 
+    type ActivityPaginatedResult{
+    data: [Activity]
+    message: String
+    status: Int
+    total: Int
+  }
+
   input ActivityAllType{
     id: ID!
     count: Int
@@ -141,7 +148,7 @@ type Activity {
     getUser(id: ID!): UserResponse
     getAllUsers: [User]
     getUserSetting(id: ID!): settingResult
-    getPaginatedActivity(input: PaginatedActivityInput) : ActivityResultAll
+    getPaginatedActivity(input: PaginatedActivityInput) : ActivityPaginatedResult
   }
 
   type Mutation {

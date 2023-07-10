@@ -75,16 +75,19 @@ export const ActivityRoot = {
               type_name: type,
             };
 
+      const totalProduct =
+        +pageNumber === 1 && (await Activity.find(queryType)).length;
       const transactions = await Activity.find(queryType)
         .skip(skipDocuments)
         .limit(+pageSize)
         .sort({ createdAt: -1 });
 
-      return createResult({
+      return {
         data: transactions,
+        total: totalProduct,
         message: "Activity fetched successfully",
         status: 200,
-      });
+      };
     } catch (error) {
       throw error || "Failed to fetch transaction";
     }

@@ -27,6 +27,7 @@ const Sidebar = () => {
                 <TransactionList
                   key={transaction.id}
                   transaction={transaction}
+                  title="dashboard"
                 />
               ))}
             </List>

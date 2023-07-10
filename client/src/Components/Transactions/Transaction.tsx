@@ -1,22 +1,26 @@
-import { Main } from "./transaction.style";
+import { Main, PUL } from "./transaction.style";
 import Header from "./Header";
-import { displayFlex } from "../Common/variable.style";
+import { displayCol, displayFlex } from "../Common/variable.style";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useQuery } from "@apollo/client";
 import { GET_PAGINATED_ACTIVITY } from "../../graphql/activity";
 import { useState } from "react";
 import { Transaction } from "../../Interface/interface";
 import InfiniteScroll from "react-infinite-scroll-component";
+import PaginatedTransactionList from "./PaginatedTransactionList";
+import { TransactionShimmer } from "../Shimmers/TextShimmer";
 
 const Transactions = () => {
-  const { data, handleSetNotification } = useGlobalContext();
+  const { handleSetNotification } = useGlobalContext();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactionType, setTransactionType] = useState("all");
   const [pageNumber, setPageNumber] = useState(1);
-  const pageSize = 1;
+  const pageSize = 20;
 
   const input = {
     pageNumber,
     pageSize,
+    type: transactionType,
   };
 
   const { loading } = useQuery(GET_PAGINATED_ACTIVITY, {
@@ -27,33 +31,37 @@ const Transactions = () => {
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
     },
+    fetchPolicy: "network-only",
   });
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTransactionType(e.target.value);
+    setTransactions([]);
+  };
 
   return (
     <Main $style={displayFlex}>
       <header>
         <h2>Transaction</h2>
-        <Header />
+        <Header transactionType={transactionType} handleChange={handleChange} />
       </header>
       <section>
         <InfiniteScroll
           dataLength={transactions?.length + 1}
           next={() => setPageNumber(pageNumber + 1)}
           hasMore={transactions?.length === 2 ? false : true}
-          loader={
-            transactions.length > 1 && (
-              <div className="globalCenter">Loading...</div>
-            )
-          }
+          loader={transactions.length > 1 && <TransactionShimmer />}
           endMessage={
             <p style={{ textAlign: "center" }}>
               {transactions?.length > 0 && <b></b>}
             </p>
           }
         >
-          {transactions.map((tran) => (
-            <div key={tran.id}>{tran.amount}</div>
-          ))}
+          <PUL $style={displayCol}>
+            {transactions.map((tran) => (
+              <PaginatedTransactionList key={tran.id} transaction={tran} />
+            ))}
+          </PUL>
         </InfiniteScroll>
       </section>
     </Main>

@@ -18,9 +18,13 @@ import { useGlobalContext } from "../../Store/globalContext";
 
 type TransactionListType = {
   transaction: Transaction;
+  title?: string;
 };
 
-const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
+const TransactionList: React.FC<TransactionListType> = ({
+  transaction,
+  title,
+}) => {
   const [details, setDetails] = useState("");
   const { editData, setEditData } = useActivity();
   const { handleSetNotification, data } = useGlobalContext();
@@ -95,9 +99,12 @@ const TransactionList: React.FC<TransactionListType> = ({ transaction }) => {
             {transaction.name && <span>Name: {transaction.name}</span>}
             {transaction.note && <span>Notes: {transaction.note}</span>}
           </div>
-          <button onClick={() => handleUpdate(transaction)}>
-            <LuFileEdit size={15} />
-          </button>
+
+          {title === "dashboard" && (
+            <button onClick={() => handleUpdate(transaction)}>
+              <LuFileEdit size={15} />
+            </button>
+          )}
         </TDetails>
       )}
     </LI>

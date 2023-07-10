@@ -65,9 +65,17 @@ export const ActivityRoot = {
 
   getPaginatedActivity: async ({ input }) => {
     try {
-      const { pageSize, pageNumber } = input;
+      const { pageSize, pageNumber, type } = input;
       const skipDocuments = (+pageNumber - 1) * +pageSize;
-      const transactions = await Activity.find()
+
+      const queryType =
+        type === "all"
+          ? null
+          : {
+              type_name: type,
+            };
+
+      const transactions = await Activity.find(queryType)
         .skip(skipDocuments)
         .limit(+pageSize)
         .sort({ createdAt: -1 });

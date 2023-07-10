@@ -106,6 +106,7 @@ type Activity {
   input PaginatedActivityInput{
     pageNumber: Int
     pageSize: Int
+    type: String
   }
 
 

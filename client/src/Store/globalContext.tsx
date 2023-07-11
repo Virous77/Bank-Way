@@ -14,6 +14,7 @@ type stateType = {
   isLoggedIn: boolean;
   active: string;
   fetch: string;
+  search: string;
 };
 
 type settingType = {
@@ -48,6 +49,7 @@ const stateInitialValueTwo: stateType = {
   isLoggedIn: false,
   active: "",
   fetch: "",
+  search: "",
 };
 
 const initialValue: GlobalType = {

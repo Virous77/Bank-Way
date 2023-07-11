@@ -114,6 +114,7 @@ type Activity {
     pageNumber: Int
     pageSize: Int
     type: String
+    search: String
   }
 
 

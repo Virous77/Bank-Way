@@ -4,14 +4,14 @@ import { displayCol, displayFlex } from "../Common/variable.style";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useQuery } from "@apollo/client";
 import { GET_PAGINATED_ACTIVITY } from "../../graphql/activity";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Transaction } from "../../Interface/interface";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PaginatedTransactionList from "./PaginatedTransactionList";
 import { TransactionShimmer } from "../Shimmers/TextShimmer";
 
 const Transactions = () => {
-  const { handleSetNotification } = useGlobalContext();
+  const { handleSetNotification, state, setState } = useGlobalContext();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [transactionType, setTransactionType] = useState("all");
   const [total, setTotal] = useState(0);
@@ -22,12 +22,18 @@ const Transactions = () => {
     pageNumber,
     pageSize,
     type: transactionType,
+    search: state.search.length > 3 ? state.search : "",
   };
 
   const { loading } = useQuery(GET_PAGINATED_ACTIVITY, {
     variables: { input },
     onCompleted: (data) => {
-      setTransactions(transactions.concat(data.getPaginatedActivity.data));
+      if (state.search.length > 0) {
+        setTransactions(data.getPaginatedActivity.data);
+      } else {
+        setTransactions(transactions.concat(data.getPaginatedActivity.data));
+      }
+
       setTotal(data.getPaginatedActivity.total);
     },
     onError: (error) => {
@@ -37,9 +43,16 @@ const Transactions = () => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setState({ ...state, search: "" });
     setTransactionType(e.target.value);
     setTransactions([]);
   };
+
+  useEffect(() => {
+    if (state.search.length > 3) {
+      setTransactions([]);
+    }
+  }, [state.search]);
 
   return (
     <Main $style={displayFlex}>

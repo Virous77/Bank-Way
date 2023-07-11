@@ -131,3 +131,19 @@ export const PUL = styled.div<{ $style: string }>`
   gap: 1rem;
   ${(props) => props.$style};
 `;
+
+export const Aside = styled.aside<{ $style: string }>`
+  header {
+    background-color: var(--exact-white-color);
+    border-radius: 5px;
+    ${(props) => props.$style};
+    padding: 0 10px;
+
+    input {
+      padding: 10px;
+      padding-left: 5px;
+      color: var(--exact-font-color);
+      background-color: transparent;
+    }
+  }
+`;

@@ -100,20 +100,29 @@ export const ActivityContextProvider = ({
   const [editData, setEditData] = useState<EditActivityType | undefined>(
     EditInitialState
   );
+
   const { handleSetNotification, setState, state, handleError } =
     useGlobalContext();
   const id = getLocalData("bankId");
 
+  const today = new Date();
+
+  const DaysAgo = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - Number(state.days)
+  );
+
   const input = {
     id,
-    count: 10,
+    date: DaysAgo,
   };
   const { refetch, data, loading } = useQuery<Result>(GET_ALL_ACTIVITY, {
     variables: { input },
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
     },
-    fetchPolicy: id ? "cache-and-network" : "standby",
+    fetchPolicy: id && state.days ? "cache-and-network" : "standby",
   });
 
   const [createActivity, { loading: isLoading }] = useMutation(

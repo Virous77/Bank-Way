@@ -119,16 +119,16 @@ export const transactionDuration = [
   {
     id: 1,
     name: "Weekly",
-    value: "weekly",
+    value: "7",
   },
   {
     id: 2,
     name: "15 Days",
-    value: "half",
+    value: "15",
   },
   {
     id: 3,
     name: "Monthly",
-    value: "monthly",
+    value: "30",
   },
 ];

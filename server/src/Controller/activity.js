@@ -49,9 +49,10 @@ export const ActivityRoot = {
 
   getAllActivity: async ({ input }) => {
     try {
-      const transactions = await Activity.find({ user_id: input.id })
-        .sort({ createdAt: -1 })
-        .limit(input.count || 10000);
+      const transactions = await Activity.find({
+        user_id: input.id,
+        createdAt: { $gte: input.date },
+      }).sort({ createdAt: -1 });
 
       return createResult({
         data: transactions,

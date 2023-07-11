@@ -146,4 +146,48 @@ export const Aside = styled.aside<{ $style: string }>`
       background-color: transparent;
     }
   }
+
+  section {
+    margin-top: 10px;
+    h3 {
+      color: var(--exact-font-color);
+      padding-bottom: 3px;
+      border-bottom: 2px solid var(--exact-font-color);
+      width: fit-content;
+      margin: auto;
+      margin-bottom: 10px;
+    }
+  }
+`;
+
+export const Card = styled.div`
+  padding: 10px;
+  box-shadow: var(--box-shadow);
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 300ms ease-in-out;
+
+  &:hover {
+    scale: 1.05;
+  }
+`;
+
+export const NDiv = styled.div`
+  box-shadow: var(--box-shadow);
+  padding: 10px 2rem;
+  border-radius: 10px;
+  width: 60%;
+  margin: auto;
+  margin-top: 1rem;
+  margin-bottom: 10px;
+
+  p {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+    color: var(--main-font-color);
+  }
 `;

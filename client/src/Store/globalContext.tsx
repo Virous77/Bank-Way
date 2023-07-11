@@ -15,6 +15,7 @@ type stateType = {
   active: string;
   fetch: string;
   search: string;
+  days: string;
 };
 
 type settingType = {
@@ -50,6 +51,7 @@ const stateInitialValueTwo: stateType = {
   active: "",
   fetch: "",
   search: "",
+  days: "",
 };
 
 const initialValue: GlobalType = {
@@ -94,6 +96,12 @@ export const GlobalContextProvider = ({
     variables: { id },
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });
+    },
+    onCompleted: (data) => {
+      setState({
+        ...state,
+        days: data?.getUserSetting.data.home_transaction_duration || "7",
+      });
     },
     fetchPolicy: id ? "cache-and-network" : "standby",
   });

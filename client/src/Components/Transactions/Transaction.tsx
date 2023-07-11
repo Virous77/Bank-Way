@@ -1,4 +1,4 @@
-import { Main, PUL } from "./transaction.style";
+import { Main, PUL, NDiv } from "./transaction.style";
 import Header from "./Header";
 import { displayCol, displayFlex } from "../Common/variable.style";
 import { useGlobalContext } from "../../Store/globalContext";
@@ -9,6 +9,7 @@ import { Transaction } from "../../Interface/interface";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PaginatedTransactionList from "./PaginatedTransactionList";
 import { TransactionShimmer } from "../Shimmers/TextShimmer";
+import noTransaction from "../../assets/no-transaction.svg";
 
 const Transactions = () => {
   const { handleSetNotification, state, setState } = useGlobalContext();
@@ -75,11 +76,18 @@ const Transactions = () => {
               </p>
             }
           >
-            <PUL $style={displayCol}>
-              {transactions.map((tran) => (
-                <PaginatedTransactionList key={tran.id} transaction={tran} />
-              ))}
-            </PUL>
+            {transactions.length > 0 ? (
+              <PUL $style={displayCol}>
+                {transactions.map((tran) => (
+                  <PaginatedTransactionList key={tran.id} transaction={tran} />
+                ))}
+              </PUL>
+            ) : (
+              <NDiv>
+                <img src={noTransaction} alt="no-transaction" />
+                <p>Start tracking your daily spend.</p>
+              </NDiv>
+            )}
           </InfiniteScroll>
         )}
       </section>

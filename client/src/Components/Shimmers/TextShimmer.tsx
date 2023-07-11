@@ -4,6 +4,7 @@ import {
   ShimmerCircularImage,
   ShimmerSectionHeader,
   ShimmerCategoryItem,
+  ShimmerThumbnail,
 } from "react-shimmer-effects";
 
 type TextShimmerType = {
@@ -33,4 +34,8 @@ export const TransactionShimmer = () => {
       text
     />
   );
+};
+
+export const TextThumb = ({ height }: { height: number }) => {
+  return <ShimmerThumbnail height={height} rounded />;
 };

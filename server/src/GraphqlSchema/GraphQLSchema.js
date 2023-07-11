@@ -107,7 +107,7 @@ type Activity {
 
   input ActivityAllType{
     id: ID!
-    count: Int
+    date: String
   }
 
   input PaginatedActivityInput{

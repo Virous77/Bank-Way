@@ -42,6 +42,16 @@ export const List = styled.div`
 
 export const Section = styled.section`
   margin-top: 1rem;
+  position: relative;
+
+  b {
+    position: absolute;
+    right: -5%;
+    bottom: -20%;
+    color: var(--main-font-color);
+    font-size: 12px;
+    font-weight: 400;
+  }
 `;
 
 export const FieldSet = styled.fieldset`

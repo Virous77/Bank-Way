@@ -49,11 +49,16 @@ export const ActivityRoot = {
 
   getAllActivity: async ({ input }) => {
     try {
-      const transactions = await Activity.find({
+      let query = {
         user_id: input.id,
         createdAt: { $gte: input.date },
-      }).sort({ createdAt: -1 });
+      };
 
+      if (input.type !== "all") {
+        query.type_name = input.type;
+      }
+
+      const transactions = await Activity.find(query).sort({ createdAt: -1 });
       return createResult({
         data: transactions,
         message: "Activity fetched successfully",

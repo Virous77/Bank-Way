@@ -122,3 +122,12 @@ export const dateFormat = (date: any) => {
 
   return modifiedDate;
 };
+
+export const daysAgo = (days: number) => {
+  const today = new Date();
+  return new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - days
+  );
+};

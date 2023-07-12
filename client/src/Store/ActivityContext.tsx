@@ -10,6 +10,8 @@ import { useGlobalContext } from "./globalContext";
 import { getLocalData, handleAction } from "../Utils/data";
 import { Transaction } from "../Interface/interface";
 import { expenseType, incomeType } from "../Utils/activity";
+import { useLocation } from "react-router-dom";
+import { daysAgo } from "../Utils/data";
 
 export type ActivityType = {
   name: string;
@@ -101,21 +103,22 @@ export const ActivityContextProvider = ({
     EditInitialState
   );
 
-  const { handleSetNotification, setState, state, handleError } =
-    useGlobalContext();
+  const {
+    handleSetNotification,
+    setState,
+    state,
+    handleError,
+    data: settingData,
+  } = useGlobalContext();
   const id = getLocalData("bankId");
-
-  const today = new Date();
-
-  const DaysAgo = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - Number(state.days)
-  );
+  const { pathname } = useLocation();
+  const DaysAgo = daysAgo(Number(state.days));
 
   const input = {
     id,
     date: DaysAgo,
+    type:
+      pathname === "/transaction" ? "all" : settingData?.home_transaction_type,
   };
   const { refetch, data, loading } = useQuery<Result>(GET_ALL_ACTIVITY, {
     variables: { input },

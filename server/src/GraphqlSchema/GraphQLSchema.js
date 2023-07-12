@@ -108,6 +108,7 @@ type Activity {
   input ActivityAllType{
     id: ID!
     date: String
+    type: String
   }
 
   input PaginatedActivityInput{

@@ -15,6 +15,7 @@ import { useActivity } from "../../Store/ActivityContext";
 import { expenseType, incomeType } from "../../Utils/activity";
 import { useState } from "react";
 import { useGlobalContext } from "../../Store/globalContext";
+import { daysAgo } from "../../Utils/data";
 
 type TransactionListType = {
   transaction: Transaction;
@@ -30,6 +31,15 @@ const TransactionList: React.FC<TransactionListType> = ({
   const { handleSetNotification, data } = useGlobalContext();
 
   const handleUpdate = (data: Transaction) => {
+    const DaysAgo = daysAgo(1);
+    const date = new Date(Number(data.createdAt));
+
+    if (DaysAgo > date)
+      return handleSetNotification({
+        message: "Transaction older than 24hr can't be edited.",
+        status: "error",
+      });
+
     if (data.is_edited)
       return handleSetNotification({
         message: "Transaction can't edited multiple time.",

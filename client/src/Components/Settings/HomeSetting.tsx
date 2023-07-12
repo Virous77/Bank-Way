@@ -19,6 +19,7 @@ import {
   transactionIconType,
   transactionDuration,
 } from "../../Utils/icons";
+import { formatDate } from "../../Utils/data";
 
 const HomeSetting = () => {
   const { data, handleUpdateSetting } = useGlobalContext();
@@ -96,6 +97,7 @@ const HomeSetting = () => {
           </TTDiv>
         </IconLi>
       </HomeUL>
+      <b>* Last updated at {formatDate(new Date(Number(data?.updatedAt)))}</b>
     </Section>
   );
 };

@@ -42,7 +42,7 @@ const TransactionSidebar = () => {
 
       <section>
         <h3>This {transactionDuration} Transactions</h3>
-        <Card style={{ background: "#FF6666" }}>
+        <Card style={{ background: "#47A992" }}>
           <div>
             <GiReceiveMoney size={28} />
             <p>Income</p>
@@ -50,7 +50,7 @@ const TransactionSidebar = () => {
           {data ? <h2>₹{income}</h2> : <TextThumb height={20} />}
         </Card>
 
-        <Card style={{ background: "#47A992" }}>
+        <Card style={{ background: "#FF6666" }}>
           <div>
             <GiPayMoney size={28} />
             <p>Expense</p>

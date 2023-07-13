@@ -7,6 +7,7 @@ import {
   Legend,
 } from "chart.js";
 import { ChartBox } from "./dashboard.style";
+import useChartData from "../../hooks/useChartData";
 
 ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
@@ -25,12 +26,13 @@ const options = {
 };
 
 const PolarGraph = () => {
-  const data = {
-    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  const { dates, chartData } = useChartData();
+  const configData = {
+    labels: dates,
     datasets: [
       {
         label: "Activity",
-        data: [12, 19, 8, 5, 2, 30, 12],
+        data: chartData,
         backgroundColor: [
           "rgb(255, 200, 532)",
           "rgb(255, 99, 132)",
@@ -48,7 +50,7 @@ const PolarGraph = () => {
   return (
     <ChartBox>
       <h1>Current week Activity</h1>
-      <PolarArea data={data} options={options} />
+      <PolarArea data={configData} options={options} />
     </ChartBox>
   );
 };

@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { ChartBox } from "./dashboard.style";
+import useChartData from "../../hooks/useChartData";
 
 ChartJS.register(
   CategoryScale,
@@ -36,12 +37,14 @@ const options = {
 };
 
 const BarChart = () => {
-  const data = {
-    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  const { dates, chartData } = useChartData();
+
+  const configData = {
+    labels: dates,
     datasets: [
       {
         label: "Activity",
-        data: [12, 19, 8, 5, 2, 30, 12],
+        data: chartData,
         backgroundColor: [
           "rgb(255, 200, 532)",
           "rgb(255, 99, 132)",
@@ -59,7 +62,7 @@ const BarChart = () => {
 
   return (
     <ChartBox>
-      <Line options={options} data={data} />
+      <Line options={options} data={configData} />
     </ChartBox>
   );
 };

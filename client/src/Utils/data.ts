@@ -123,6 +123,15 @@ export const dateFormat = (date: any) => {
   return modifiedDate;
 };
 
+export const dateFormat2 = (date: any) => {
+  const splitDate = date?.split("-");
+
+  const modifiedDate =
+    splitDate && month[splitDate[1] - 1] + ", " + splitDate[2];
+
+  return modifiedDate;
+};
+
 export const daysAgo = (days: number) => {
   const today = new Date();
   return new Date(

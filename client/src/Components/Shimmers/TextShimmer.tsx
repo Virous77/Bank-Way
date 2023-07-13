@@ -39,3 +39,23 @@ export const TransactionShimmer = () => {
 export const TextThumb = ({ height }: { height: number }) => {
   return <ShimmerThumbnail height={height} rounded />;
 };
+
+export const ChartLoading = () => {
+  return (
+    <div
+      style={{
+        display: "grid",
+        alignItems: "center",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "2rem",
+        padding: "1rem",
+        paddingTop: "3rem",
+        boxShadow: "var(--box-shadow)",
+        borderRadius: "10px",
+      }}
+    >
+      <CircleShimmer size={260} />
+      <TextThumb height={205} />
+    </div>
+  );
+};

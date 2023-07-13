@@ -21,7 +21,7 @@ const useChartData = () => {
       const transactionsOfDay = weeklyData
         .filter((transaction) => transaction.date === currentDate)
         .map((trans) => {
-          if (trans.type_name === "income") {
+          if (trans.type_name === "income" || trans.type_name === "refund") {
             return trans.amount;
           } else {
             return -trans.amount;

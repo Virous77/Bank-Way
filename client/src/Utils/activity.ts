@@ -79,3 +79,10 @@ export const expenseType = [
     name: "others",
   },
 ];
+
+export const refundType = [
+  {
+    id: 1,
+    name: "refund",
+  },
+];

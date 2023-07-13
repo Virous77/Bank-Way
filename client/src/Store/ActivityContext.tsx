@@ -174,8 +174,9 @@ export const ActivityContextProvider = ({
 
   const handleCreateData = (typeName: string) => {
     const { type, other, amount, ...rest } = activityData;
+    const incomeExpenseType = other ? other : type;
     const data = {
-      type: other ? other : type,
+      type: typeName === "Refund" ? "refund" : incomeExpenseType,
       ...rest,
       type_name: typeName.toLowerCase(),
       amount: Number(amount),

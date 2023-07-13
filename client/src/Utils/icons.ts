@@ -60,6 +60,7 @@ export const SvgIcon: SvgIconType = {
   rent: { value: MdOutlineBedroomParent },
   recharge: { value: FaBatteryFull },
   others: { value: TbArrowsRandom },
+  refund: { value: TbArrowsRandom },
 };
 
 type ImageIconType = {
@@ -85,6 +86,7 @@ export const ImageIcon: ImageIconType = {
   rent: { value: rent },
   recharge: { value: recharge },
   others: { value: others },
+  refund: { value: others },
 };
 
 export const transactionType = [

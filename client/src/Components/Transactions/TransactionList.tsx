@@ -111,9 +111,13 @@ const TransactionList: React.FC<TransactionListType> = ({
           </div>
 
           {title === "dashboard" && (
-            <button onClick={() => handleUpdate(transaction)}>
-              <LuFileEdit size={15} />
-            </button>
+            <>
+              {transaction.type_name !== "refund" && (
+                <button onClick={() => handleUpdate(transaction)}>
+                  <LuFileEdit size={15} />
+                </button>
+              )}
+            </>
           )}
         </TDetails>
       )}

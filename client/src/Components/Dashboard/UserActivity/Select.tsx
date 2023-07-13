@@ -16,7 +16,7 @@ const SelectComp: React.FC<MainFormType> = ({ types, title, activityData }) => {
 
   return (
     <Select value={activityData.type} onChange={handleChange}>
-      <option value="">Select {title}</option>
+      {title !== "Refund" && <option value="">Select {title}</option>}
       {types.map((type) => (
         <option value={type.name} key={type.id}>
           {type.name}

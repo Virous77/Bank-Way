@@ -7,6 +7,8 @@ export const ActivityRoot = {
     try {
       const { error } = ActivityValidate.validate(input);
       if (error) throw new Error(error.details[0].message);
+      if (input.type_name === "refund" && input.name.trim().length <= 2)
+        throw new Error("Refund name is required");
       const activity = new Activity(input);
       await activity.save();
       return createResult({

@@ -3,6 +3,8 @@ import Graph from "./Graph";
 import { Modal } from "../Modal/Modal";
 import ModalHeader from "../Modal/ModalHeader";
 import { useGlobalContext } from "../../Store/globalContext";
+import { useActivity } from "../../Store/ActivityContext";
+import { ChartLoading } from "../Shimmers/TextShimmer";
 
 type DashboardType = {
   Compo: React.ReactNode;
@@ -11,11 +13,16 @@ type DashboardType = {
 
 const Dashboard: React.FC<DashboardType> = ({ Compo, title }) => {
   const { setState, state } = useGlobalContext();
+  const { data, loading } = useActivity();
 
   return (
     <div>
       <Header />
-      <Graph />
+      {loading ? (
+        <ChartLoading />
+      ) : (
+        <>{data && data?.getAllActivity.data.length > 0 && <Graph />}</>
+      )}
 
       {state.show === title && (
         <Modal

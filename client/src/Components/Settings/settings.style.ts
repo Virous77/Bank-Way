@@ -139,3 +139,17 @@ export const TTDiv = styled.div<{ $style: string }>`
   ${(props) => props.$style};
   gap: 1rem;
 `;
+
+export const CsvButton = styled.button`
+  background-color: var(--body-color);
+  color: var(--main-font-color) !important;
+  padding: 10px 25px;
+  border-radius: 4px;
+  margin-top: 20px;
+`;
+
+export const CsvTab = styled.div<{ $style: string }>`
+  ${(props) => props.$style};
+  margin-bottom: 20px;
+  gap: 2rem;
+`;

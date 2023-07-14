@@ -70,6 +70,12 @@ export const Tabs = [
     value: "theme",
     message: "Set Theme according to your system setting or auto.",
   },
+  {
+    id: 4,
+    name: "Download Transaction",
+    value: "trans",
+    message: "Download Transaction data.",
+  },
 ];
 
 export const currentMoment = (date: Date) => {

@@ -16,6 +16,7 @@
     "graphql": "^16.6.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
     "react-infinite-scroll-component": "^6.1.0",

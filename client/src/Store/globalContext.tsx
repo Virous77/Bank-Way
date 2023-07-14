@@ -17,6 +17,7 @@ type stateType = {
   search: string;
   days: string;
   menu: string;
+  csvDataType: string;
 };
 
 type settingType = {
@@ -54,6 +55,7 @@ const stateInitialValueTwo: stateType = {
   search: "",
   days: "",
   menu: "",
+  csvDataType: "all",
 };
 
 const initialValue: GlobalType = {

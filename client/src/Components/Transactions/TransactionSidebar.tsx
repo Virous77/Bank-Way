@@ -6,6 +6,7 @@ import { useActivity } from "../../Store/ActivityContext";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
 import { RiRefundLine } from "react-icons/ri";
 import { TextThumb } from "../Shimmers/TextShimmer";
+import { useMemo } from "react";
 
 const TransactionSidebar = () => {
   const { state, setState } = useGlobalContext();
@@ -14,19 +15,29 @@ const TransactionSidebar = () => {
     state.days === "7" ? "Week" : state.days === "15" ? "15 Days" : "Month";
 
   const { data } = useActivity();
-  const expense = data?.getAllActivity.data
-    .filter((trans) => trans.type_name === "expense")
-    .map((trans) => +trans.amount)
-    .reduce((acc, curr) => acc + curr, 0);
 
-  const income = data?.getAllActivity.data
-    .filter((trans) => trans.type_name === "income")
-    .map((trans) => +trans.amount)
-    .reduce((acc, curr) => acc + curr, 0);
-  const refund = data?.getAllActivity.data
-    .filter((trans) => trans.type_name === "refund")
-    .map((trans) => +trans.amount)
-    .reduce((acc, curr) => acc + curr, 0);
+  const expense = useMemo(() => {
+    return data?.getAllActivity.data
+      .filter((trans) => trans.type_name === "expense")
+      .map((trans) => +trans.amount)
+      .reduce((acc, curr) => acc + curr, 0);
+  }, [data]);
+
+  const income = useMemo(() => {
+    return data?.getAllActivity.data
+      .filter((trans) => trans.type_name === "income")
+      .map((trans) => +trans.amount)
+      .reduce((acc, curr) => acc + curr, 0);
+  }, [data]);
+
+  const refund = useMemo(() => {
+    return data?.getAllActivity.data
+      .filter((trans) => trans.type_name === "refund")
+      .map((trans) => +trans.amount)
+      .reduce((acc, curr) => acc + curr, 0);
+  }, [data]);
+
+  const Total = expense && income && income - expense;
 
   return (
     <Aside $style={displayCenter}>
@@ -64,6 +75,17 @@ const TransactionSidebar = () => {
             <p>Refund</p>
           </div>
           {data ? <h2>₹{refund}</h2> : <TextThumb height={20} />}
+        </Card>
+
+        <Card style={{ background: "var(--main-font-color)" }}>
+          <div>
+            <h2 style={{ color: "var(--body-color)" }}>Total</h2>
+          </div>
+          {data ? (
+            <h2 style={{ color: "var(--body-color)" }}>{Total}₹</h2>
+          ) : (
+            <TextThumb height={20} />
+          )}
         </Card>
       </section>
     </Aside>

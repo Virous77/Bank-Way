@@ -7,6 +7,7 @@ import { Modal } from "../Modal/Modal";
 import PasswordModal from "./PasswordModal";
 import ThemeSetting from "./ThemeSetting";
 import HomeSetting from "./HomeSetting";
+import CsvData from "./CsvData";
 
 const Settings = () => {
   const [active, setActive] = useState<string | undefined>(undefined);
@@ -59,6 +60,20 @@ const Settings = () => {
             onClose={() => setActive(undefined)}
           />
           <HomeSetting />
+        </Modal>
+      )}
+
+      {active === "trans" && (
+        <Modal
+          isOpen="isOpen"
+          onClose={() => setActive(undefined)}
+          size="570px"
+        >
+          <ModalHeader
+            name="Transaction Data"
+            onClose={() => setActive(undefined)}
+          />
+          <CsvData />
         </Modal>
       )}
     </Main>

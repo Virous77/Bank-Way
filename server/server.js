@@ -32,7 +32,7 @@ app.use(
   })
 );
 
-const PORT = 4000 || process.env.PORT;
+const PORT = process.env.PORT || 4001;
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

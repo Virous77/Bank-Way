@@ -16,6 +16,7 @@ type stateType = {
   fetch: string;
   search: string;
   days: string;
+  menu: string;
 };
 
 type settingType = {
@@ -52,6 +53,7 @@ const stateInitialValueTwo: stateType = {
   fetch: "",
   search: "",
   days: "",
+  menu: "",
 };
 
 const initialValue: GlobalType = {

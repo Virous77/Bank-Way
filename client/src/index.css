@@ -98,3 +98,17 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+@media (max-width: 740px) {
+  canvas {
+    width: 80% !important;
+    margin: auto;
+    height: 260px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  canvas {
+    width: 100% !important;
+  }
+}

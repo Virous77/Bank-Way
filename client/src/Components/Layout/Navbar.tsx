@@ -1,4 +1,12 @@
-import { NavbarMain, Logo, RightContainer, Circle, Img } from "./navbar.style";
+import {
+  NavbarMain,
+  Logo,
+  RightContainer,
+  Circle,
+  Img,
+  Menu,
+  LogoConta,
+} from "./navbar.style";
 import { displayAllCenter, displayCenter } from "../Common/variable.style";
 import ThemeProvider from "../../Theme/ThemeProvider";
 import { PrivateLinks, PublicLinks } from "../Private/PtotectedRoutes";
@@ -9,6 +17,7 @@ import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
 import { useNavigate } from "react-router-dom";
 import defaultUser from "../../assets/user.avif";
+import { ImMenu } from "react-icons/im";
 
 const Navbar = () => {
   const { setState, state } = useGlobalContext();
@@ -23,7 +32,12 @@ const Navbar = () => {
 
   return (
     <NavbarMain $displayCenter={displayCenter}>
-      <Logo>BankWay</Logo>
+      <LogoConta $style={displayCenter}>
+        <Menu onClick={() => setState({ ...state, menu: "yes" })}>
+          <ImMenu size={20} />
+        </Menu>
+        <Logo>BankWay</Logo>
+      </LogoConta>
 
       <RightContainer $displayCenter={displayCenter}>
         <ThemeProvider />

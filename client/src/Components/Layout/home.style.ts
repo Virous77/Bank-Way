@@ -7,15 +7,59 @@ export const Main = styled.main`
   color: var(--body-color);
   grid-template-columns: 300px 1fr 300px;
   gap: 1rem;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
-export const Aside = styled.aside`
+export const Aside = styled.aside<{ $style: string; $styles: string }>`
   padding: 1rem;
   background-color: var(--card-color);
   border-radius: 10px;
   height: 80vh;
   position: sticky;
   top: 11%;
+
+  div {
+    ${(props) => props.$styles};
+    align-items: flex-start;
+    display: none;
+
+    button {
+      background-color: transparent;
+      font-size: 20px;
+      color: var(--exact-font-color);
+      margin-top: 3px;
+      padding-right: 5px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    z-index: 1000;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    height: 100vh;
+    display: ${(props) => (props.$style === "yes" ? "block" : "none")};
+
+    h1 {
+      margin-bottom: 1rem;
+      padding-left: 3px;
+    }
+
+    div {
+      display: flex;
+    }
+  }
 `;
 
 export const List = styled.ul<{ $style?: string }>`

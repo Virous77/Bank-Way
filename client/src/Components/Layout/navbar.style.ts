@@ -12,9 +12,26 @@ export const NavbarMain = styled.header<{ $displayCenter: string }>`
   justify-content: space-between;
   ${(props) => props.$displayCenter};
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     width: 95%;
     padding: 0.5rem 1rem;
+  }
+`;
+
+export const LogoConta = styled.div<{ $style: string }>`
+  ${(props) => props.$style};
+  gap: 17px;
+`;
+
+export const Menu = styled.button`
+  display: none;
+  background-color: transparent;
+  color: var(--exact-font-color);
+  margin-top: 2px;
+  cursor: pointer;
+
+  @media (max-width: 992px) {
+    display: block;
   }
 `;
 

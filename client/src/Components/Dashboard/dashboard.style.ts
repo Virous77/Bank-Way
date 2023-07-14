@@ -7,6 +7,11 @@ export const Head = styled.header<{ $style: string }>`
   border-top-left-radius: 10px;
   ${(props) => props.$style};
 
+  @media (max-width: 660px) {
+    flex-direction: column;
+    gap: 13px;
+  }
+
   div {
     display: flex;
     align-items: flex-end;
@@ -32,9 +37,18 @@ export const WrapChart = styled.section<{ $style: string }>`
   gap: 2rem;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+
+  @media (max-width: 740px) {
+    flex-direction: column;
+    height: fit-content;
+  }
 `;
 
 export const ChartBox = styled.div`
+  @media (max-width: 740px) {
+    width: 100%;
+  }
+
   h1 {
     margin-bottom: 1.5rem;
     font-size: var(--secondary-font-size);

@@ -8,7 +8,7 @@ const SettingsSchema = new mongoose.Schema(
     },
     home_transaction_duration: {
       type: String,
-      default: "weekly",
+      default: "7",
     },
     home_transaction_type: {
       type: String,

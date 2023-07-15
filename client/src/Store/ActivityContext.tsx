@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery } from "@apollo/client";
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import {
   CREATE_ACTIVITY,
   GET_ALL_ACTIVITY,
@@ -120,6 +120,7 @@ export const ActivityContextProvider = ({
     type:
       pathname === "/transaction" ? "all" : settingData?.home_transaction_type,
   };
+
   const { refetch, data, loading } = useQuery<Result>(GET_ALL_ACTIVITY, {
     variables: { input },
     onError: (error) => {

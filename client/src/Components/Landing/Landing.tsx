@@ -4,6 +4,8 @@ import ModalHeader from "../Modal/ModalHeader";
 import { useGlobalContext } from "../../Store/globalContext";
 import SignUp from "../Auth/SignUp";
 import SignIn from "../Auth/SignIn";
+import money from "../../assets/money.svg";
+import { displayCol } from "../Common/variable.style";
 
 const Landing = () => {
   const { setState, state } = useGlobalContext();
@@ -16,7 +18,19 @@ const Landing = () => {
       : "cool";
 
   return (
-    <Main>
+    <Main $style={displayCol}>
+      <section>
+        <h1>Goodbye, money stress. Hello, Track Daily.</h1>
+        <img src={money} alt="BankWay" />
+        <h2>Take the guesswork out of managing your money.</h2>
+
+        <p>
+          Track daily makes it easy to spend and track your money. Budget
+          smarter by knowing how much you spending daily. You have all the good
+          features add notes & inbuilt graph to understand better.
+        </p>
+        <button>Sign Up</button>
+      </section>
       {state.show === activeTab && (
         <Modal isOpen="isOpen" onClose={() => setState({ ...state, show: "" })}>
           <ModalHeader

@@ -6,6 +6,7 @@ import {
   ShimmerCategoryItem,
   ShimmerThumbnail,
 } from "react-shimmer-effects";
+import { ShimDiv } from "./shim.style";
 
 type TextShimmerType = {
   gap?: number;
@@ -42,20 +43,9 @@ export const TextThumb = ({ height }: { height: number }) => {
 
 export const ChartLoading = () => {
   return (
-    <div
-      style={{
-        display: "grid",
-        alignItems: "center",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "2rem",
-        padding: "1rem",
-        paddingTop: "3rem",
-        boxShadow: "var(--box-shadow)",
-        borderRadius: "10px",
-      }}
-    >
+    <ShimDiv>
       <CircleShimmer size={260} />
       <TextThumb height={205} />
-    </div>
+    </ShimDiv>
   );
 };

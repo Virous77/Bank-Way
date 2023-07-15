@@ -6,6 +6,7 @@ import {
   Img,
   Menu,
   LogoConta,
+  AuthB,
 } from "./navbar.style";
 import { displayAllCenter, displayCenter } from "../Common/variable.style";
 import ThemeProvider from "../../Theme/ThemeProvider";
@@ -15,7 +16,7 @@ import { Button } from "./navbar.style";
 import { getLocalData } from "../../Utils/data";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import defaultUser from "../../assets/user.avif";
 import { ImMenu } from "react-icons/im";
 
@@ -24,6 +25,7 @@ const Navbar = () => {
   const active = getLocalData("bankId");
   const { userData } = useAuthContext();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem("bankId");
@@ -33,9 +35,11 @@ const Navbar = () => {
   return (
     <NavbarMain $displayCenter={displayCenter}>
       <LogoConta $style={displayCenter}>
-        <Menu onClick={() => setState({ ...state, menu: "yes" })}>
-          <ImMenu size={20} />
-        </Menu>
+        {pathname !== "/landing" && (
+          <Menu onClick={() => setState({ ...state, menu: "yes" })}>
+            <ImMenu size={20} />
+          </Menu>
+        )}
         <Logo>BankWay</Logo>
       </LogoConta>
 
@@ -57,11 +61,13 @@ const Navbar = () => {
           </PublicLinks>
         )}
 
-        <PrivateLinks>
-          <Button $primary="var(--body-color)" onClick={handleLogout}>
-            Logout
-          </Button>
-        </PrivateLinks>
+        <AuthB>
+          <PrivateLinks>
+            <Button $primary="var(--body-color)" onClick={handleLogout}>
+              Logout
+            </Button>
+          </PrivateLinks>
+        </AuthB>
       </RightContainer>
     </NavbarMain>
   );

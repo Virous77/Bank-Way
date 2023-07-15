@@ -102,3 +102,9 @@ export const Img = styled.img`
   object-fit: cover;
   height: 100%;
 `;
+
+export const AuthB = styled.div`
+  @media (max-width: 992px) {
+    display: none;
+  }
+`;

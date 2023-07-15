@@ -18,6 +18,7 @@ type stateType = {
   days: string;
   menu: string;
   csvDataType: string;
+  error: boolean;
 };
 
 type settingType = {
@@ -56,6 +57,7 @@ const stateInitialValueTwo: stateType = {
   days: "",
   menu: "",
   csvDataType: "all",
+  error: false,
 };
 
 const initialValue: GlobalType = {

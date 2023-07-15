@@ -37,7 +37,7 @@ export const ModalContent = styled.main<{ $modalSize?: string }>`
 
 export const ModalHead = styled.header`
   display: flex;
-  align-item: center;
+  align-items: center;
   justify-content: space-between;
 `;
 

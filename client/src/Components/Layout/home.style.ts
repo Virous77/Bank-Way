@@ -90,3 +90,15 @@ export const Item = styled.li<{ $style?: string; $active?: boolean }>`
     border-radius: 30px;
   }
 `;
+
+export const SAuthB = styled.div`
+  button {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding-left: 3px;
+    margin-left: 5px;
+    color: var(--exact-font-color) !important;
+    font-weight: 600;
+  }
+`;

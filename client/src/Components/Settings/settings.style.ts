@@ -9,6 +9,11 @@ export const Main = styled.main`
     width: fit-content;
     padding-bottom: 3px;
   }
+
+  @media (max-width: 768px) {
+    padding: 0;
+    padding-bottom: 1rem;
+  }
 `;
 
 export const Wrap = styled.div`
@@ -16,6 +21,11 @@ export const Wrap = styled.div`
   grid-template-columns: repeat(2, 1fr);
   margin-top: 2rem;
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 
   span {
     font-size: 12px;
@@ -51,6 +61,14 @@ export const Section = styled.section`
     color: var(--main-font-color);
     font-size: 12px;
     font-weight: 400;
+
+    @media (max-width: 768px) {
+      right: -1%;
+    }
+
+    @media (max-width: 620px) {
+      bottom: -11%;
+    }
   }
 `;
 
@@ -90,6 +108,20 @@ export const CheckList = styled.div<{ $style: string }>`
   ${(props) => props.$style};
   gap: 3rem;
   margin-top: 2rem;
+
+  @media (max-width: 440px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 0;
+
+    div {
+      padding: 15px 10px;
+      box-shadow: var(--box-shadow);
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
 `;
 
 export const IconLi = styled.li`
@@ -106,6 +138,11 @@ export const IconLi = styled.li`
 
   p {
     color: var(--exact-white-color);
+
+    @media (max-width: 620px) {
+      color: var(--exact-font-color);
+      font-weight: 600;
+    }
   }
 `;
 
@@ -125,6 +162,12 @@ export const HomeUL = styled.ul<{ $style: string; $liStyle: string }>`
 
   li {
     ${(props) => props.$liStyle};
+
+    @media (max-width: 620px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
   }
 `;
 
@@ -152,4 +195,22 @@ export const CsvTab = styled.div<{ $style: string }>`
   ${(props) => props.$style};
   margin-bottom: 20px;
   gap: 2rem;
+
+  @media (max-width: 520px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    width: 100%;
+    gap: 1rem;
+
+    div {
+      padding: 10px;
+      box-shadow: var(--box-shadow);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+    }
+  }
 `;

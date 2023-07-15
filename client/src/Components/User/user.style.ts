@@ -18,6 +18,11 @@ export const Header = styled.header<{ $style: string }>`
 export const ProfileWrap = styled.div`
   display: grid;
   grid-template-columns: 190px 1fr;
+
+  @media (max-width: 620px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 `;
 
 export const ProfileSection = styled.section`

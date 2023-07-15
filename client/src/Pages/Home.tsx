@@ -9,7 +9,7 @@ const Home = () => {
   const activeTab = pathname === "/settings";
 
   return (
-    <Main>
+    <Main $style={pathname}>
       <SideMenu />
       <PageContent />
       {!activeTab && <SideContent />}

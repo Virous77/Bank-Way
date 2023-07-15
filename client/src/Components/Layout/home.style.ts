@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Main = styled.main`
+export const Main = styled.main<{ $style: string }>`
   margin-top: 4rem;
   padding: 2rem 4rem;
   display: grid;
@@ -11,6 +11,9 @@ export const Main = styled.main`
   @media (max-width: 992px) {
     grid-template-columns: 1fr;
     padding: 2rem;
+    display: ${(props) => (props.$style === "/transaction" ? "flex" : "grid")};
+    flex-direction: ${(props) =>
+      props.$style === "/transaction" ? "column-reverse" : "column"};
   }
 
   @media (max-width: 768px) {
@@ -59,6 +62,10 @@ export const Aside = styled.aside<{ $style: string; $styles: string }>`
     div {
       display: flex;
     }
+  }
+
+  @media (max-width: 768px) {
+    width: 70%;
   }
 `;
 

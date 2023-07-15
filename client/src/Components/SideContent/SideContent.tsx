@@ -26,7 +26,9 @@ const SideContent = () => {
   };
   const currentTab = Tabs[pathname || ""];
 
-  return <Aside>{(currentTab && currentTab.value) || ""}</Aside>;
+  return (
+    <Aside $style={pathname}>{(currentTab && currentTab.value) || ""}</Aside>
+  );
 };
 
 export default SideContent;

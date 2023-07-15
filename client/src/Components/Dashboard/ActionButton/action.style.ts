@@ -24,4 +24,9 @@ export const Tab = styled.button`
   &:hover {
     scale: 1.02;
   }
+
+  @media (max-width: 440px) {
+    font-size: 10px;
+    padding: 8px;
+  }
 `;

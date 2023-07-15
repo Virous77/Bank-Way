@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Aside, List, Item, SAuthB } from "./home.style";
-import { getLocalData, navLink } from "../../Utils/data";
+import { navLink } from "../../Utils/data";
 import {
   displayCol,
   displayCenter,

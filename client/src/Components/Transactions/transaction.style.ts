@@ -125,6 +125,8 @@ export const Main = styled.main<{ $style: string }>`
       font-size: 16px;
       border-radius: 5px;
       border: none;
+      background-color: var(--main-font-color);
+      color: var(--body-color);
     }
   }
 `;

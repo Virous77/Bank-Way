@@ -48,7 +48,7 @@ export const Aside = styled.aside<{ $style: string; $styles: string }>`
     top: 0;
     left: 0;
     width: 50%;
-    z-index: 1000;
+    z-index: 1000000;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     height: 100vh;

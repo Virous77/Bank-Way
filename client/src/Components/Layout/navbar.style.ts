@@ -11,6 +11,7 @@ export const NavbarMain = styled.header<{ $displayCenter: string }>`
   border-radius: 30px;
   justify-content: space-between;
   ${(props) => props.$displayCenter};
+  z-index: 100000;
 
   @media (max-width: 992px) {
     width: 95%;

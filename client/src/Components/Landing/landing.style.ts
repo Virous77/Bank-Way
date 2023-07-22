@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const Main = styled.main<{ $style: string }>`
-  margin-top: 5rem;
+  margin-top: 6rem;
   padding: 1rem 4rem;
 
   @media (max-width: 768px) {
@@ -76,6 +76,7 @@ export const Main = styled.main<{ $style: string }>`
       @media (max-width: 620px) {
         width: 100%;
         margin-top: 2rem;
+        font-size: 1rem;
       }
     }
   }

@@ -16,7 +16,7 @@ import { Button } from "./navbar.style";
 import { getLocalData } from "../../Utils/data";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import defaultUser from "../../assets/user.avif";
 import { ImMenu } from "react-icons/im";
 
@@ -40,7 +40,9 @@ const Navbar = () => {
             <ImMenu size={20} />
           </Menu>
         )}
-        <Logo>BankWay</Logo>
+        <Link to="/">
+          <Logo>BankWay</Logo>
+        </Link>
       </LogoConta>
 
       <RightContainer $displayCenter={displayCenter}>

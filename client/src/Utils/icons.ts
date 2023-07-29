@@ -16,9 +16,10 @@ import {
   GiElectric,
   GiCommercialAirplane,
 } from "react-icons/gi";
-import { HiOutlineShoppingBag } from "react-icons/hi";
+import { HiOutlineShoppingBag, HiOutlineReceiptRefund } from "react-icons/hi";
 import { FaBatteryFull } from "react-icons/fa";
 import { TbArrowsRandom } from "react-icons/tb";
+import { FcNeutralTrading } from "react-icons/fc";
 
 import investing from "../assets/icon/investing.jpg";
 import education from "../assets/icon/education.jpeg";
@@ -36,6 +37,8 @@ import travel from "../assets/icon/travel.jpeg";
 import rent from "../assets/icon/rent.jpeg";
 import recharge from "../assets/icon/recharge.jpeg";
 import others from "../assets/icon/others.jpeg";
+import trading from "../assets/icon/trading.jpeg";
+import refund from "../assets/icon/refund.jpeg";
 
 type SvgIconType = {
   [key: string]: {
@@ -60,7 +63,8 @@ export const SvgIcon: SvgIconType = {
   rent: { value: MdOutlineBedroomParent },
   recharge: { value: FaBatteryFull },
   others: { value: TbArrowsRandom },
-  refund: { value: TbArrowsRandom },
+  refund: { value: HiOutlineReceiptRefund },
+  trading: { value: FcNeutralTrading },
 };
 
 type ImageIconType = {
@@ -86,7 +90,8 @@ export const ImageIcon: ImageIconType = {
   rent: { value: rent },
   recharge: { value: recharge },
   others: { value: others },
-  refund: { value: others },
+  refund: { value: refund },
+  trading: { value: trading },
 };
 
 export const transactionType = [

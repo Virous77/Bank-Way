@@ -84,8 +84,7 @@ export const ActivityRoot = {
               type_name: type,
             };
 
-      const totalProduct =
-        +pageNumber === 1 && (await Activity.find(queryType)).length;
+      const totalProduct = (await Activity.find(queryType)).length;
       const transactions = await Activity.find({
         ...queryType,
         name: { $regex: regex },

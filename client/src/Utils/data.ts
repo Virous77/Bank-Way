@@ -3,6 +3,7 @@ import { BiHomeSmile } from "react-icons/bi";
 import { TbReportMoney } from "react-icons/tb";
 import { FiSettings } from "react-icons/fi";
 import { MdOutlineAccountCircle } from "react-icons/md";
+import { BiTransfer } from "react-icons/bi";
 
 export const navLink = [
   {
@@ -28,6 +29,12 @@ export const navLink = [
     name: "Settings",
     link: "/settings",
     icon: FiSettings,
+  },
+  {
+    id: 5,
+    name: "Transfer",
+    link: "/transfer",
+    icon: BiTransfer,
   },
 ];
 

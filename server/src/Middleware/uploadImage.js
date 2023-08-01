@@ -42,7 +42,7 @@ router.delete("/uploads/:filename", (req, res) => {
       fs.unlinkSync(filePath);
       res.status(200).json({ message: "Image deleted successfully" });
     } else {
-      res.status(404).json({ message: "Image not found" });
+      res.status(200).json({ message: "Image not found" });
     }
   } catch (error) {
     console.log(error);

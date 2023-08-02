@@ -30,3 +30,11 @@ export const ActivityValidate = joi
     date: joi.string().trim().required(),
   })
   .options({ stripUnknown: true });
+
+export const TransferValidate = joi
+  .object({
+    transfer_to: joi.string().trim().required(),
+    amount: joi.number().required().greater(0),
+    notes: joi.string().trim().required(),
+  })
+  .options({ stripUnknown: true });

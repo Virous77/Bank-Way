@@ -143,6 +143,39 @@ type Activity {
     status: Int
   }
 
+  type Transfer{
+    id: ID!
+    transfer_to: String
+    amount: Int
+    notes: String
+    user_id: String
+    createdAt: String
+    updatedAt: String
+  }
+
+   input CreateTransferInput {
+    transfer_to: String!
+    amount: Int!
+    notes: String
+    user_id: String!
+  }
+
+  input TransferType{
+    id: ID!
+  }
+
+   type TransferResult{
+    data: Transfer
+    message: String
+    status: Int
+   }
+
+   type TransferResultAll{
+    data: [Transfer]
+    message: String
+    status: Int
+   }
+
 
     type Query {
     getActivity(id: ID!): ActivityResult
@@ -151,6 +184,7 @@ type Activity {
     getAllUsers: [User]
     getUserSetting(id: ID!): settingResult
     getPaginatedActivity(input: PaginatedActivityInput) : ActivityPaginatedResult
+    getTransferAll(input: TransferType!): TransferResultAll 
   }
 
   type Mutation {
@@ -163,5 +197,6 @@ type Activity {
     loginUser(input: LoginUserInput!): UserResponse
     changePassword(input: ChangePassword!): UserResponse
     updateSetting(input: UpdateSettingInput!): settingResult
+    createTransfer(input: CreateTransferInput!): TransferResult
   }
 `);

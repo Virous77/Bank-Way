@@ -36,3 +36,11 @@ export interface Setting {
   home_transaction_type: string;
   updatedAt: string;
 }
+
+export interface Payments {
+  id: string;
+  transfer_to: string;
+  amount: number;
+  notes: string;
+  createdAt: string;
+}

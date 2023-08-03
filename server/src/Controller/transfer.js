@@ -20,4 +20,18 @@ export const TransferRoot = {
       throw error || "Failed to create payment";
     }
   },
+
+  getTransferAll: async ({ id }) => {
+    try {
+      const payments = await Transfer.find({ user_id: id });
+
+      return createResult({
+        data: payments,
+        message: "Payment fetched successfully",
+        status: 200,
+      });
+    } catch (error) {
+      throw error || "Failed to fetch payment";
+    }
+  },
 };

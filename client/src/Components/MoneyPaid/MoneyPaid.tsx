@@ -5,6 +5,7 @@ import { useGlobalContext } from "../../Store/globalContext";
 import AddPayment from "./AddPayment";
 import { Modal } from "../Modal/Modal";
 import ModalHeader from "../Modal/ModalHeader";
+import PaymentTransaction from "./PaymentTransaction";
 
 const MoneyPaid = () => {
   const { setState, state } = useGlobalContext();
@@ -17,6 +18,7 @@ const MoneyPaid = () => {
           Add Payment
         </button>
       </PayHeader>
+      <PaymentTransaction />
 
       {state.show === "payment" && (
         <Modal

@@ -160,10 +160,6 @@ type Activity {
     user_id: String!
   }
 
-  input TransferType{
-    id: ID!
-  }
-
    type TransferResult{
     data: Transfer
     message: String
@@ -184,7 +180,7 @@ type Activity {
     getAllUsers: [User]
     getUserSetting(id: ID!): settingResult
     getPaginatedActivity(input: PaginatedActivityInput) : ActivityPaginatedResult
-    getTransferAll(input: TransferType!): TransferResultAll 
+    getTransferAll(id: ID!): TransferResultAll 
   }
 
   type Mutation {

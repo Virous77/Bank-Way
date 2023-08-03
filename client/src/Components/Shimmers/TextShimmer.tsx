@@ -25,15 +25,17 @@ export const HeadingShimmer = () => {
   return <ShimmerSectionHeader />;
 };
 
-export const TransactionShimmer = () => {
+export const TransactionShimmer = ({ margin }: { margin?: string }) => {
   return (
-    <ShimmerCategoryItem
-      hasImage
-      imageType="circular"
-      imageWidth={60}
-      imageHeight={40}
-      text
-    />
+    <div style={{ marginTop: margin }}>
+      <ShimmerCategoryItem
+        hasImage
+        imageType="circular"
+        imageWidth={60}
+        imageHeight={40}
+        text
+      />
+    </div>
   );
 };
 

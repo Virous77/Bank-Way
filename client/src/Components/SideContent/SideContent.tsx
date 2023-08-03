@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import Quotes from "../Quotes/Quotes";
 import Sidebar from "../Dashboard/Sidebar";
 import TransactionSidebar from "../Transactions/TransactionSidebar";
+import PaymentSidebar from "../MoneyPaid/PaymentSidebar";
 
 const SideContent = () => {
   const { pathname } = useLocation();
@@ -22,6 +23,9 @@ const SideContent = () => {
     },
     "/transaction": {
       value: <TransactionSidebar />,
+    },
+    "/transfer": {
+      value: <PaymentSidebar />,
     },
   };
   const currentTab = Tabs[pathname || ""];

@@ -56,3 +56,32 @@ export const PDiv = styled.div<{ $style: string }>`
     }
   }
 `;
+
+export const Main = styled.main<{ $style: string }>`
+  ${(props) => props.$style};
+  gap: 1rem;
+  background-color: var(--main-font-color);
+  margin-top: 1rem;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  padding: 10px;
+`;
+
+export const PList = styled.div<{ $style: string }>`
+  background-color: var(--body-color);
+  padding: 5px 10px;
+  border-radius: 10px;
+  ${(props) => props.$style};
+
+  b {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 4px;
+  }
+`;

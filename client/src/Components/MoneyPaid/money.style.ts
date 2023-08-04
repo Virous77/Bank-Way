@@ -67,11 +67,39 @@ export const Main = styled.main<{ $style: string }>`
   padding: 10px;
 `;
 
-export const PList = styled.div<{ $style: string }>`
+export const PList = styled.div`
   background-color: var(--body-color);
   padding: 5px 10px;
   border-radius: 10px;
+`;
+
+export const PAction = styled.div<{ $style: string }>`
+  padding-top: 6px;
+  border-top: 1px solid var(--main-font-color);
   ${(props) => props.$style};
+  margin-top: 8px;
+
+  p {
+    color: green;
+    font-size: 15px;
+  }
+
+  button {
+    background-color: red;
+    padding: 3px 10px;
+    font-size: 14px;
+    color: var(--main-font-color);
+    opacity: 0.9;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+`;
+
+export const Wrap = styled.div<{ $style: string }>`
+  ${(props) => props.$style};
+  cursor: pointer;
 
   b {
     display: flex;

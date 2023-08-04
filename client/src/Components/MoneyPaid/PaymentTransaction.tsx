@@ -18,7 +18,7 @@ const PaymentTransaction = () => {
   const { handleSetNotification } = useGlobalContext();
   const id = getLocalData("bankId");
 
-  const { data, loading } = useQuery<PaymentResponse | undefined>(
+  const { data, loading, refetch } = useQuery<PaymentResponse | undefined>(
     GET_ALL_TRANSFER,
     {
       variables: { id },
@@ -35,7 +35,11 @@ const PaymentTransaction = () => {
     <Main $style={displayCol}>
       {data &&
         data.getTransferAll.data.map((payment) => (
-          <PaymentTransactionList key={payment.id} payment={payment} />
+          <PaymentTransactionList
+            key={payment.id}
+            payment={payment}
+            refetch={refetch}
+          />
         ))}
     </Main>
   );

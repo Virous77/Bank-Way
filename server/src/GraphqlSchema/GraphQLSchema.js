@@ -194,5 +194,6 @@ type Activity {
     changePassword(input: ChangePassword!): UserResponse
     updateSetting(input: UpdateSettingInput!): settingResult
     createTransfer(input: CreateTransferInput!): TransferResult
+    deleteTransfer(id: ID!): TransferResult
   }
 `);

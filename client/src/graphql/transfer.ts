@@ -27,3 +27,15 @@ export const GET_ALL_TRANSFER = gql`
     }
   }
 `;
+
+export const DELETE_TRANSFER = gql`
+  mutation DeleteTransfer($id: ID!) {
+    deleteTransfer(id: $id) {
+      data {
+        id
+      }
+      message
+      status
+    }
+  }
+`;

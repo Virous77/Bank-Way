@@ -34,4 +34,17 @@ export const TransferRoot = {
       throw error || "Failed to fetch payment";
     }
   },
+
+  deleteTransfer: async ({ id }) => {
+    try {
+      const payment = await Transfer.findByIdAndDelete(id);
+      return createResult({
+        message: "Payment deleted successfully",
+        status: 200,
+        data: payment,
+      });
+    } catch (error) {
+      throw error || "Failed to delete payment";
+    }
+  },
 };

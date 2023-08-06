@@ -57,10 +57,6 @@ export const ActivityRoot = {
         createdAt: { $gte: input.date },
       };
 
-      if (input.type !== "all") {
-        query.type_name = input.type;
-      }
-
       const transactions = await Activity.find(query).sort({ createdAt: -1 });
       return createResult({
         data: transactions,

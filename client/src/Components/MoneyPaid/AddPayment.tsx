@@ -1,12 +1,16 @@
 import { displayCol } from "../Common/variable.style";
 import { PDiv } from "./money.style";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useGlobalContext } from "../../Store/globalContext";
 import { CREATE_TRANSFER } from "../../graphql/transfer";
 import { getLocalData, handleAction } from "../../Utils/data";
 
-const AddPayment = () => {
+type AddPaymentType = {
+  refetch: () => void;
+};
+
+const AddPayment: React.FC<AddPaymentType> = ({ refetch }) => {
   const initialState = {
     transfer_to: "",
     amount: 0,
@@ -23,6 +27,7 @@ const AddPayment = () => {
       handleSetNotification({ message: error.message, status: "error" });
     },
     onCompleted: () => {
+      refetch();
       setState((prev) => ({ ...prev, show: "" }));
       setFormData(initialState);
     },

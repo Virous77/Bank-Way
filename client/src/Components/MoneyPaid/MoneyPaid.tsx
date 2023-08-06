@@ -6,9 +6,34 @@ import AddPayment from "./AddPayment";
 import { Modal } from "../Modal/Modal";
 import ModalHeader from "../Modal/ModalHeader";
 import PaymentTransaction from "./PaymentTransaction";
+import { getLocalData } from "../../Utils/data";
+import { GET_ALL_TRANSFER } from "../../graphql/transfer";
+import { useQuery } from "@apollo/client";
+import { Payments } from "../../Interface/interface";
+
+type PaymentResponse = {
+  getTransferAll: {
+    data: Payments[];
+  };
+};
 
 const MoneyPaid = () => {
-  const { setState, state } = useGlobalContext();
+  const { setState, state, handleSetNotification } = useGlobalContext();
+  const id = getLocalData("bankId");
+
+  const { data, loading, refetch } = useQuery<PaymentResponse | undefined>(
+    GET_ALL_TRANSFER,
+    {
+      variables: { id },
+      onError: (error) => {
+        handleSetNotification({ message: error.message, status: "error" });
+      },
+      onCompleted: (data) => {
+        setState({ ...state, payment: data?.getTransferAll.data });
+      },
+      fetchPolicy: id ? "cache-and-network" : "standby",
+    }
+  );
 
   return (
     <Main>
@@ -18,7 +43,11 @@ const MoneyPaid = () => {
           Add Payment
         </button>
       </PayHeader>
-      <PaymentTransaction />
+      <PaymentTransaction
+        data={data?.getTransferAll.data}
+        loading={loading}
+        refetch={refetch}
+      />
 
       {state.show === "payment" && (
         <Modal
@@ -30,7 +59,7 @@ const MoneyPaid = () => {
             name="Add Payment"
             onClose={() => setState({ ...state, show: "" })}
           />
-          <AddPayment />
+          <AddPayment refetch={refetch} />
         </Modal>
       )}
     </Main>

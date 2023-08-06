@@ -88,7 +88,7 @@ export const PAction = styled.div<{ $style: string }>`
     background-color: red;
     padding: 3px 10px;
     font-size: 14px;
-    color: var(--main-font-color);
+    color: var(--exact-white-color) !important;
     opacity: 0.9;
 
     &:hover {
@@ -105,11 +105,61 @@ export const Wrap = styled.div<{ $style: string }>`
     display: flex;
     align-items: center;
     gap: 10px;
+    text-transform: capitalize;
   }
 
   p {
     font-size: 14px;
     margin-top: 5px;
     margin-left: 4px;
+  }
+`;
+
+export const PSide = styled.div`
+  h2 {
+    color: var(--exact-font-color);
+    font-size: 20px;
+  }
+`;
+
+export const WrapD = styled.div<{ $style: string }>`
+  ${(props) => props.$style};
+  gap: 1rem;
+  margin-top: 1rem;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--box-shadow);
+    padding: 10px 5px;
+  }
+
+  p {
+    color: var(--exact-font-color) !important;
+  }
+
+  b {
+    color: var(--exact-font-color) !important;
+    text-transform: capitalize;
+  }
+
+  h3 {
+    color: var(--exact-font-color) !important;
+  }
+`;
+
+export const SDiv = styled.div`
+  flex-direction: column !important;
+  align-items: flex-start !important;
+
+  @media (max-width: 992px) {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  @media (max-width: 540px) {
+    flex-direction: column !important;
+    align-items: flex-start !important;
   }
 `;

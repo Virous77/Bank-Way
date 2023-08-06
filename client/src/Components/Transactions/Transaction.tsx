@@ -44,6 +44,7 @@ const Transactions = () => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPageNumber(1);
     setState({ ...state, search: "" });
     setTransactionType(e.target.value);
     setTransactions([]);

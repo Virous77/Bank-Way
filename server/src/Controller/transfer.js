@@ -23,7 +23,9 @@ export const TransferRoot = {
 
   getTransferAll: async ({ id }) => {
     try {
-      const payments = await Transfer.find({ user_id: id });
+      const payments = await Transfer.find({ user_id: id }).sort({
+        createdAt: -1,
+      });
 
       return createResult({
         data: payments,

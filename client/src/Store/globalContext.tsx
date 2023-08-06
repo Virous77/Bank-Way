@@ -2,7 +2,7 @@ import { createContext, useContext, useState, ReactNode } from "react";
 import { UPDATE_SETTING, GET_SETTING } from "../graphql/setting";
 import { useQuery, useMutation } from "@apollo/client";
 import { getLocalData, handleAction } from "../Utils/data";
-import { Setting } from "../Interface/interface";
+import { Setting, Payments } from "../Interface/interface";
 
 type notificationType = {
   message: string;
@@ -19,6 +19,7 @@ type stateType = {
   menu: string;
   csvDataType: string;
   error: boolean;
+  payment: Payments[] | undefined;
 };
 
 type settingType = {
@@ -58,6 +59,7 @@ const stateInitialValueTwo: stateType = {
   menu: "",
   csvDataType: "all",
   error: false,
+  payment: [],
 };
 
 const initialValue: GlobalType = {

@@ -21,7 +21,11 @@ const CsvData = () => {
   ];
 
   const csvData = data?.getAllActivity.data
-    .filter((trans) => trans.type_name === state.csvDataType)
+    .filter((trans) =>
+      state.csvDataType === "all"
+        ? trans.type_name
+        : trans.type_name === state.csvDataType
+    )
     .map((item) => ({
       transaction: item.type,
       amount: item?.amount,

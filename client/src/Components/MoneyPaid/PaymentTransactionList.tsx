@@ -2,7 +2,7 @@ import { Payments } from "../../Interface/interface";
 import { displayFlex } from "../Common/variable.style";
 import { PList, Wrap, PAction } from "./money.style";
 import { RiSecurePaymentLine } from "react-icons/ri";
-import { formatDate, handleAction } from "../../Utils/data";
+import { formatDate } from "../../Utils/data";
 import { useState } from "react";
 import { DELETE_TRANSFER } from "../../graphql/transfer";
 import { useMutation } from "@apollo/client";

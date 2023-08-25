@@ -146,4 +146,19 @@ export const UserRoot = {
       throw new Error("Failed to fetch users");
     }
   },
+
+  forgetPassword: async ({ input }) => {
+    try {
+      const user = User.findOne({ email: input.email });
+
+      if (!user) {
+        return {
+          message: "Email not exists",
+          status: false,
+        };
+      }
+    } catch (error) {
+      throw new Error("Failed to send OTP");
+    }
+  },
 };

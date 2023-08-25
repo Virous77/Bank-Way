@@ -8,7 +8,8 @@ const useAppTitle = ({
   data?: string;
 }) => {
   useEffect(() => {
-    document.title = `${name} | Expensify` || "Expensify";
+    document.title =
+      `${name} ${name !== "Expensify" ? "| Expensify" : ""}` || "Expensify";
   }, [data]);
 };
 

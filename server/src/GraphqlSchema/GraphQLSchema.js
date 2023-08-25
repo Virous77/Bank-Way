@@ -38,6 +38,10 @@ export const GraphQLSchema = buildSchema(`
     newPassword: String!
   }
 
+  input ForgetPassword{
+  email: String!     
+  }
+
   input LoginUserInput{
     email: String
     password: String
@@ -47,6 +51,11 @@ export const GraphQLSchema = buildSchema(`
     data: User
     message: String
     status: Int
+  }
+
+  type ForgetPassResponse{
+    message: String
+    status: Boolean
   }
 
 
@@ -192,6 +201,7 @@ type Activity {
     deleteUser(id: ID!): UserResponse
     loginUser(input: LoginUserInput!): UserResponse
     changePassword(input: ChangePassword!): UserResponse
+    forgetPassword(input: ForgetPassword!): ForgetPassResponse
     updateSetting(input: UpdateSettingInput!): settingResult
     createTransfer(input: CreateTransferInput!): TransferResult
     deleteTransfer(id: ID!): TransferResult

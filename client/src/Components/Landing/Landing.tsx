@@ -6,8 +6,11 @@ import SignUp from "../Auth/SignUp";
 import SignIn from "../Auth/SignIn";
 import money from "../../assets/money.svg";
 import { displayCol } from "../Common/variable.style";
+import useAppTitle from "../../hooks/useAppTitle";
+import ForgetPassword from "../Auth/ForgetPassword";
 
 const Landing = () => {
+  useAppTitle({ name: "Expensify" });
   const { setState, state } = useGlobalContext();
 
   const activeTab =
@@ -15,19 +18,21 @@ const Landing = () => {
       ? "signIn"
       : state.show === "signUp"
       ? "signUp"
+      : state.show === "forget"
+      ? "forget"
       : "cool";
 
   return (
     <Main $style={displayCol}>
       <section>
-        <h1>Goodbye, money stress. Hello, BankWay.</h1>
+        <h1>Goodbye, money stress. Hello BankWay.</h1>
         <img src={money} alt="BankWay" />
         <h2>Take the guesswork out of managing your money.</h2>
 
         <p>
-          Track daily makes it easy to spend and track your money. Budget
-          smarter by knowing how much you spending daily. You have all the good
-          features add notes & inbuilt graph to understand better.
+          BankWay makes it easy to spend and track your money. Budget smarter by
+          knowing how much you spending daily. You have all the good features
+          add notes & inbuilt graph to understand better.
         </p>
         <button onClick={() => setState({ ...state, show: "signUp" })}>
           Sign Up
@@ -39,7 +44,13 @@ const Landing = () => {
             name="BankWay"
             onClose={() => setState({ ...state, show: "" })}
           />
-          {activeTab === "signUp" ? <SignUp /> : <SignIn />}
+          {activeTab === "signUp" ? (
+            <SignUp />
+          ) : activeTab === "signIn" ? (
+            <SignIn />
+          ) : (
+            <ForgetPassword />
+          )}
         </Modal>
       )}
     </Main>

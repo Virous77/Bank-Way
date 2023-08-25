@@ -75,6 +75,7 @@ type ContextType = {
   >;
   updateLoading: boolean;
   handleUpdateData: () => void;
+  refetch: () => void;
 };
 
 const contextInitialState: ContextType = {
@@ -89,6 +90,7 @@ const contextInitialState: ContextType = {
   setEditData: () => {},
   updateLoading: false,
   handleUpdateData: () => {},
+  refetch: () => {},
 };
 
 const ActivityContext = createContext(contextInitialState);
@@ -233,6 +235,7 @@ export const ActivityContextProvider = ({
         setEditData,
         updateLoading,
         handleUpdateData,
+        refetch,
       }}
     >
       {children}

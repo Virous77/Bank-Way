@@ -16,9 +16,14 @@ import EditUser from "./EditUser";
 import { CircleShimmer, HeadingShimmer } from "../Shimmers/TextShimmer";
 import { useAuthContext } from "../../Store/AuthContext";
 import defaultUser from "../../assets/user.avif";
+import useAppTitle from "../../hooks/useAppTitle";
 
 const UserProfile = () => {
   const { userData } = useAuthContext();
+  useAppTitle({
+    name: userData?.name,
+    data: userData?.name,
+  });
   const { formData, setFormData, editUserData, setEditUserData } =
     useAuthContext();
 

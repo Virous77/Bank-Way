@@ -10,8 +10,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import PaginatedTransactionList from "./PaginatedTransactionList";
 import { TransactionShimmer } from "../Shimmers/TextShimmer";
 import noTransaction from "../../assets/no-transaction.svg";
+import useAppTitle from "../../hooks/useAppTitle";
 
 const Transactions = () => {
+  useAppTitle({ name: "Transaction" });
   const { handleSetNotification, state, setState } = useGlobalContext();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [transactionType, setTransactionType] = useState("all");

@@ -10,6 +10,7 @@ import { getLocalData } from "../../Utils/data";
 import { GET_ALL_TRANSFER } from "../../graphql/transfer";
 import { useQuery } from "@apollo/client";
 import { Payments } from "../../Interface/interface";
+import useAppTitle from "../../hooks/useAppTitle";
 
 type PaymentResponse = {
   getTransferAll: {
@@ -18,6 +19,7 @@ type PaymentResponse = {
 };
 
 const MoneyPaid = () => {
+  useAppTitle({ name: "Transfer" });
   const { setState, state, handleSetNotification } = useGlobalContext();
   const id = getLocalData("bankId");
 

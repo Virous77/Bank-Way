@@ -17,6 +17,10 @@ export const NavbarMain = styled.header<{ $displayCenter: string }>`
     width: 95%;
     padding: 0.5rem 1rem;
   }
+
+  @media (max-width: 768px) {
+    top: 4.5%;
+  }
 `;
 
 export const LogoConta = styled.div<{ $style: string }>`

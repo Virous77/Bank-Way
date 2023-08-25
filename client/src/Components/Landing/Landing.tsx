@@ -20,7 +20,7 @@ const Landing = () => {
   return (
     <Main $style={displayCol}>
       <section>
-        <h1>Goodbye, money stress. Hello, Track Daily.</h1>
+        <h1>Goodbye, money stress. Hello, BankWay.</h1>
         <img src={money} alt="BankWay" />
         <h2>Take the guesswork out of managing your money.</h2>
 
@@ -29,7 +29,9 @@ const Landing = () => {
           smarter by knowing how much you spending daily. You have all the good
           features add notes & inbuilt graph to understand better.
         </p>
-        <button>Sign Up</button>
+        <button onClick={() => setState({ ...state, show: "signUp" })}>
+          Sign Up
+        </button>
       </section>
       {state.show === activeTab && (
         <Modal isOpen="isOpen" onClose={() => setState({ ...state, show: "" })}>

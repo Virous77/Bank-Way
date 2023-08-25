@@ -8,8 +8,10 @@ import PasswordModal from "./PasswordModal";
 import ThemeSetting from "./ThemeSetting";
 import HomeSetting from "./HomeSetting";
 import CsvData from "./CsvData";
+import useAppTitle from "../../hooks/useAppTitle";
 
 const Settings = () => {
+  useAppTitle({ name: "Settings" });
   const [active, setActive] = useState<string | undefined>(undefined);
 
   return (

@@ -1,24 +1,59 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Main, Form, Input, Heading } from "./auth.style";
 import { Button } from "../Layout/navbar.style";
 import { displayCol } from "../Common/variable.style";
-import { FORGET_PASSWORD } from "../../graphql/user";
+import { FORGET_PASSWORD, RESET_PASSWORD } from "../../graphql/user";
 import { useMutation } from "@apollo/client";
 import { handleAction } from "../../Utils/data";
 import { useGlobalContext } from "../../Store/globalContext";
 
+type OTPResponse = {
+  forgetPassword: {
+    message: string;
+    status: boolean;
+  };
+};
+
+type ResetResponse = {
+  resetPassword: {
+    message: string;
+    status: boolean;
+  };
+};
+
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
-  const { handleError } = useGlobalContext();
-
-  const [forgetPassword, { loading }] = useMutation(FORGET_PASSWORD, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
-    onError: (data) => {
-      console.log(data);
-    },
+  const { handleError, handleSetNotification, setState, state } =
+    useGlobalContext();
+  const [reset, setReset] = useState({
+    otp: "",
+    password: "",
+    confirmPassword: "",
   });
+
+  const [forgetPassword, { loading, data }] = useMutation<OTPResponse>(
+    FORGET_PASSWORD,
+    {
+      onError: (data) => {
+        handleSetNotification({ message: data.message, status: "error" });
+      },
+    }
+  );
+
+  const [resetPassword, { loading: isLoading, data: resetData }] =
+    useMutation<ResetResponse>(RESET_PASSWORD, {
+      onError: (data) => {
+        handleSetNotification({ message: data.message, status: "error" });
+      },
+      onCompleted: (data) => {
+        localStorage.clear();
+        handleSetNotification({
+          message: data.resetPassword.message,
+          status: "success",
+        });
+        setState({ ...state, show: "signIn" });
+      },
+    });
 
   const handleEvent = () => {
     const data = {
@@ -34,11 +69,46 @@ const ForgetPassword = () => {
     }
   };
 
+  function formHasUnsavedChanges() {
+    return data?.forgetPassword.status && !resetData ? true : false;
+  }
+
+  window.addEventListener("beforeunload", function (event) {
+    if (formHasUnsavedChanges()) {
+      event.preventDefault();
+      event.returnValue = "";
+      return "You have unsaved changes. Are you sure you want to leave?";
+    }
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setReset({ ...reset, [name]: value });
+  };
+
+  const handleReset = () => {
+    const { otp, ...rest } = reset;
+    const data = {
+      ...rest,
+      otp: +otp,
+    };
+    try {
+      handleAction({
+        action: resetPassword,
+        formData: data,
+      });
+    } catch (error: any) {
+      handleError(error.message);
+    }
+  };
+
   return (
     <Main>
-      <Heading>Forget Password</Heading>
+      <Heading>
+        {data?.forgetPassword.status ? "Setup new Password" : "Forget Password"}
+      </Heading>
 
-      <React.Fragment>
+      {!data?.forgetPassword.status ? (
         <Form onSubmit={(e) => e.preventDefault()} $style={displayCol}>
           <Input
             type="text"
@@ -56,7 +126,52 @@ const ForgetPassword = () => {
             {loading ? "Processing..." : "Get OTP"}
           </Button>
         </Form>
-      </React.Fragment>
+      ) : (
+        <Form onSubmit={(e) => e.preventDefault()} $style={displayCol}>
+          <fieldset>
+            <label htmlFor="password"> New Password</label>
+            <Input
+              type="text"
+              placeholder="New Password*"
+              value={reset.password}
+              name="password"
+              onChange={handleChange}
+            />
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="confirmPassword"> Confirm Password</label>
+            <Input
+              type="text"
+              placeholder="Confirm Password*"
+              value={reset.confirmPassword}
+              name="confirmPassword"
+              onChange={handleChange}
+            />
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="otp">OTP</label>
+            <Input
+              type="text"
+              placeholder="OTP*"
+              value={reset.otp}
+              name="otp"
+              onChange={handleChange}
+            />
+          </fieldset>
+
+          <Button
+            $width="100%"
+            $primary="var(--body-color)"
+            disabled={isLoading}
+            style={{ marginTop: "-0.5rem" }}
+            onClick={handleReset}
+          >
+            {loading ? "Processing..." : "Change Password"}
+          </Button>
+        </Form>
+      )}
     </Main>
   );
 };

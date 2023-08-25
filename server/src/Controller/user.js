@@ -2,11 +2,13 @@ import User from "../Models/User.js";
 import {
   AuthValidate,
   PasswordValidate,
+  ResetValidate,
   UserUpdateValidate,
 } from "../Middleware/validate.js";
-import { createResult } from "../Utils/utility.js";
+import { createResult, generateOTP } from "../Utils/utility.js";
 import bcrypt from "bcrypt";
 import { SettingRoot } from "./settings.js";
+import { sendOTP } from "../Middleware/sendMail.js";
 
 export const UserRoot = {
   createUser: async ({ input }) => {
@@ -149,16 +151,61 @@ export const UserRoot = {
 
   forgetPassword: async ({ input }) => {
     try {
-      const user = User.findOne({ email: input.email });
+      if (!input.email) throw new Error("Email is required");
+      const user = await User.findOne({ email: input.email.toLowerCase() });
+      if (!user) throw new Error("Email not exists");
 
-      if (!user) {
+      const otp = generateOTP();
+      user.otp = otp;
+      await user.save();
+      const isSent = await sendOTP(input.email.toLowerCase(), otp);
+
+      if (isSent) {
         return {
-          message: "Email not exists",
-          status: false,
+          message: "OTP sent successfully!",
+          status: true,
         };
+      } else {
+        user.otp = null;
+        await user.save();
+        throw new Error("Something went wrong,Try again");
       }
     } catch (error) {
-      throw new Error("Failed to send OTP");
+      throw error || "Failed to send OTP";
+    }
+  },
+
+  resetPassword: async ({ input }) => {
+    try {
+      const { error } = ResetValidate.validate(input);
+      if (error) {
+        if (error.details[0].message === `"otp" must be greater than 99999`) {
+          throw new Error("OTP format is wrong");
+        } else {
+          console.log(error.details[0].message);
+          throw new Error(error.details[0].message);
+        }
+      }
+
+      if (input.password !== input.confirmPassword)
+        throw new Error("New Password and Confirm Password doesn't match");
+
+      const user = await User.findOne({ otp: input.otp });
+      if (!user) throw new Error("OTP is wrong");
+
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(input.password, salt);
+
+      user.password = hash;
+      user.otp = null;
+      user.save();
+
+      return {
+        message: "Password Reset Successfully",
+        status: true,
+      };
+    } catch (error) {
+      throw error || "Failed to reset Password";
     }
   },
 };

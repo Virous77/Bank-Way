@@ -70,7 +70,7 @@ export const ActivityRoot = {
 
   getPaginatedActivity: async ({ input }) => {
     try {
-      const { pageSize, pageNumber, type, search } = input;
+      const { pageSize, pageNumber, type, search, user_id } = input;
       const skipDocuments = (+pageNumber - 1) * +pageSize;
       const regex = new RegExp(search.toLowerCase(), "i");
 
@@ -81,8 +81,11 @@ export const ActivityRoot = {
               type_name: type,
             };
 
-      const totalProduct = (await Activity.find(queryType)).length;
+      const totalProduct = (
+        await Activity.find({ ...queryType, user_id: user_id })
+      ).length;
       const transactions = await Activity.find({
+        user_id: user_id,
         ...queryType,
         name: { $regex: regex },
       })

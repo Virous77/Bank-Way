@@ -9,6 +9,7 @@ export const GraphQLSchema = buildSchema(`
     image: String
     isAdmin: Boolean
     bio: String
+    otp: Int
     createdAt: String
     updatedAt: String
   }
@@ -56,6 +57,12 @@ export const GraphQLSchema = buildSchema(`
   type ForgetPassResponse{
     message: String
     status: Boolean
+  }
+
+  input ResetPassword{
+    otp: Int
+    password: String
+    confirmPassword: String
   }
 
 
@@ -125,6 +132,7 @@ type Activity {
     pageSize: Int
     type: String
     search: String
+    user_id: String
   }
 
 
@@ -202,6 +210,7 @@ type Activity {
     loginUser(input: LoginUserInput!): UserResponse
     changePassword(input: ChangePassword!): UserResponse
     forgetPassword(input: ForgetPassword!): ForgetPassResponse
+    resetPassword(input: ResetPassword): ForgetPassResponse
     updateSetting(input: UpdateSettingInput!): settingResult
     createTransfer(input: CreateTransferInput!): TransferResult
     deleteTransfer(id: ID!): TransferResult

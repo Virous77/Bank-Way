@@ -11,6 +11,7 @@ import PaginatedTransactionList from "./PaginatedTransactionList";
 import { TransactionShimmer } from "../Shimmers/TextShimmer";
 import noTransaction from "../../assets/no-transaction.svg";
 import useAppTitle from "../../hooks/useAppTitle";
+import { getLocalData } from "../../Utils/data";
 
 const Transactions = () => {
   useAppTitle({ name: "Transaction" });
@@ -20,12 +21,14 @@ const Transactions = () => {
   const [total, setTotal] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const pageSize = 20;
+  const user_id = getLocalData("bankId");
 
   const input = {
     pageNumber,
     pageSize,
     type: transactionType,
     search: state.search.length > 3 ? state.search : "",
+    user_id,
   };
 
   const { loading } = useQuery(GET_PAGINATED_ACTIVITY, {

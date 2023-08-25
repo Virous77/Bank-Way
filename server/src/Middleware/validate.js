@@ -38,3 +38,9 @@ export const TransferValidate = joi
     notes: joi.string().trim().required(),
   })
   .options({ stripUnknown: true });
+
+export const ResetValidate = joi.object({
+  otp: joi.number().greater(99999).required(),
+  password: joi.string().trim().required(),
+  confirmPassword: joi.string().trim().required(),
+});

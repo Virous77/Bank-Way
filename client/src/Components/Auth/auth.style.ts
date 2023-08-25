@@ -17,12 +17,26 @@ export const Form = styled.form<{ $style?: string }>`
   ${(props) => props.$style};
   gap: 2rem;
   width: 100%;
+
+  fieldset {
+    border: none;
+    ${(props) => props.$style};
+    gap: 7px;
+
+    label {
+      display: inline-block;
+      padding-left: 3px;
+      font-weight: 600;
+      color: var(--exact-white-color);
+    }
+  }
 `;
 
 export const Input = styled.input`
   font-size: 1rem;
   padding: 10px;
   border-radius: 10px;
+  color: var(--exact-font-color);
 `;
 
 export const P = styled.p`

@@ -39,7 +39,15 @@ const Landing = () => {
         </button>
       </section>
       {state.show === activeTab && (
-        <Modal isOpen="isOpen" onClose={() => setState({ ...state, show: "" })}>
+        <Modal
+          isOpen="isOpen"
+          onClose={() =>
+            setState({
+              ...state,
+              show: state.show === "forget" ? "forget" : "",
+            })
+          }
+        >
           <ModalHeader
             name="BankWay"
             onClose={() => setState({ ...state, show: "" })}

@@ -25,7 +25,7 @@ const Sidebar = () => {
             <List $style={displayCol}>
               {data?.getAllActivity.data?.map((transaction) => (
                 <TransactionList
-                  key={transaction.id}
+                  key={transaction._id}
                   transaction={transaction}
                   title="dashboard"
                 />

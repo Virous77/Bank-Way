@@ -5,7 +5,6 @@ import ModalHeader from "../Modal/ModalHeader";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useActivity } from "../../Store/ActivityContext";
 import { ChartLoading } from "../Shimmers/TextShimmer";
-import { useEffect } from "react";
 import useAppTitle from "../../hooks/useAppTitle";
 
 type DashboardType = {
@@ -15,15 +14,8 @@ type DashboardType = {
 
 const Dashboard: React.FC<DashboardType> = ({ Compo, title }) => {
   const { setState, state } = useGlobalContext();
-  const { data, loading, refetch } = useActivity();
+  const { data, loading } = useActivity();
   useAppTitle({ name: "Dashboard" });
-
-
-  useEffect(() => {
-    if (data && data?.getAllActivity.data.length > 0) {
-      refetch();
-    }
-  }, [data?.getAllActivity.data]);
 
   return (
     <div>

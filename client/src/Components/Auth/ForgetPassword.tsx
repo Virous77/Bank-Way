@@ -168,7 +168,7 @@ const ForgetPassword = () => {
             style={{ marginTop: "-0.5rem" }}
             onClick={handleReset}
           >
-            {loading ? "Processing..." : "Change Password"}
+            {isLoading ? "Processing..." : "Change Password"}
           </Button>
         </Form>
       )}

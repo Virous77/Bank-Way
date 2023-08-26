@@ -67,7 +67,7 @@ export const GraphQLSchema = buildSchema(`
 
 
 type Activity {
-    id: ID!
+    _id: String!
     name: String
     type: String!
     type_name: String!
@@ -81,7 +81,7 @@ type Activity {
   }
 
   input CreateActivityInput {
-     name: String
+    name: String
     type: String!
     type_name: String!
     amount: Int!
@@ -91,8 +91,8 @@ type Activity {
   }
 
   input UpdateActivityInput {
-    id: ID!
-   name: String
+    _id: String!
+    name: String
     type: String!
     type_name: String!
     amount: Int!
@@ -122,7 +122,7 @@ type Activity {
   }
 
   input ActivityAllType{
-    id: ID!
+    id: String!
     date: String
     type: String
   }
@@ -137,7 +137,7 @@ type Activity {
 
 
   type Settings{
-    id: ID!
+    _id: String!
     transaction_icon_type: Boolean
     home_transaction_duration: String
     home_transaction_type: String
@@ -147,7 +147,7 @@ type Activity {
   }
 
   input UpdateSettingInput{
-    id: ID
+    _id: String
     transaction_icon_type: Boolean
     home_transaction_duration: String
     home_transaction_type: String
@@ -161,7 +161,7 @@ type Activity {
   }
 
   type Transfer{
-    id: ID!
+    _id: String!
     transfer_to: String
     amount: Int
     notes: String
@@ -203,7 +203,6 @@ type Activity {
   type Mutation {
     createActivity(input: CreateActivityInput!): ActivityResult
     updateActivity(input: UpdateActivityInput!): ActivityResult
-    deleteActivity(id: ID!): ActivityResult
     createUser(input: CreateUserInput!): UserResponse
     updateUser(input: UpdateUserInput!): UserResponse
     deleteUser(id: ID!): UserResponse

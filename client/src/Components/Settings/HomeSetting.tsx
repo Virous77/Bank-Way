@@ -97,7 +97,16 @@ const HomeSetting = () => {
           </TTDiv>
         </IconLi>
       </HomeUL>
-      <b>* Last updated at {formatDate(new Date(Number(data?.updatedAt)))}</b>
+      <b>
+        * Last updated at{" "}
+        {formatDate(
+          new Date(
+            data?.updatedAt.includes("T")
+              ? data.updatedAt
+              : Number(data?.updatedAt)
+          )
+        )}
+      </b>
     </Section>
   );
 };

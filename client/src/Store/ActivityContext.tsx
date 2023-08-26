@@ -75,7 +75,6 @@ type ContextType = {
   >;
   updateLoading: boolean;
   handleUpdateData: () => void;
-  refetch: () => void;
 };
 
 const contextInitialState: ContextType = {
@@ -90,7 +89,6 @@ const contextInitialState: ContextType = {
   setEditData: () => {},
   updateLoading: false,
   handleUpdateData: () => {},
-  refetch: () => {},
 };
 
 const ActivityContext = createContext(contextInitialState);
@@ -198,7 +196,7 @@ export const ActivityContextProvider = ({
 
   const handleUpdateData = () => {
     if (!editData) return;
-    const { type, other, amount, type_name, ...rest } = editData;
+    const { type, other, amount, type_name, id: tId, ...rest } = editData;
     const transType = type_name === "expense" ? expenseType : incomeType;
     const isOther =
       type !== "others" && transType.find((id) => id.name === type);
@@ -209,6 +207,7 @@ export const ActivityContextProvider = ({
       amount: Number(amount),
       user_id: id,
       type_name,
+      _id: tId,
     };
 
     try {
@@ -235,7 +234,6 @@ export const ActivityContextProvider = ({
         setEditData,
         updateLoading,
         handleUpdateData,
-        refetch,
       }}
     >
       {children}

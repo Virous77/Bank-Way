@@ -17,7 +17,7 @@ export interface QuotesType {
 }
 
 export interface Transaction {
-  id: string;
+  _id: string;
   name: string;
   type: string;
   type_name: string;
@@ -29,7 +29,7 @@ export interface Transaction {
 }
 
 export interface Setting {
-  id: string;
+  _id: string;
   user_id: string;
   transaction_icon_type: boolean;
   home_transaction_duration: string;
@@ -38,7 +38,7 @@ export interface Setting {
 }
 
 export interface Payments {
-  id: string;
+  _id: string;
   transfer_to: string;
   amount: number;
   notes: string;

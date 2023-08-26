@@ -85,7 +85,7 @@ const Transactions = () => {
             {transactions.length > 0 ? (
               <PUL $style={displayCol}>
                 {transactions.map((tran) => (
-                  <PaginatedTransactionList key={tran.id} transaction={tran} />
+                  <PaginatedTransactionList key={tran._id} transaction={tran} />
                 ))}
               </PUL>
             ) : (

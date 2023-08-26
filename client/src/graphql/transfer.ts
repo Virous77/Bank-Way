@@ -4,7 +4,7 @@ export const CREATE_TRANSFER = gql`
   mutation CreateTransfer($input: CreateTransferInput!) {
     createTransfer(input: $input) {
       data {
-        id
+        _id
       }
       message
       status
@@ -16,7 +16,7 @@ export const GET_ALL_TRANSFER = gql`
   query GetTransferAll($id: ID!) {
     getTransferAll(id: $id) {
       data {
-        id
+        _id
         transfer_to
         amount
         notes
@@ -32,7 +32,7 @@ export const DELETE_TRANSFER = gql`
   mutation DeleteTransfer($id: ID!) {
     deleteTransfer(id: $id) {
       data {
-        id
+        _id
       }
       message
       status

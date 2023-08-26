@@ -1,6 +1,11 @@
 import Activity from "../Models/activity.js";
 import { createResult } from "../Utils/utility.js";
 import { ActivityValidate } from "../Middleware/validate.js";
+import {
+  deleteRedisKey,
+  setRedisCache,
+  getRedisCache,
+} from "../Utils/redis.js";
 
 export const ActivityRoot = {
   createActivity: async ({ input }) => {
@@ -11,6 +16,7 @@ export const ActivityRoot = {
         throw new Error("Refund name is required");
 
       const activity = new Activity(input);
+      await deleteRedisKey(input.user_id);
       await activity.save();
       return createResult({
         data: activity,
@@ -26,20 +32,20 @@ export const ActivityRoot = {
       const { error } = ActivityValidate.validate(input);
       if (error) throw new Error(error.details[0].message);
 
-      const { id, ...rest } = input;
+      const { _id, ...rest } = input;
       const data = {
         ...rest,
         is_edited: true,
       };
 
       const updatedActivity = await Activity.findByIdAndUpdate(
-        id,
+        _id,
         {
           $set: { ...data },
         },
         { new: true }
       );
-
+      await deleteRedisKey(input.user_id);
       return createResult({
         data: updatedActivity,
         message: "Activity updated successfully",
@@ -57,12 +63,25 @@ export const ActivityRoot = {
         createdAt: { $gte: input.date },
       };
 
-      const transactions = await Activity.find(query).sort({ createdAt: -1 });
-      return createResult({
-        data: transactions,
-        message: "Activity fetched successfully",
-        status: 200,
-      });
+      const cacheTransactions = await getRedisCache(input.id);
+
+      if (cacheTransactions) {
+        return createResult({
+          data: cacheTransactions,
+          message: "Activity fetched successfully",
+          status: 200,
+        });
+      } else {
+        const transactions = await Activity.find(query).sort({
+          createdAt: -1,
+        });
+        await setRedisCache(input.id, transactions);
+        return createResult({
+          data: transactions,
+          message: "Activity fetched successfully",
+          status: 200,
+        });
+      }
     } catch (error) {
       throw error || "Failed to fetch transaction";
     }

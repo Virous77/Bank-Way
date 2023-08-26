@@ -1,15 +1,22 @@
 import Settings from "../Models/settings.js";
 import { createResult } from "../Utils/utility.js";
+import {
+  getRedisCache,
+  deleteRedisKey,
+  setRedisCache,
+} from "../Utils/redis.js";
 
 export const SettingRoot = {
   createSetting: async ({ id }) => {
     try {
       const newSetting = new Settings({ user_id: id });
       await newSetting.save();
+      await deleteRedisKey(`${newSetting.user_id}setting`);
     } catch (error) {
       throw error || "Failed to create Settings";
     }
   },
+
   updateSetting: async ({ input }) => {
     const { user_id, ...rest } = input;
     try {
@@ -20,6 +27,7 @@ export const SettingRoot = {
       );
 
       if (!updatedSetting) throw new Error("User id is wrong");
+      await deleteRedisKey(`${updatedSetting.user_id}setting`);
 
       return createResult({
         data: updatedSetting,
@@ -33,13 +41,23 @@ export const SettingRoot = {
   },
   getUserSetting: async ({ id }) => {
     try {
-      const setting = await Settings.findOne({ user_id: id });
+      const cacheSetting = await getRedisCache(`${id}setting`);
 
-      return createResult({
-        data: setting,
-        message: "Setting fetched Successfully",
-        status: 200,
-      });
+      if (cacheSetting) {
+        return createResult({
+          data: cacheSetting,
+          message: "Setting fetched Successfully",
+          status: 200,
+        });
+      } else {
+        const setting = await Settings.findOne({ user_id: id });
+        await setRedisCache(`${id}setting`, setting);
+        return createResult({
+          data: setting,
+          message: "Setting fetched Successfully",
+          status: 200,
+        });
+      }
     } catch (error) {
       throw error || "Failed to fetch Settings";
     }

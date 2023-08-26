@@ -7,7 +7,12 @@ const useChartData = () => {
   const { data } = useActivity();
 
   const weeklyData = data?.getAllActivity.data.filter(
-    (trans) => new Date(Number(trans.createdAt)) > DaysAgo
+    (trans) =>
+      new Date(
+        data?.getAllActivity.data[0].createdAt.includes("T")
+          ? trans.createdAt
+          : Number(trans.createdAt)
+      ) > DaysAgo
   );
 
   const chartData = useMemo(() => {

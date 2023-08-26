@@ -29,7 +29,7 @@ const PaymentTransaction: React.FC<PaymentTransactionType> = ({
         <>
           {data?.map((payment) => (
             <PaymentTransactionList
-              key={payment.id}
+              key={payment._id}
               payment={payment}
               refetch={refetch}
             />

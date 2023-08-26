@@ -10,7 +10,9 @@ import { graphqlHTTP } from "express-graphql";
 import UploadImage from "./src/Middleware/uploadImage.js";
 import { GraphQLSchema } from "./src/GraphqlSchema/GraphQLSchema.js";
 import { resolvers } from "./src/Resolvers.js";
+import Redis from "ioredis";
 
+export const client = new Redis();
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }));

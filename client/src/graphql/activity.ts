@@ -16,7 +16,7 @@ export const GET_ALL_ACTIVITY = gql`
   query GetAllActivity($input: ActivityAllType!) {
     getAllActivity(input: $input) {
       data {
-        id
+        _id
         name
         type
         type_name
@@ -48,7 +48,7 @@ export const GET_PAGINATED_ACTIVITY = gql`
   query GetPaginatedActivity($input: PaginatedActivityInput!) {
     getPaginatedActivity(input: $input) {
       data {
-        id
+        _id
         name
         type
         type_name

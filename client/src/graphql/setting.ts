@@ -4,7 +4,7 @@ export const UPDATE_SETTING = gql`
   mutation UpdateSetting($input: UpdateSettingInput!) {
     updateSetting(input: $input) {
       data {
-        id
+        _id
       }
       message
       status
@@ -16,7 +16,7 @@ export const GET_SETTING = gql`
   query GetUserSetting($id: ID!) {
     getUserSetting(id: $id) {
       data {
-        id
+        _id
         user_id
         transaction_icon_type
         home_transaction_duration

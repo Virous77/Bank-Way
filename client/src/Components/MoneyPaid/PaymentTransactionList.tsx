@@ -53,7 +53,7 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
           if (active) {
             setActive("");
           } else {
-            setActive(payment.id);
+            setActive(payment._id);
           }
         }}
       >
@@ -65,10 +65,10 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
         </div>
         <h3>₹{payment.amount}</h3>
       </Wrap>
-      {active === payment.id && (
+      {active === payment._id && (
         <PAction $style={displayFlex}>
           <p>Date: {formatDate(new Date(+payment.createdAt))}</p>
-          <button onClick={() => handleDelete(payment.id)} disabled={loading}>
+          <button onClick={() => handleDelete(payment._id)} disabled={loading}>
             Delete
           </button>
         </PAction>

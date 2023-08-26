@@ -59,7 +59,7 @@ const TransactionList: React.FC<TransactionListType> = ({
       amount: data.amount,
       type_name: data.type_name,
       other: isOther ? "" : data.type,
-      id: data.id,
+      id: data._id,
     });
   };
 
@@ -78,7 +78,7 @@ const TransactionList: React.FC<TransactionListType> = ({
           if (details) {
             setDetails("");
           } else {
-            setDetails(transaction.id);
+            setDetails(transaction._id);
           }
         }}
       >
@@ -103,7 +103,7 @@ const TransactionList: React.FC<TransactionListType> = ({
           <h4>₹{transaction.amount}</h4>
         </TDiv>
       </LiWrap>
-      {details === transaction.id && (
+      {details === transaction._id && (
         <TDetails $style={displayFlex}>
           <div>
             {transaction.name && <span>Name: {transaction.name}</span>}

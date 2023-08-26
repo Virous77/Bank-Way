@@ -12,7 +12,12 @@ import { GraphQLSchema } from "./src/GraphqlSchema/GraphQLSchema.js";
 import { resolvers } from "./src/Resolvers.js";
 import Redis from "ioredis";
 
-export const client = new Redis();
+export const client = new Redis({
+  password: process.env.REDIS_PASS,
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+});
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }));

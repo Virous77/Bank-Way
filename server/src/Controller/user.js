@@ -6,7 +6,7 @@ import {
   UserUpdateValidate,
 } from "../Middleware/validate.js";
 import { createResult, generateOTP } from "../Utils/utility.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { SettingRoot } from "./settings.js";
 import { sendOTP } from "../Middleware/sendMail.js";
 

@@ -3,6 +3,7 @@ import multer from "multer";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import { uploadImage, deleteImages } from "./uploadImageToCloudinary.js";
 
 const router = express.Router();
 
@@ -13,31 +14,32 @@ const __dirname = dirname(__filename);
 router.post("/api/upload", upload.single("image"), async (req, res) => {
   const image = req.file;
   try {
-    res
-      .status(200)
-      .json({ image: `${process.env.FRONTEND_URL}/${image.filename}` });
+    const cloudImage = await uploadImage(image.path);
+    res.status(200).json({ image: cloudImage });
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get("/uploads/:imageId", (req, res) => {
-  try {
-    const imageId = req.params.imageId;
-    const imagePath = path.join(__dirname, "../uploads", imageId);
-    const contentType = "image/jpeg";
-    res.set("Content-Type", contentType);
-    res.sendFile(imagePath);
-  } catch (error) {
-    console.log(error);
-  }
-});
+// router.get("/uploads/:imageId", (req, res) => {
+//   try {
+//     const imageId = req.params.imageId;
+//     const imagePath = path.join(__dirname, "../uploads", imageId);
+//     const contentType = "image/jpeg";
+//     res.set("Content-Type", contentType);
+//     res.sendFile(imagePath);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
-router.delete("/uploads/:filename", (req, res) => {
+router.delete("/uploads/:filename", async (req, res) => {
   try {
     const { filename } = req.params;
-    const filePath = path.join(__dirname, "../uploads", filename);
+    const cFileName = filename ? filename.split(".") : [];
 
+    const filePath = path.join(__dirname, "../uploads", cFileName[0]);
+    filename && (await deleteImages(filename));
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
       res.status(200).json({ message: "Image deleted successfully" });

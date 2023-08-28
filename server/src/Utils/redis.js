@@ -13,14 +13,22 @@ export const getRedisCache = async (key) => {
 };
 
 export const setRedisCache = async (key, value) => {
+  const expirationInSeconds = 24 * 60 * 60;
   return new Promise((resolve, reject) => {
-    client.set(key, JSON.stringify(value), (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
+    client.set(
+      key,
+      JSON.stringify(value),
+      "EX",
+      expirationInSeconds,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(result);
+        }
       }
-    });
+    );
   });
 };
 

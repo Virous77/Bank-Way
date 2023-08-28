@@ -8,6 +8,8 @@ export const PayHeader = styled.div<{ $style: string }>`
     padding: 6px 20px;
     border-radius: 5px;
     transition: all 300ms ease-in-out;
+    background-color: #47a992;
+    color: var(--exact-white-color);
 
     &:hover {
       opacity: 0.9;
@@ -48,6 +50,7 @@ export const PDiv = styled.div<{ $style: string }>`
       font-size: 16px;
       margin-top: 1rem;
       transition: all 300ms ease-in-out;
+      color: var(--exact-font-color);
 
       &:hover {
         background-color: var(--body-color);

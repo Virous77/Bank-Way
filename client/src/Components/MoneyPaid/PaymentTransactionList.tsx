@@ -67,7 +67,16 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
       </Wrap>
       {active === payment._id && (
         <PAction $style={displayFlex}>
-          <p>Date: {formatDate(new Date(+payment.createdAt))}</p>
+          <p>
+            Date:{" "}
+            {formatDate(
+              new Date(
+                payment.createdAt.includes("T")
+                  ? payment.createdAt
+                  : Number(payment.createdAt)
+              )
+            )}
+          </p>
           <button onClick={() => handleDelete(payment._id)} disabled={loading}>
             Delete
           </button>

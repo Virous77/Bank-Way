@@ -41,7 +41,13 @@ const PaymentSidebar = () => {
               <p>Last Transfer :</p>
               <b>
                 {state.payment &&
-                  formatDate(new Date(+state.payment[0]?.createdAt))}
+                  formatDate(
+                    new Date(
+                      state.payment[0]?.createdAt.includes("T")
+                        ? state.payment[0]?.createdAt
+                        : Number(state.payment[0]?.createdAt)
+                    )
+                  )}
               </b>
             </div>
 

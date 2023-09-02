@@ -2,13 +2,14 @@ import { styled } from "styled-components";
 
 export const MNav = styled.div<{ $style: string }>`
   padding: 5px 2rem;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   background-color: #47a992;
   ${(props) => props.$style};
   justify-content: center;
   gap: 3rem;
+  z-index: 100;
 
   button {
     background-color: green;
@@ -35,6 +36,19 @@ export const MNav = styled.div<{ $style: string }>`
 
     &:hover {
       background-color: green;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 5px 1rem;
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+
+  p {
+    font-size: 15px;
+    @media (max-width: 768px) {
+      font-size: 12px;
     }
   }
 `;

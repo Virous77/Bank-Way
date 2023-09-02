@@ -1,5 +1,5 @@
 const Safari = () => {
-  return <div>Safari</div>;
+  return <div>p</div>;
 };
 
 export default Safari;

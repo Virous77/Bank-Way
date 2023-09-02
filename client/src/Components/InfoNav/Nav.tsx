@@ -6,50 +6,61 @@ import useWorker from "../../hooks/useWorker";
 import { Modal } from "../Modal/Modal";
 import Safari from "./Safari";
 import { useState } from "react";
+import Chrome from "./Chrome";
+import Wrong from "./Wrong";
 
 const Nav = () => {
   const { state, setState } = useGlobalContext();
-  const { handleInstall, userClient } = useWorker();
+  const { handleInstall, userClient, isMobile } = useWorker();
   const [safari, setSafari] = useState("");
-
-  const isMobile = () => {
-    if (
-      screen.width <= 640 ||
-      (window.matchMedia &&
-        window.matchMedia("only screen and (max-width: 640px)").matches)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   const handleCheckBrowser = () => {
     const data = userClient();
+
+    if (data === "chrome" && isMobile()) {
+      return setSafari("chrome");
+    }
 
     if (data === "chrome") {
       return handleInstall();
     }
 
     if (data === "safari" && isMobile()) {
-      setSafari("mobile");
+      setSafari("safari");
     } else {
-      setSafari("desktop");
+      setSafari("wrong");
     }
   };
 
   return (
     <MNav $style={displayCenter}>
-      <p>Now You can Install Expensify in your Laptop,Mobile or iPad</p>
+      <p>
+        {" "}
+        {isMobile()
+          ? "Install Expensify in your mobile"
+          : "Now You can Install Expensify in your Laptop,Mobile or iPad"}
+      </p>
 
       <button onClick={handleCheckBrowser}>Install</button>
       <b onClick={() => setState({ ...state, show: "" })}>
         <AiOutlineClose />
       </b>
 
-      {safari && (
+      {safari === "safari" && (
         <Modal size="400px" onClose={() => setSafari("")} isOpen="isOpen">
           <Safari />
+        </Modal>
+      )}
+
+      {safari === "chrome" && (
+        <Modal size="400px" onClose={() => setSafari("")} isOpen="isOpen">
+          <Chrome />
+        </Modal>
+      )}
+
+      {safari === "wrong" && (
+        <Modal size="400px" onClose={() => setSafari("")} isOpen="isOpen">
+          <Wrong />
         </Modal>
       )}
     </MNav>

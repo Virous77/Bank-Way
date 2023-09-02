@@ -1,24 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-var */
+import { useGlobalContext } from "../Store/globalContext";
+
 const useWorker = () => {
+  const { state, setState } = useGlobalContext();
+
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("../sw.js").then(() => {
       console.log("registered");
     });
   }
 
-  var globalWorker: any;
-
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
-    globalWorker = event;
+    setState({ ...state, service: event });
     return false;
   });
 
   const handleInstall = () => {
-    if (globalWorker) {
-      globalWorker.prompt();
-      globalWorker.userChoice.then((cool: any) => {
+    if (state.service) {
+      state.service.prompt();
+      state.service.userChoice.then((cool: any) => {
         if (cool.outcome === "dismissed") {
           console.log("user close");
         } else {
@@ -37,14 +39,26 @@ const useWorker = () => {
       return "firefox";
     } else if (userAgent.includes("Safari")) {
       return "safari";
-    } else if (userAgent.includes("Edge")) {
+    } else if (userAgent.includes("Edg")) {
       return "edge";
     } else {
       return null;
     }
   };
 
-  return { handleInstall, userClient };
+  const isMobile = () => {
+    if (
+      screen.width <= 640 ||
+      (window.matchMedia &&
+        window.matchMedia("only screen and (max-width: 640px)").matches)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  return { handleInstall, userClient, isMobile };
 };
 
 export default useWorker;

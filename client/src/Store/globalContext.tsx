@@ -20,6 +20,7 @@ type stateType = {
   csvDataType: string;
   error: boolean;
   payment: Payments[] | undefined;
+  service: any | null;
 };
 
 type settingType = {
@@ -50,7 +51,7 @@ const stateInitialValue = {
 };
 
 const stateInitialValueTwo: stateType = {
-  show: "",
+  show: "banner",
   isLoggedIn: false,
   active: "",
   fetch: "",
@@ -60,6 +61,7 @@ const stateInitialValueTwo: stateType = {
   csvDataType: "all",
   error: false,
   payment: [],
+  service: null,
 };
 
 const initialValue: GlobalType = {

@@ -63,6 +63,10 @@ export const ActivityRoot = {
         createdAt: { $gte: input.date },
       };
 
+      if (input.type !== "all") {
+        query.type_name = input.type;
+      }
+
       const cacheTransactions = await getRedisCache(input.id);
 
       if (cacheTransactions) {

@@ -51,7 +51,7 @@ const stateInitialValue = {
 };
 
 const stateInitialValueTwo: stateType = {
-  show: "banner",
+  show: "",
   isLoggedIn: false,
   active: "",
   fetch: "",

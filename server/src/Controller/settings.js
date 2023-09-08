@@ -18,6 +18,7 @@ export const SettingRoot = {
   },
 
   updateSetting: async ({ input }) => {
+    await deleteRedisKey(input.user_id);
     const { user_id, ...rest } = input;
     try {
       const updatedSetting = await Settings.findOneAndUpdate(

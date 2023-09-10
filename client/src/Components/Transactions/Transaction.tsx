@@ -11,7 +11,7 @@ import PaginatedTransactionList from "./PaginatedTransactionList";
 import { TransactionShimmer } from "../Shimmers/TextShimmer";
 import noTransaction from "../../assets/no-transaction.svg";
 import useAppTitle from "../../hooks/useAppTitle";
-import { getLocalData } from "../../Utils/data";
+import { filterAllTransactionData, getLocalData } from "../../Utils/data";
 
 const Transactions = () => {
   useAppTitle({ name: "Transaction" });
@@ -65,7 +65,11 @@ const Transactions = () => {
     <Main $style={displayFlex}>
       <header>
         <h2>Transaction</h2>
-        <Header transactionType={transactionType} handleChange={handleChange} />
+        <Header
+          transactionType={transactionType}
+          handleChange={handleChange}
+          data={filterAllTransactionData}
+        />
       </header>
       <section>
         {transactions.length === 0 && loading ? (

@@ -31,7 +31,11 @@ const MoneyPaid = () => {
         handleSetNotification({ message: error.message, status: "error" });
       },
       onCompleted: (data) => {
-        setState({ ...state, payment: data?.getTransferAll.data });
+        if (data) {
+          setTimeout(() => {
+            setState({ ...state, payment: data.getTransferAll.data });
+          }, 100);
+        }
       },
       fetchPolicy: id ? "cache-and-network" : "standby",
     }

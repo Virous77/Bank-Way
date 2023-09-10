@@ -153,3 +153,54 @@ export const daysAgo = (days: number) => {
     today.getDate() - days
   );
 };
+
+export const filterAllTransactionData = [
+  {
+    id: 1,
+    name: "Select Type",
+    value: "all",
+  },
+  {
+    id: 2,
+    name: "Income",
+    value: "income",
+  },
+  {
+    id: 3,
+    name: "Expense",
+    value: "expense",
+  },
+  {
+    id: 4,
+    name: "Refund",
+    value: "refund",
+  },
+];
+
+export const filterTransactionData = [
+  {
+    id: 1,
+    name: "Last 7 days",
+    value: "7",
+  },
+  {
+    id: 2,
+    name: "Last 15 days",
+    value: "15",
+  },
+  {
+    id: 3,
+    name: "Last 30 days",
+    value: "30",
+  },
+  {
+    id: 5,
+    name: "3 Month",
+    value: "3",
+  },
+  {
+    id: 6,
+    name: "All Time",
+    value: "all",
+  },
+];

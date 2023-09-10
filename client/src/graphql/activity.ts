@@ -64,3 +64,16 @@ export const GET_PAGINATED_ACTIVITY = gql`
     }
   }
 `;
+
+export const FILTER_ACTIVITY = gql`
+  query FilterActivity($input: FilterActivityInput!) {
+    filterActivity(input: $input) {
+      data {
+        amount
+        type_name
+      }
+      message
+      status
+    }
+  }
+`;

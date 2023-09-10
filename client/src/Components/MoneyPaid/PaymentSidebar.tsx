@@ -7,7 +7,6 @@ import noTransaction from "../../assets/no-transaction.svg";
 
 const PaymentSidebar = () => {
   const { state } = useGlobalContext();
-
   const total = state.payment?.reduce((acc, curr) => acc + curr.amount, 0);
 
   const mostTransfer = state.payment
@@ -22,7 +21,7 @@ const PaymentSidebar = () => {
     .slice(0, 3);
 
   const last30Days = state.payment
-    ?.filter((payment) => new Date(+payment.createdAt) >= daysAgo(30))
+    ?.filter((payment) => new Date(payment.createdAt) >= daysAgo(30))
     .reduce((acc, curr) => acc + curr.amount, 0);
 
   return (

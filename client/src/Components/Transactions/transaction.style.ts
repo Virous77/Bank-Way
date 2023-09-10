@@ -198,3 +198,39 @@ export const NDiv = styled.div`
     color: var(--main-font-color);
   }
 `;
+
+export const FButton = styled.button<{ $style: string }>`
+  background-color: transparent;
+  width: 21px;
+  height: 21px;
+  border-radius: 100%;
+  font-size: 1.2rem;
+  ${(props) => props.$style};
+  color: var(--exact-font-color);
+  padding: 2px;
+
+  &:hover {
+    background-color: var(--exact-font-color);
+    color: var(--exact-white-color);
+  }
+`;
+
+export const FilterDiv = styled.div<{ $style: string }>`
+  ${(props) => props.$style};
+  justify-content: space-between;
+  padding: 5px 0;
+
+  select {
+    padding: 3px 7px;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    color: var(--exact-font-color);
+    border-radius: 3px;
+  }
+
+  p {
+    color: var(--exact-font-color);
+    font-size: 15px;
+  }
+`;

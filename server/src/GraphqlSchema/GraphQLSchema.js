@@ -135,6 +135,10 @@ type Activity {
     user_id: String
   }
 
+  input FilterActivityInput{
+    type: String
+  }
+
 
   type Settings{
     _id: String!
@@ -198,6 +202,7 @@ type Activity {
     getUserSetting(id: ID!): settingResult
     getPaginatedActivity(input: PaginatedActivityInput) : ActivityPaginatedResult
     getTransferAll(id: ID!): TransferResultAll 
+    filterActivity(input: FilterActivityInput) : ActivityResultAll
   }
 
   type Mutation {

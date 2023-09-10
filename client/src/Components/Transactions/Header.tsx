@@ -3,15 +3,25 @@ import React from "react";
 type HeaderType = {
   transactionType: string;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  data: {
+    id: number;
+    value: string;
+    name: string;
+  }[];
 };
 
-const Header: React.FC<HeaderType> = ({ transactionType, handleChange }) => {
+const Header: React.FC<HeaderType> = ({
+  transactionType,
+  handleChange,
+  data,
+}) => {
   return (
     <select value={transactionType} onChange={handleChange}>
-      <option value="all">Select Type</option>
-      <option value="income">Income</option>
-      <option value="expense">Expense</option>
-      <option value="refund">Refund</option>
+      {data.map((type) => (
+        <option value={type.value} key={type.id}>
+          {type.name}
+        </option>
+      ))}
     </select>
   );
 };

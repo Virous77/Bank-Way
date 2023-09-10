@@ -6,6 +6,7 @@ import {
   setRedisCache,
   getRedisCache,
 } from "../Utils/redis.js";
+import { daysAgo } from "../Utils/utility.js";
 
 export const ActivityRoot = {
   createActivity: async ({ input }) => {
@@ -119,6 +120,36 @@ export const ActivityRoot = {
       return {
         data: transactions,
         total: totalProduct,
+        message: "Activity fetched successfully",
+        status: 200,
+      };
+    } catch (error) {
+      throw error || "Failed to fetch transaction";
+    }
+  },
+  filterActivity: async ({ input }) => {
+    try {
+      let query;
+
+      if (input.type !== "all") {
+        if (input.type === "30" || input.type === "7" || input.type === "15") {
+          const days = daysAgo(Number(input.type) + 1);
+          query = {
+            createdAt: { $gte: days },
+          };
+        }
+
+        if (input.type === "3") {
+          const days = daysAgo(90);
+          query = {
+            createdAt: { $gte: days },
+          };
+        }
+      }
+
+      const transactions = await Activity.find(query);
+      return {
+        data: transactions,
         message: "Activity fetched successfully",
         status: 200,
       };

@@ -2,36 +2,62 @@ import { displayCenter } from "../Common/variable.style";
 import { Aside, Card } from "./transaction.style";
 import { BiSearch } from "react-icons/bi";
 import { useGlobalContext } from "../../Store/globalContext";
-import { useActivity } from "../../Store/ActivityContext";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
 import { RiRefundLine } from "react-icons/ri";
 import { TextThumb } from "../Shimmers/TextShimmer";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import Filter from "./Filter";
+import FilterComp from "./FilterComp";
+import { useQuery } from "@apollo/client";
+import { FILTER_ACTIVITY } from "../../graphql/activity";
+
+type Result = {
+  filterActivity: {
+    data: {
+      amount: number;
+      type_name: string;
+    }[];
+    message: string;
+    status: number;
+  };
+};
 
 const TransactionSidebar = () => {
-  const { state, setState } = useGlobalContext();
+  const { state, setState, handleSetNotification } = useGlobalContext();
+  const [filterOption, setFilterOption] = useState(false);
+  const [filterType, setFilterType] = useState("30");
 
   const transactionDuration =
     state.days === "7" ? "Week" : state.days === "15" ? "15 Days" : "Month";
 
-  const { data } = useActivity();
+  const input = {
+    type: filterType,
+  };
+
+  const { loading, data } = useQuery<Result>(FILTER_ACTIVITY, {
+    variables: { input },
+    onError: (error) => {
+      handleSetNotification({ message: error.message, status: "error" });
+    },
+    fetchPolicy: "network-only",
+  });
 
   const expense = useMemo(() => {
-    return data?.getAllActivity.data
+    return data?.filterActivity.data
       .filter((trans) => trans.type_name === "expense")
       .map((trans) => +trans.amount)
       .reduce((acc, curr) => acc + curr, 0);
   }, [data]);
 
   const income = useMemo(() => {
-    return data?.getAllActivity.data
+    return data?.filterActivity.data
       .filter((trans) => trans.type_name === "income")
       .map((trans) => +trans.amount)
       .reduce((acc, curr) => acc + curr, 0);
   }, [data]);
 
   const refund = useMemo(() => {
-    return data?.getAllActivity.data
+    return data?.filterActivity.data
       .filter((trans) => trans.type_name === "refund")
       .map((trans) => +trans.amount)
       .reduce((acc, curr) => acc + curr, 0);
@@ -49,7 +75,11 @@ const TransactionSidebar = () => {
           onChange={(e) => setState({ ...state, search: e.target.value })}
           placeholder="Search Transactions"
         />
+        <Filter setFilterOption={setFilterOption} filterOption={filterOption} />
       </header>
+      {filterOption && (
+        <FilterComp filterType={filterType} setFilterType={setFilterType} />
+      )}
 
       <section>
         <h3>This {transactionDuration} Transactions</h3>

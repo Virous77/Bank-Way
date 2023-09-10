@@ -18,3 +18,12 @@ export const generateOTP = () => {
 
   return otp;
 };
+
+export const daysAgo = (days) => {
+  const today = new Date();
+  return new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - days
+  );
+};

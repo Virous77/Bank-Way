@@ -34,7 +34,7 @@ const TransactionSidebar = () => {
     type: filterType,
   };
 
-  const { loading, data } = useQuery<Result>(FILTER_ACTIVITY, {
+  const { data } = useQuery<Result>(FILTER_ACTIVITY, {
     variables: { input },
     onError: (error) => {
       handleSetNotification({ message: error.message, status: "error" });

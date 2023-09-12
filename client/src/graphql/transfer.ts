@@ -21,6 +21,7 @@ export const GET_ALL_TRANSFER = gql`
         amount
         notes
         createdAt
+        isCompleted
       }
       message
       status
@@ -31,6 +32,18 @@ export const GET_ALL_TRANSFER = gql`
 export const DELETE_TRANSFER = gql`
   mutation DeleteTransfer($id: ID!) {
     deleteTransfer(id: $id) {
+      data {
+        _id
+      }
+      message
+      status
+    }
+  }
+`;
+
+export const UPDATE_TRANSFER = gql`
+  mutation UpdateTransfer($input: UpdateTransferInput!) {
+    updateTransfer(input: $input) {
       data {
         _id
       }

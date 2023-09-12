@@ -43,4 +43,5 @@ export interface Payments {
   amount: number;
   notes: string;
   createdAt: string;
+  isCompleted: boolean;
 }

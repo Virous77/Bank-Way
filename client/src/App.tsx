@@ -9,7 +9,7 @@ import useWorker from "./hooks/useWorker";
 
 const App = () => {
   const { state } = useGlobalContext();
-  useWorker();
+  // useWorker();
 
   return (
     <React.Fragment>

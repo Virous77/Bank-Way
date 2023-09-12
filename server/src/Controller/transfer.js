@@ -66,4 +66,19 @@ export const TransferRoot = {
       throw error || "Failed to delete payment";
     }
   },
+
+  updateTransfer: async ({ input }) => {
+    const { id, ...rest } = input;
+    try {
+      const payment = await Transfer.findByIdAndUpdate(id, { ...rest });
+      await deleteRedisKey(`${payment.user_id}transfer`);
+      return createResult({
+        message: "Payment updated successfully",
+        status: 200,
+        data: payment,
+      });
+    } catch (error) {
+      throw error || "Failed to update payment";
+    }
+  },
 };

@@ -70,10 +70,12 @@ export const Main = styled.main<{ $style: string }>`
   padding: 10px;
 `;
 
-export const PList = styled.div`
+export const PList = styled.div<{ $isDone: string }>`
   background-color: var(--body-color);
   padding: 5px 10px;
   border-radius: 10px;
+  border-left: ${(props) =>
+    props.$isDone === "true" ? "8px solid green" : ""};
 `;
 
 export const PAction = styled.div<{ $style: string }>`
@@ -85,6 +87,11 @@ export const PAction = styled.div<{ $style: string }>`
   p {
     color: green;
     font-size: 15px;
+  }
+
+  div {
+    ${(props) => props.$style};
+    gap: 20px;
   }
 
   button {

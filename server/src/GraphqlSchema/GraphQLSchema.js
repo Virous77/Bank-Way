@@ -172,6 +172,8 @@ type Activity {
     user_id: String
     createdAt: String
     updatedAt: String
+    isCompleted : Boolean
+
   }
 
    input CreateTransferInput {
@@ -179,6 +181,11 @@ type Activity {
     amount: Int!
     notes: String
     user_id: String!
+  }
+
+  input UpdateTransferInput {
+    id: String!
+    isCompleted: Boolean
   }
 
    type TransferResult{
@@ -218,5 +225,6 @@ type Activity {
     updateSetting(input: UpdateSettingInput!): settingResult
     createTransfer(input: CreateTransferInput!): TransferResult
     deleteTransfer(id: ID!): TransferResult
+    updateTransfer(input: UpdateTransferInput): TransferResult
   }
 `);

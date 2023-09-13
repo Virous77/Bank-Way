@@ -7,7 +7,9 @@ import noTransaction from "../../assets/no-transaction.svg";
 
 const PaymentSidebar = () => {
   const { state } = useGlobalContext();
-  const total = state.payment?.reduce((acc, curr) => acc + curr.amount, 0);
+  const total = state.payment
+    ?.filter((trans) => !trans.isCompleted)
+    .reduce((acc, curr) => acc + curr.amount, 0);
 
   const mostTransfer = state.payment
     ?.map((payment) => payment.transfer_to.toLowerCase())

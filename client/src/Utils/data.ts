@@ -204,3 +204,15 @@ export const filterTransactionData = [
     value: "all",
   },
 ];
+
+type TransType = {
+  [key: string]: string;
+};
+
+export const transactionTimeFrame: TransType = {
+  "30": "Last 30 Days Transaction",
+  all: "All Time Transaction",
+  "3": "Last 3 Month Transaction",
+  "15": "Last 15 Days Transaction",
+  "7": "Last 7 Days Transaction",
+};

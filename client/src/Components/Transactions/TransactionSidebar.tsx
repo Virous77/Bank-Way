@@ -10,6 +10,7 @@ import Filter from "./Filter";
 import FilterComp from "./FilterComp";
 import { useQuery } from "@apollo/client";
 import { FILTER_ACTIVITY } from "../../graphql/activity";
+import { transactionTimeFrame } from "../../Utils/data";
 
 type Result = {
   filterActivity: {
@@ -26,9 +27,6 @@ const TransactionSidebar = () => {
   const { state, setState, handleSetNotification } = useGlobalContext();
   const [filterOption, setFilterOption] = useState(false);
   const [filterType, setFilterType] = useState("30");
-
-  const transactionDuration =
-    state.days === "7" ? "Week" : state.days === "15" ? "15 Days" : "Month";
 
   const input = {
     type: filterType,
@@ -82,7 +80,7 @@ const TransactionSidebar = () => {
       )}
 
       <section>
-        <h3>This {transactionDuration} Transactions</h3>
+        <h3>{transactionTimeFrame[String(filterType)]}</h3>
         <Card style={{ background: "#47A992" }}>
           <div>
             <GiReceiveMoney size={28} />

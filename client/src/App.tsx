@@ -5,7 +5,6 @@ import { PublicRoutes } from "./Components/Private/PtotectedRoutes";
 import Notification from "./Components/Notification/Notification";
 import Nav from "./Components/InfoNav/Nav";
 import { useGlobalContext } from "./Store/globalContext";
-import useWorker from "./hooks/useWorker";
 
 const App = () => {
   const { state } = useGlobalContext();

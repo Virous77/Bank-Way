@@ -2,7 +2,7 @@ import { Payments } from "../../Interface/interface";
 import { displayFlex } from "../Common/variable.style";
 import { PList, Wrap, PAction } from "./money.style";
 import { RiSecurePaymentLine } from "react-icons/ri";
-import { formatDate, handleAction } from "../../Utils/data";
+import { formatDate, getLocalData, handleAction } from "../../Utils/data";
 import { useState } from "react";
 import { DELETE_TRANSFER, UPDATE_TRANSFER } from "../../graphql/transfer";
 import { useMutation } from "@apollo/client";
@@ -19,6 +19,8 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
 }) => {
   const [active, setActive] = useState("");
   const { handleSetNotification, handleError } = useGlobalContext();
+  const user_id = getLocalData("bankId");
+  const token = getLocalData("bankToken");
 
   const [deleteTransfer, { loading }] = useMutation(DELETE_TRANSFER, {
     onError: (error) => {
@@ -50,11 +52,15 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
   );
 
   const handleDelete = (id: string) => {
+    const data = {
+      user_id,
+      token,
+      id,
+    };
     try {
-      deleteTransfer({
-        variables: {
-          id: id,
-        },
+      handleAction({
+        action: deleteTransfer,
+        formData: data,
       });
     } catch (error: any) {
       handleError(error.message);
@@ -69,6 +75,8 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
     const data = {
       id: params._id,
       isCompleted: true,
+      token,
+      user_id,
     };
 
     try {

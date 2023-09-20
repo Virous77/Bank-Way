@@ -38,6 +38,7 @@ export const UPDATE_USER = gql`
       }
       message
       status
+      token
     }
   }
 `;
@@ -50,6 +51,7 @@ export const DELETE_USER = gql`
       }
       message
       status
+      token
     }
   }
 `;
@@ -66,6 +68,7 @@ export const GET_USER = gql`
       }
       message
       status
+      token
     }
   }
 `;
@@ -78,6 +81,7 @@ export const PASSWORD_CHANGE = gql`
       }
       message
       status
+      token
     }
   }
 `;

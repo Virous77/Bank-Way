@@ -13,8 +13,8 @@ export const CREATE_TRANSFER = gql`
 `;
 
 export const GET_ALL_TRANSFER = gql`
-  query GetTransferAll($id: ID!) {
-    getTransferAll(id: $id) {
+  query GetTransferAll($input: GetAllTransferRes!) {
+    getTransferAll(input: $input) {
       data {
         _id
         transfer_to
@@ -30,8 +30,8 @@ export const GET_ALL_TRANSFER = gql`
 `;
 
 export const DELETE_TRANSFER = gql`
-  mutation DeleteTransfer($id: ID!) {
-    deleteTransfer(id: $id) {
+  mutation DeleteTransfer($input: DeleteTransferRes!) {
+    deleteTransfer(input: $input) {
       data {
         _id
       }

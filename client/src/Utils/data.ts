@@ -216,3 +216,15 @@ export const transactionTimeFrame: TransType = {
   "15": "Last 15 Days Transaction",
   "7": "Last 7 Days Transaction",
 };
+
+export const validateTokenMessage = (error: string) => {
+  if (
+    error === "session is over, login again" ||
+    error === "token is incorrect or session is over" ||
+    error === "token is incorrect"
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};

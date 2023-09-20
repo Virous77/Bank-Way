@@ -4,7 +4,12 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useGlobalContext } from "../../Store/globalContext";
 import { CREATE_TRANSFER } from "../../graphql/transfer";
-import { getLocalData, handleAction } from "../../Utils/data";
+import {
+  getLocalData,
+  handleAction,
+  validateTokenMessage,
+} from "../../Utils/data";
+import { useAuthContext } from "../../Store/AuthContext";
 
 type AddPaymentType = {
   refetch: () => void;
@@ -18,12 +23,18 @@ const AddPayment: React.FC<AddPaymentType> = ({ refetch }) => {
   };
   const [formData, setFormData] = useState(initialState);
   const { transfer_to, amount, notes } = formData;
+  const { logoutUser } = useAuthContext();
 
   const { handleSetNotification, setState, handleError } = useGlobalContext();
   const id = getLocalData("bankId");
+  const token = getLocalData("bankToken");
 
   const [createTransfer, { loading }] = useMutation(CREATE_TRANSFER, {
     onError: (error) => {
+      const validateError = validateTokenMessage(error.message);
+      if (validateError) {
+        logoutUser();
+      }
       handleSetNotification({ message: error.message, status: "error" });
     },
     onCompleted: () => {
@@ -44,6 +55,7 @@ const AddPayment: React.FC<AddPaymentType> = ({ refetch }) => {
       amount: +amount,
       transfer_to,
       notes,
+      token,
     };
 
     try {

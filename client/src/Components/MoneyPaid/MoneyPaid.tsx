@@ -22,11 +22,17 @@ const MoneyPaid = () => {
   useAppTitle({ name: "Transfer" });
   const { setState, state, handleSetNotification } = useGlobalContext();
   const id = getLocalData("bankId");
+  const token = getLocalData("bankToken");
+
+  const input = {
+    id,
+    token,
+  };
 
   const { data, loading, refetch } = useQuery<PaymentResponse | undefined>(
     GET_ALL_TRANSFER,
     {
-      variables: { id },
+      variables: { input },
       onError: (error) => {
         handleSetNotification({ message: error.message, status: "error" });
       },

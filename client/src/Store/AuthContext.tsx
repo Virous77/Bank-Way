@@ -16,6 +16,7 @@ import {
   initialState,
 } from "../contextSuggestionType/contextType";
 import axios from "axios";
+import { validateTokenMessage } from "../Utils/data";
 
 type UserResponse = {
   getUser: {
@@ -54,9 +55,11 @@ export const AuthContextProvider = ({
   const { data, refetch } = useQuery<UserResponse | undefined>(GET_USER, {
     variables: { input },
     onError: (error) => {
-      if (error.message === "session is over, login again") {
+      const validateError = validateTokenMessage(error.message);
+      if (validateError) {
         logoutUser();
       }
+
       handleSetNotification({ message: error.message, status: "error" });
     },
     fetchPolicy: id ? "cache-and-network" : "standby",
@@ -89,6 +92,10 @@ export const AuthContextProvider = ({
 
   const [updateUser, { loading: updateLoading }] = useMutation(UPDATE_USER, {
     onError: (error) => {
+      const validateError = validateTokenMessage(error.message);
+      if (validateError) {
+        logoutUser();
+      }
       handleSetNotification({ message: error.message, status: "error" });
     },
     onCompleted: (data) => {
@@ -145,6 +152,7 @@ export const AuthContextProvider = ({
           id,
           image: res.data.image,
           ...rest,
+          token: token,
         };
 
         if (res.data.image) {
@@ -160,6 +168,7 @@ export const AuthContextProvider = ({
           id,
           image: editUserData?.image,
           ...rest,
+          token: token,
         };
 
         handleAction({

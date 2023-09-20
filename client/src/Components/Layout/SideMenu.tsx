@@ -11,16 +11,13 @@ import { useGlobalContext } from "../../Store/globalContext";
 import { AiOutlineClose } from "react-icons/ai";
 import { PrivateLinks } from "../Private/PtotectedRoutes";
 import { AiOutlineLogout } from "react-icons/ai";
+import { useAuthContext } from "../../Store/AuthContext";
 
 const SideMenu = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { state, setState } = useGlobalContext();
-
-  const handleLogout = () => {
-    localStorage.removeItem("bankId");
-    setState({ ...state, isLoggedIn: false });
-  };
+  const { logoutUser } = useAuthContext();
 
   return (
     <Aside $style={state.menu} $styles={displayFlex}>
@@ -48,7 +45,7 @@ const SideMenu = () => {
 
         <SAuthB>
           <PrivateLinks>
-            <Button $primary="var(--body-color)" onClick={handleLogout}>
+            <Button $primary="var(--body-color)" onClick={logoutUser}>
               <AiOutlineLogout />
               Logout
             </Button>

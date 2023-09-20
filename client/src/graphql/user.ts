@@ -25,6 +25,7 @@ export const LOGIN_USER = gql`
       }
       message
       status
+      token
     }
   }
 `;
@@ -54,8 +55,8 @@ export const DELETE_USER = gql`
 `;
 
 export const GET_USER = gql`
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
+  query GetUser($input: GetUserRes!) {
+    getUser(input: $input) {
       data {
         id
         name

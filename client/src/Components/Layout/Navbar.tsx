@@ -23,14 +23,9 @@ import { ImMenu } from "react-icons/im";
 const Navbar = () => {
   const { setState, state } = useGlobalContext();
   const active = getLocalData("bankId");
-  const { userData } = useAuthContext();
+  const { userData, logoutUser } = useAuthContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
-  const handleLogout = () => {
-    localStorage.removeItem("bankId");
-    setState({ ...state, isLoggedIn: false });
-  };
 
   return (
     <NavbarMain $displayCenter={displayCenter}>
@@ -65,7 +60,7 @@ const Navbar = () => {
 
         <AuthB>
           <PrivateLinks>
-            <Button $primary="var(--body-color)" onClick={handleLogout}>
+            <Button $primary="var(--body-color)" onClick={logoutUser}>
               Logout
             </Button>
           </PrivateLinks>

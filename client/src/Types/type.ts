@@ -22,4 +22,5 @@ export type contextType = {
   updateLoading: boolean;
   editUserData: User | undefined;
   setEditUserData: React.Dispatch<React.SetStateAction<User | undefined>>;
+  logoutUser: () => void;
 };

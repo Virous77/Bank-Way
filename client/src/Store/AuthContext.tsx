@@ -31,15 +31,32 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [formData, setFormData] = useState(initialState);
-  const { handleSetNotification, setState, handleError } = useGlobalContext();
+  const { handleSetNotification, setState, state, handleError } =
+    useGlobalContext();
   const navigate = useNavigate();
   const id = getLocalData("bankId");
+  const token = getLocalData("bankToken");
+
+  const input = {
+    id,
+    token,
+  };
+
   const [editUserData, setEditUserData] = useState<User | undefined>(undefined);
+
+  const logoutUser = () => {
+    localStorage.removeItem("bankId");
+    localStorage.removeItem("bankToken");
+    setState({ ...state, isLoggedIn: false });
+  };
 
   // * All the DB related services are below
   const { data, refetch } = useQuery<UserResponse | undefined>(GET_USER, {
-    variables: { id },
+    variables: { input },
     onError: (error) => {
+      if (error.message === "session is over, login again") {
+        logoutUser();
+      }
       handleSetNotification({ message: error.message, status: "error" });
     },
     fetchPolicy: id ? "cache-and-network" : "standby",
@@ -61,6 +78,7 @@ export const AuthContextProvider = ({
     },
     onCompleted: (data) => {
       localStorage.setItem("bankId", JSON.stringify(data.loginUser.data.id));
+      localStorage.setItem("bankToken", JSON.stringify(data.loginUser.token));
       refetch();
       setState((prev) => ({ ...prev, show: "", isLoggedIn: true }));
       navigate("/");
@@ -185,6 +203,7 @@ export const AuthContextProvider = ({
         updateLoading,
         editUserData,
         setEditUserData,
+        logoutUser,
       }}
     >
       {children}

@@ -23,4 +23,5 @@ export const contextState: contextType = {
   updateLoading: false,
   editUserData: {} as User,
   setEditUserData: () => {},
+  logoutUser: () => {},
 };

@@ -10,7 +10,7 @@ import Filter from "./Filter";
 import FilterComp from "./FilterComp";
 import { useQuery } from "@apollo/client";
 import { FILTER_ACTIVITY } from "../../graphql/activity";
-import { transactionTimeFrame } from "../../Utils/data";
+import { getLocalData, transactionTimeFrame } from "../../Utils/data";
 
 type Result = {
   filterActivity: {
@@ -27,9 +27,13 @@ const TransactionSidebar = () => {
   const { state, setState, handleSetNotification } = useGlobalContext();
   const [filterOption, setFilterOption] = useState(false);
   const [filterType, setFilterType] = useState("30");
+  const id = getLocalData("bankId");
+  const token = getLocalData("bankToken");
 
   const input = {
     type: filterType,
+    id,
+    token,
   };
 
   const { data } = useQuery<Result>(FILTER_ACTIVITY, {

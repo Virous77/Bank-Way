@@ -2,11 +2,17 @@ import { Payments } from "../../Interface/interface";
 import { displayFlex } from "../Common/variable.style";
 import { PList, Wrap, PAction } from "./money.style";
 import { RiSecurePaymentLine } from "react-icons/ri";
-import { formatDate, getLocalData, handleAction } from "../../Utils/data";
+import {
+  formatDate,
+  getLocalData,
+  handleAction,
+  validateTokenMessage,
+} from "../../Utils/data";
 import { useState } from "react";
 import { DELETE_TRANSFER, UPDATE_TRANSFER } from "../../graphql/transfer";
 import { useMutation } from "@apollo/client";
 import { useGlobalContext } from "../../Store/globalContext";
+import { useAuthContext } from "../../Store/AuthContext";
 
 type PaymentList = {
   payment: Payments;
@@ -21,9 +27,14 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
   const { handleSetNotification, handleError } = useGlobalContext();
   const user_id = getLocalData("bankId");
   const token = getLocalData("bankToken");
+  const { logoutUser } = useAuthContext();
 
   const [deleteTransfer, { loading }] = useMutation(DELETE_TRANSFER, {
     onError: (error) => {
+      const validateError = validateTokenMessage(error.message);
+      if (validateError) {
+        logoutUser();
+      }
       handleSetNotification({ message: error.message, status: "error" });
     },
     onCompleted: (data) => {
@@ -39,6 +50,10 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
     UPDATE_TRANSFER,
     {
       onError: (error) => {
+        const validateError = validateTokenMessage(error.message);
+        if (validateError) {
+          logoutUser();
+        }
         handleSetNotification({ message: error.message, status: "error" });
       },
       onCompleted: (data) => {

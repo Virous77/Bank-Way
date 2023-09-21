@@ -1,8 +1,13 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { UPDATE_SETTING, GET_SETTING } from "../graphql/setting";
 import { useQuery, useMutation } from "@apollo/client";
-import { getLocalData, handleAction } from "../Utils/data";
+import {
+  getLocalData,
+  handleAction,
+  validateTokenMessage,
+} from "../Utils/data";
 import { Setting, Payments } from "../Interface/interface";
+import { useAuthContext } from "./AuthContext";
 
 type notificationType = {
   message: string;
@@ -87,6 +92,13 @@ export const GlobalContextProvider = ({
     useState<notificationType>(stateInitialValue);
   const [state, setState] = useState(stateInitialValueTwo);
   const id = getLocalData("bankId");
+  const token = getLocalData("bankToken");
+  const { logoutUser } = useAuthContext();
+
+  const input = {
+    id,
+    token,
+  };
 
   ///App notification
   const handleSetNotification = ({ message, status }: notificationType) => {
@@ -103,8 +115,12 @@ export const GlobalContextProvider = ({
   };
 
   const { data, refetch } = useQuery<SettingResponse | undefined>(GET_SETTING, {
-    variables: { id },
+    variables: { input },
     onError: (error) => {
+      const validateError = validateTokenMessage(error.message);
+      if (validateError) {
+        logoutUser();
+      }
       handleSetNotification({ message: error.message, status: "error" });
     },
     onCompleted: (data) => {
@@ -118,6 +134,10 @@ export const GlobalContextProvider = ({
 
   const [updateSetting, { loading }] = useMutation(UPDATE_SETTING, {
     onError: (error) => {
+      const validateError = validateTokenMessage(error.message);
+      if (validateError) {
+        logoutUser();
+      }
       handleSetNotification({ message: error.message, status: "error" });
     },
     onCompleted: (data) => {
@@ -152,6 +172,7 @@ export const GlobalContextProvider = ({
     const newSetting = {
       ...modifyData,
       ...setting,
+      token,
     };
 
     try {

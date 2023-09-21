@@ -11,7 +11,12 @@ import PaginatedTransactionList from "./PaginatedTransactionList";
 import { TransactionShimmer } from "../Shimmers/TextShimmer";
 import noTransaction from "../../assets/no-transaction.svg";
 import useAppTitle from "../../hooks/useAppTitle";
-import { filterAllTransactionData, getLocalData } from "../../Utils/data";
+import {
+  filterAllTransactionData,
+  getLocalData,
+  validateTokenMessage,
+} from "../../Utils/data";
+import { useAuthContext } from "../../Store/AuthContext";
 
 const Transactions = () => {
   useAppTitle({ name: "Transaction" });
@@ -22,6 +27,8 @@ const Transactions = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const pageSize = 20;
   const user_id = getLocalData("bankId");
+  const token = getLocalData("bankToken");
+  const { logoutUser } = useAuthContext();
 
   const input = {
     pageNumber,
@@ -29,6 +36,7 @@ const Transactions = () => {
     type: transactionType,
     search: state.search.length > 3 ? state.search : "",
     user_id,
+    token,
   };
 
   const { loading } = useQuery(GET_PAGINATED_ACTIVITY, {
@@ -43,6 +51,10 @@ const Transactions = () => {
       setTotal(data.getPaginatedActivity.total);
     },
     onError: (error) => {
+      const validateError = validateTokenMessage(error.message);
+      if (validateError) {
+        logoutUser();
+      }
       handleSetNotification({ message: error.message, status: "error" });
     },
     fetchPolicy: "network-only",

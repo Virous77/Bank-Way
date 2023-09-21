@@ -6,11 +6,12 @@ import AddPayment from "./AddPayment";
 import { Modal } from "../Modal/Modal";
 import ModalHeader from "../Modal/ModalHeader";
 import PaymentTransaction from "./PaymentTransaction";
-import { getLocalData } from "../../Utils/data";
+import { getLocalData, validateTokenMessage } from "../../Utils/data";
 import { GET_ALL_TRANSFER } from "../../graphql/transfer";
 import { useQuery } from "@apollo/client";
 import { Payments } from "../../Interface/interface";
 import useAppTitle from "../../hooks/useAppTitle";
+import { useAuthContext } from "../../Store/AuthContext";
 
 type PaymentResponse = {
   getTransferAll: {
@@ -23,6 +24,7 @@ const MoneyPaid = () => {
   const { setState, state, handleSetNotification } = useGlobalContext();
   const id = getLocalData("bankId");
   const token = getLocalData("bankToken");
+  const { logoutUser } = useAuthContext();
 
   const input = {
     id,
@@ -34,6 +36,10 @@ const MoneyPaid = () => {
     {
       variables: { input },
       onError: (error) => {
+        const validateError = validateTokenMessage(error.message);
+        if (validateError) {
+          logoutUser();
+        }
         handleSetNotification({ message: error.message, status: "error" });
       },
       onCompleted: (data) => {

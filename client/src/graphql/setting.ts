@@ -8,13 +8,14 @@ export const UPDATE_SETTING = gql`
       }
       message
       status
+      token
     }
   }
 `;
 
 export const GET_SETTING = gql`
-  query GetUserSetting($id: ID!) {
-    getUserSetting(id: $id) {
+  query GetUserSetting($input: GetAllTransferRes!) {
+    getUserSetting(input: $input) {
       data {
         _id
         user_id
@@ -26,6 +27,7 @@ export const GET_SETTING = gql`
       }
       message
       status
+      token
     }
   }
 `;

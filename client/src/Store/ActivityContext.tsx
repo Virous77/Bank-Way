@@ -7,11 +7,16 @@ import {
   UPDATE_ACTIVITY,
 } from "../graphql/activity";
 import { useGlobalContext } from "./globalContext";
-import { getLocalData, handleAction } from "../Utils/data";
+import {
+  getLocalData,
+  handleAction,
+  validateTokenMessage,
+} from "../Utils/data";
 import { Transaction } from "../Interface/interface";
 import { expenseType, incomeType } from "../Utils/activity";
 import { useLocation } from "react-router-dom";
 import { daysAgo } from "../Utils/data";
+import { useAuthContext } from "./AuthContext";
 
 export type ActivityType = {
   name: string;
@@ -111,11 +116,14 @@ export const ActivityContextProvider = ({
     data: settingData,
   } = useGlobalContext();
   const id = getLocalData("bankId");
+  const token = getLocalData("bankToken");
   const { pathname } = useLocation();
   const DaysAgo = daysAgo(Number(state.days));
+  const { logoutUser } = useAuthContext();
 
   const input = {
     id,
+    token,
     date: DaysAgo,
     type:
       pathname === "/transaction" ? "all" : settingData?.home_transaction_type,
@@ -124,6 +132,10 @@ export const ActivityContextProvider = ({
   const { refetch, data, loading } = useQuery<Result>(GET_ALL_ACTIVITY, {
     variables: { input },
     onError: (error) => {
+      const validateError = validateTokenMessage(error.message);
+      if (validateError) {
+        logoutUser();
+      }
       handleSetNotification({ message: error.message, status: "error" });
     },
     fetchPolicy: id && state.days ? "cache-and-network" : "standby",
@@ -133,6 +145,10 @@ export const ActivityContextProvider = ({
     CREATE_ACTIVITY,
     {
       onError: (error) => {
+        const validateError = validateTokenMessage(error.message);
+        if (validateError) {
+          logoutUser();
+        }
         handleSetNotification({ message: error.message, status: "error" });
       },
       onCompleted: () => {
@@ -147,6 +163,10 @@ export const ActivityContextProvider = ({
     UPDATE_ACTIVITY,
     {
       onError: (error) => {
+        const validateError = validateTokenMessage(error.message);
+        if (validateError) {
+          logoutUser();
+        }
         handleSetNotification({ message: error.message, status: "error" });
       },
       onCompleted: (data) => {
@@ -182,6 +202,7 @@ export const ActivityContextProvider = ({
       type_name: typeName.toLowerCase(),
       amount: Number(amount),
       user_id: id,
+      token,
     };
 
     try {
@@ -208,6 +229,7 @@ export const ActivityContextProvider = ({
       user_id: id,
       type_name,
       _id: tId,
+      token,
     };
 
     try {

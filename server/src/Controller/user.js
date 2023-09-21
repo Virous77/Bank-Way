@@ -5,10 +5,15 @@ import {
   ResetValidate,
   UserUpdateValidate,
 } from "../Middleware/validate.js";
-import { createResult, generateOTP } from "../Utils/utility.js";
+import {
+  createResult,
+  generateOTP,
+  validateJwtToken,
+} from "../Utils/utility.js";
 import bcrypt from "bcryptjs";
 import { SettingRoot } from "./settings.js";
 import { sendOTP } from "../Middleware/sendMail.js";
+import { createJwtToken } from "../Utils/jwttoken.js";
 
 export const UserRoot = {
   createUser: async ({ input }) => {
@@ -50,16 +55,17 @@ export const UserRoot = {
     const { email, password } = input;
     try {
       const user = await User.findOne({ email: email.toLowerCase() });
-
       if (!user) throw new Error("User not exists, Email is incorrect");
 
       const pass = await bcrypt.compare(password, user.password);
       if (!pass) throw new Error("Password is incorrect");
+      const token = await createJwtToken(user);
 
       return createResult({
         data: user,
         message: "User Logged in Successfully",
         status: 201,
+        token: token,
       });
     } catch (error) {
       throw error || "Failed to login user";
@@ -68,6 +74,7 @@ export const UserRoot = {
 
   updateUser: async ({ input }) => {
     try {
+      await validateJwtToken(input.token, input.id);
       const { error } = UserUpdateValidate.validate(input);
       if (error) throw new Error(error.details[0].message);
       const { id, password, ...update } = input;
@@ -79,21 +86,24 @@ export const UserRoot = {
         data: user,
         message: "User updated Successfully",
         status: 200,
+        token: input.token,
       });
     } catch (error) {
       throw error || "Failed to update user";
     }
   },
 
-  deleteUser: async ({ id }) => {
+  deleteUser: async ({ input }) => {
     try {
-      const user = await User.findByIdAndDelete(id);
+      await validateJwtToken(input.token, input.id);
+      const user = await User.findByIdAndDelete(input.id);
       if (!user) throw new Error("User not exists");
 
       return createResult({
         data: user,
         message: user ? "User deleted Successfully" : "User don't exists",
         status: 200,
+        token: input.token,
       });
     } catch (error) {
       throw error || "Failed to delete user";
@@ -125,15 +135,17 @@ export const UserRoot = {
     }
   },
 
-  getUser: async ({ id }) => {
+  getUser: async ({ input }) => {
     try {
-      const user = await User.findById(id);
+      await validateJwtToken(input.token, input.id);
+      const user = await User.findById(input.id);
       if (!user) throw new Error("User not exits");
 
       return createResult({
         data: user,
         message: "User fetched successfully",
         status: 200,
+        token: input.token,
       });
     } catch (error) {
       throw error || "Failed to fetch user";

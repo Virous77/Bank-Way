@@ -1,5 +1,5 @@
 import Settings from "../Models/settings.js";
-import { createResult } from "../Utils/utility.js";
+import { createResult, validateJwtToken } from "../Utils/utility.js";
 import {
   getRedisCache,
   deleteRedisKey,
@@ -18,9 +18,10 @@ export const SettingRoot = {
   },
 
   updateSetting: async ({ input }) => {
-    await deleteRedisKey(input.user_id);
-    const { user_id, ...rest } = input;
     try {
+      await validateJwtToken(input.token, input.user_id);
+      await deleteRedisKey(input.user_id);
+      const { user_id, ...rest } = input;
       const updatedSetting = await Settings.findOneAndUpdate(
         { user_id },
         { ...rest },
@@ -40,9 +41,10 @@ export const SettingRoot = {
       throw error || "Failed to update Settings";
     }
   },
-  getUserSetting: async ({ id }) => {
+  getUserSetting: async ({ input }) => {
     try {
-      const cacheSetting = await getRedisCache(`${id}setting`);
+      // await validateJwtToken(input.token, input.id);
+      const cacheSetting = await getRedisCache(`${input.id}setting`);
 
       if (cacheSetting) {
         return createResult({
@@ -51,8 +53,8 @@ export const SettingRoot = {
           status: 200,
         });
       } else {
-        const setting = await Settings.findOne({ user_id: id });
-        await setRedisCache(`${id}setting`, setting);
+        const setting = await Settings.findOne({ user_id: input.id });
+        await setRedisCache(`${input.id}setting`, setting);
         return createResult({
           data: setting,
           message: "Setting fetched Successfully",

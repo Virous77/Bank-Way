@@ -1,5 +1,5 @@
 import Activity from "../Models/activity.js";
-import { createResult } from "../Utils/utility.js";
+import { createResult, validateJwtToken } from "../Utils/utility.js";
 import { ActivityValidate } from "../Middleware/validate.js";
 import {
   deleteRedisKey,
@@ -11,6 +11,7 @@ import { daysAgo } from "../Utils/utility.js";
 export const ActivityRoot = {
   createActivity: async ({ input }) => {
     try {
+      await validateJwtToken(input.token, input.user_id);
       const { error } = ActivityValidate.validate(input);
       if (error) throw new Error(error.details[0].message);
       if (input.type_name === "refund" && input.name.trim().length <= 2)
@@ -30,6 +31,7 @@ export const ActivityRoot = {
   },
   updateActivity: async ({ input }) => {
     try {
+      await validateJwtToken(input.token, input.user_id);
       const { error } = ActivityValidate.validate(input);
       if (error) throw new Error(error.details[0].message);
 
@@ -59,6 +61,7 @@ export const ActivityRoot = {
 
   getAllActivity: async ({ input }) => {
     try {
+      await validateJwtToken(input.token, input.id);
       let query = {
         user_id: input.id,
         createdAt: { $gte: input.date },
@@ -94,6 +97,7 @@ export const ActivityRoot = {
 
   getPaginatedActivity: async ({ input }) => {
     try {
+      await validateJwtToken(input.token, input.user_id);
       const { pageSize, pageNumber, type, search, user_id } = input;
       const skipDocuments = (+pageNumber - 1) * +pageSize;
       const regex = new RegExp(search.toLowerCase(), "i");
@@ -129,6 +133,7 @@ export const ActivityRoot = {
   },
   filterActivity: async ({ input }) => {
     try {
+      await validateJwtToken(input.token, input.id);
       let query;
 
       if (input.type !== "all") {
@@ -147,7 +152,7 @@ export const ActivityRoot = {
         }
       }
 
-      const transactions = await Activity.find(query);
+      const transactions = await Activity.find({ user_id: input.id, ...query });
       return {
         data: transactions,
         message: "Activity fetched successfully",

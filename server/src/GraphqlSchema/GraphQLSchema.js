@@ -31,6 +31,7 @@ export const GraphQLSchema = buildSchema(`
     image: String
     isAdmin: Boolean
     bio: String
+    token: String!
   }
 
   input ChangePassword{
@@ -48,10 +49,16 @@ export const GraphQLSchema = buildSchema(`
     password: String
   }
 
+   input GetUserRes{
+    id: String!
+    token: String!
+   }
+
    type UserResponse{
     data: User
     message: String
     status: Int
+    token: String
   }
 
   type ForgetPassResponse{
@@ -88,6 +95,7 @@ type Activity {
     date: String!
     note: String
     user_id: String!
+    token: String!
   }
 
   input UpdateActivityInput {
@@ -100,6 +108,7 @@ type Activity {
     note: String
     is_edited: Boolean
     user_id: String!
+    token: String!
   }
 
    type ActivityResult{
@@ -125,6 +134,7 @@ type Activity {
     id: String!
     date: String
     type: String
+    token: String!
   }
 
   input PaginatedActivityInput{
@@ -133,10 +143,13 @@ type Activity {
     type: String
     search: String
     user_id: String
+    token: String!
   }
 
   input FilterActivityInput{
     type: String
+    token: String!
+    id: String!
   }
 
 
@@ -156,12 +169,14 @@ type Activity {
     home_transaction_duration: String
     home_transaction_type: String
     user_id: String!
+    token: String!
   }
 
   type settingResult{
      data: Settings
      message: String
     status: Int
+    token: String
   }
 
   type Transfer{
@@ -181,11 +196,25 @@ type Activity {
     amount: Int!
     notes: String
     user_id: String!
+    token: String!
   }
 
   input UpdateTransferInput {
     id: String!
     isCompleted: Boolean
+    token: String!
+    user_id: String!
+  }
+
+  input GetAllTransferRes {
+    id: String!
+    token: String!
+  }
+
+    input DeleteTransferRes {
+    id: String!
+    token: String!
+    user_id: String
   }
 
    type TransferResult{
@@ -200,15 +229,17 @@ type Activity {
     status: Int
    }
 
+  
+
 
     type Query {
     getActivity(id: ID!): ActivityResult
     getAllActivity(input: ActivityAllType!): ActivityResultAll
-    getUser(id: ID!): UserResponse
+    getUser(input: GetUserRes): UserResponse
     getAllUsers: [User]
-    getUserSetting(id: ID!): settingResult
+    getUserSetting(input: GetAllTransferRes!): settingResult
     getPaginatedActivity(input: PaginatedActivityInput) : ActivityPaginatedResult
-    getTransferAll(id: ID!): TransferResultAll 
+    getTransferAll(input: GetAllTransferRes!): TransferResultAll 
     filterActivity(input: FilterActivityInput) : ActivityResultAll
   }
 
@@ -217,14 +248,14 @@ type Activity {
     updateActivity(input: UpdateActivityInput!): ActivityResult
     createUser(input: CreateUserInput!): UserResponse
     updateUser(input: UpdateUserInput!): UserResponse
-    deleteUser(id: ID!): UserResponse
+    deleteUser(input: GetUserRes): UserResponse
     loginUser(input: LoginUserInput!): UserResponse
     changePassword(input: ChangePassword!): UserResponse
     forgetPassword(input: ForgetPassword!): ForgetPassResponse
     resetPassword(input: ResetPassword): ForgetPassResponse
     updateSetting(input: UpdateSettingInput!): settingResult
     createTransfer(input: CreateTransferInput!): TransferResult
-    deleteTransfer(id: ID!): TransferResult
+    deleteTransfer(input: DeleteTransferRes!): TransferResult
     updateTransfer(input: UpdateTransferInput): TransferResult
   }
 `);

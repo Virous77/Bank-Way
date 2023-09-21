@@ -1,5 +1,5 @@
 import Transfer from "../Models/Transfer.js";
-import { createResult } from "../Utils/utility.js";
+import { createResult, validateJwtToken } from "../Utils/utility.js";
 import { TransferValidate } from "../Middleware/validate.js";
 import {
   deleteRedisKey,
@@ -10,6 +10,7 @@ import {
 export const TransferRoot = {
   createTransfer: async ({ input }) => {
     try {
+      await validateJwtToken(input.token, input.user_id);
       const { error } = TransferValidate.validate(input);
       if (error) throw new Error(error.details[0].message);
 
@@ -26,10 +27,10 @@ export const TransferRoot = {
     }
   },
 
-  getTransferAll: async ({ id }) => {
+  getTransferAll: async ({ input }) => {
     try {
-      const cachePayments = await getRedisCache(`${id}transfer`);
-
+      await validateJwtToken(input.token, input.id);
+      const cachePayments = await getRedisCache(`${input.id}transfer`);
       if (cachePayments) {
         return createResult({
           data: cachePayments,
@@ -37,10 +38,10 @@ export const TransferRoot = {
           status: 200,
         });
       } else {
-        const payments = await Transfer.find({ user_id: id }).sort({
+        const payments = await Transfer.find({ user_id: input.id }).sort({
           createdAt: -1,
         });
-        await setRedisCache(`${id}transfer`, payments);
+        await setRedisCache(`${input.id}transfer`, payments);
 
         return createResult({
           data: payments,
@@ -53,9 +54,10 @@ export const TransferRoot = {
     }
   },
 
-  deleteTransfer: async ({ id }) => {
+  deleteTransfer: async ({ input }) => {
     try {
-      const payment = await Transfer.findByIdAndDelete(id);
+      await validateJwtToken(input.token, input.user_id);
+      const payment = await Transfer.findByIdAndDelete(input.id);
       await deleteRedisKey(`${payment.user_id}transfer`);
       return createResult({
         message: "Payment deleted successfully",
@@ -70,6 +72,7 @@ export const TransferRoot = {
   updateTransfer: async ({ input }) => {
     const { id, ...rest } = input;
     try {
+      await validateJwtToken(input.token, input.user_id);
       const payment = await Transfer.findByIdAndUpdate(id, { ...rest });
       await deleteRedisKey(`${payment.user_id}transfer`);
       return createResult({

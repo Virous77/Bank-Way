@@ -4,6 +4,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
 import { uploadImage, deleteImages } from "./uploadImageToCloudinary.js";
+import { setRedisCache, getRedisCache } from "../Utils/redis.js";
 
 const router = express.Router();
 
@@ -48,6 +49,27 @@ router.delete("/uploads/:filename", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.post("/api/pwa", async (req, res, next) => {
+  const { id } = req.body;
+  console.log(req.body);
+  try {
+    await setRedisCache(`${id}pwa`, id);
+    res.status(201).json({ message: "Key set successfully" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/api/pwa/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const value = await getRedisCache(`${id}pwa`);
+    res.status(201).json({ message: "Key set successfully", data: value });
+  } catch (error) {
+    next(error);
   }
 });
 

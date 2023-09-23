@@ -6,30 +6,20 @@ import useWorker from "../../hooks/useWorker";
 import { Modal } from "../Modal/Modal";
 import Safari from "./Safari";
 import { useState } from "react";
-import Chrome from "./Chrome";
 import Wrong from "./Wrong";
+import useAppInstallApi from "../../hooks/useAppInstallApi";
 
 const Nav = () => {
   const { state, setState } = useGlobalContext();
   const { handleInstall, userClient, isMobile } = useWorker();
   const [safari, setSafari] = useState("");
+  const { setPwaStatusData } = useAppInstallApi();
 
   const handleCheckBrowser = () => {
     const data = userClient();
-
-    if (data === "chrome" && isMobile()) {
-      return setSafari("chrome");
-    }
-
-    if (data === "chrome") {
-      return handleInstall();
-    }
-
-    if (data === "safari" && isMobile()) {
-      setSafari("safari");
-    } else {
-      setSafari("wrong");
-    }
+    if (data === "safari" && isMobile()) return setSafari("safari");
+    if (data === "safari" || data === "firefox") return setSafari("wrong");
+    handleInstall();
   };
 
   return (
@@ -42,19 +32,18 @@ const Nav = () => {
       </p>
 
       <button onClick={handleCheckBrowser}>Install</button>
-      <b onClick={() => setState({ ...state, show: "" })}>
+      <b
+        onClick={() => {
+          setState({ ...state, install: "" });
+          setPwaStatusData();
+        }}
+      >
         <AiOutlineClose />
       </b>
 
       {safari === "safari" && (
         <Modal size="400px" onClose={() => setSafari("")} isOpen="isOpen">
           <Safari />
-        </Modal>
-      )}
-
-      {safari === "chrome" && (
-        <Modal size="400px" onClose={() => setSafari("")} isOpen="isOpen">
-          <Chrome />
         </Modal>
       )}
 

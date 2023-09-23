@@ -26,6 +26,7 @@ type stateType = {
   error: boolean;
   payment: Payments[] | undefined;
   service: any | null;
+  install: string;
 };
 
 type settingType = {
@@ -67,6 +68,7 @@ const stateInitialValueTwo: stateType = {
   error: false,
   payment: [],
   service: null,
+  install: "banner",
 };
 
 const initialValue: GlobalType = {

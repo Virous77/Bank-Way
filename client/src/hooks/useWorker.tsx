@@ -20,11 +20,11 @@ const useWorker = () => {
   const handleInstall = () => {
     if (state.service) {
       state.service.prompt();
-      state.service.userChoice.then((cool: any) => {
-        if (cool.outcome === "dismissed") {
+      state.service.userChoice.then((value: any) => {
+        if (value.outcome === "dismissed") {
           console.log("user close");
         } else {
-          console.log("added it");
+          console.log("installed");
         }
       });
     }
@@ -48,9 +48,9 @@ const useWorker = () => {
 
   const isMobile = () => {
     if (
-      screen.width <= 640 ||
+      screen.width <= 821 ||
       (window.matchMedia &&
-        window.matchMedia("only screen and (max-width: 640px)").matches)
+        window.matchMedia("only screen and (max-width: 821px)").matches)
     ) {
       return true;
     } else {

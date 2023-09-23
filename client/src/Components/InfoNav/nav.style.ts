@@ -52,3 +52,40 @@ export const MNav = styled.div<{ $style: string }>`
     }
   }
 `;
+
+export const MDiv = styled.div<{ $style: string }>`
+  div {
+    width: 100%;
+    ${(props) => props.$style};
+  }
+  img {
+    width: 130px;
+    height: 130px;
+  }
+
+  section {
+    ${(props) => props.$style};
+    flex-direction: column;
+  }
+
+  h1,
+  p,
+  b {
+    color: var(--exact-white-color);
+  }
+
+  p,
+  b {
+    text-align: center;
+  }
+
+  p {
+    margin-top: 7px;
+    margin-bottom: 5px;
+  }
+
+  b {
+    color: var(--exact-font-color);
+    border-bottom: 1px solid var(--exact-font-color);
+  }
+`;

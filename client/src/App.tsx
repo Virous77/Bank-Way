@@ -5,14 +5,30 @@ import { PublicRoutes } from "./Components/Private/PtotectedRoutes";
 import Notification from "./Components/Notification/Notification";
 import Nav from "./Components/InfoNav/Nav";
 import { useGlobalContext } from "./Store/globalContext";
+import useWorker from "./hooks/useWorker";
+import useAppInstallApi from "./hooks/useAppInstallApi";
+import { getLocalData } from "./Utils/data";
 
 const App = () => {
+  const id = getLocalData("bankId");
   const { state } = useGlobalContext();
-  // useWorker();
+  const { pwaStatus } = useAppInstallApi();
+  useWorker();
+
+  const isPwaInstalled = window.matchMedia(
+    "(display-mode: standalone)"
+  ).matches;
 
   return (
     <React.Fragment>
-      {state.show === "banner" && <Nav />}
+      {!id && (
+        <>
+          {state.install === "banner" && !isPwaInstalled && !pwaStatus && (
+            <Nav />
+          )}
+        </>
+      )}
+
       <Navbar />
       <PublicRoutes>
         <Router />

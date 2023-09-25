@@ -1,21 +1,30 @@
 import axios from "axios";
 import { getLocalData } from "../Utils/data";
 import { useGlobalContext } from "../Store/globalContext";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const useAppInstallApi = () => {
   const id = getLocalData("bankPwaId");
   const { handleSetNotification } = useGlobalContext();
-  const [pwaStatus, setPwaStatus] = useState("");
+  const [pwaStatus, setPwaStatus] = useState({
+    data: "",
+    isLoading: false,
+  });
+
+  const isPwaInstalled = window.matchMedia(
+    "(display-mode: standalone)"
+  ).matches;
 
   const getPwaStatusData = async (newId: string) => {
     try {
+      setPwaStatus({ ...pwaStatus, isLoading: true });
       const { data } = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/pwa/${id || newId}`
       );
-      setPwaStatus(data.data);
+      setPwaStatus({ ...pwaStatus, data: data.data, isLoading: false });
     } catch (error) {
+      setPwaStatus({ ...pwaStatus, isLoading: false });
       handleSetNotification({
         message: "Something went wrong,Try again!",
         status: "error",
@@ -27,16 +36,18 @@ const useAppInstallApi = () => {
     await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/pwa`, { id });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const newId = uuidv4();
     if (!id) {
       localStorage.setItem("bankPwaId", JSON.stringify(newId));
     }
 
-    getPwaStatusData(newId);
+    if (!isPwaInstalled) {
+      getPwaStatusData(newId);
+    }
   }, []);
 
-  return { pwaStatus, setPwaStatusData };
+  return { pwaStatus, setPwaStatusData, isPwaInstalled };
 };
 
 export default useAppInstallApi;

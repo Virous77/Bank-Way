@@ -12,20 +12,17 @@ import { getLocalData } from "./Utils/data";
 const App = () => {
   const id = getLocalData("bankId");
   const { state } = useGlobalContext();
-  const { pwaStatus } = useAppInstallApi();
+  const { pwaStatus, isPwaInstalled } = useAppInstallApi();
   useWorker();
-
-  const isPwaInstalled = window.matchMedia(
-    "(display-mode: standalone)"
-  ).matches;
 
   return (
     <React.Fragment>
-      {!id && (
+      {!pwaStatus.isLoading && (
         <>
-          {state.install === "banner" && !isPwaInstalled && !pwaStatus && (
-            <Nav />
-          )}
+          {state.install === "banner" &&
+            !isPwaInstalled &&
+            !pwaStatus.data &&
+            !id && <Nav />}
         </>
       )}
 

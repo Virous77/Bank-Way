@@ -25,13 +25,13 @@ const Landing = () => {
   return (
     <Main $style={displayCol}>
       <section>
-        <h1>Goodbye, money stress. Hello BankWay.</h1>
-        <img src={money} alt="BankWay" />
-        <h2>Take the guesswork out of managing your money.</h2>
+        <h1>Goodbye, money stress. Hello Expensify.</h1>
+        <img src={money} alt="Expensify" />
+        <h2>Take the guess work out of managing your Money.</h2>
 
         <p>
-          BankWay makes it easy to spend and track your money. Budget smarter by
-          knowing how much you spending daily. You have all the good features
+          Expensify makes it easy to spend and track your money. Budget smarter
+          by knowing how much you spending daily. You have all the good features
           add notes & inbuilt graph to understand better.
         </p>
         <button onClick={() => setState({ ...state, show: "signUp" })}>
@@ -49,7 +49,7 @@ const Landing = () => {
           }
         >
           <ModalHeader
-            name="BankWay"
+            name="Expensify"
             onClose={() => setState({ ...state, show: "" })}
           />
           {activeTab === "signUp" ? (

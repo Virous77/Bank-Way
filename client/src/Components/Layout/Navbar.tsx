@@ -36,7 +36,7 @@ const Navbar = () => {
           </Menu>
         )}
         <Link to="/">
-          <Logo>BankWay</Logo>
+          <Logo>Expensify</Logo>
         </Link>
       </LogoConta>
 

@@ -22,7 +22,7 @@ const SideMenu = () => {
   return (
     <Aside $style={state.menu} $styles={displayFlex}>
       <div>
-        <Logo>BankWay</Logo>
+        <Logo>Expensify</Logo>
         <button onClick={() => setState({ ...state, menu: "" })}>
           <AiOutlineClose />
         </button>

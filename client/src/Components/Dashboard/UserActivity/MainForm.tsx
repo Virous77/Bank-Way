@@ -75,7 +75,7 @@ const MainForm: React.FC<AddFormType> = ({
 
         <Button onClick={() => handleCreateData(title || "")}>
           {isLoading
-            ? "Processing"
+            ? "Processing..."
             : `${editData?.amount ? "Update" : "Add"} ${title}`}
         </Button>
       </Form>

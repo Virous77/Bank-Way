@@ -102,7 +102,7 @@ const AddPayment: React.FC<AddPaymentType> = ({ refetch }) => {
         </fieldset>
 
         <button onClick={handleAddPayment} disabled={loading}>
-          {loading ? "Processing.." : "Add Payment"}
+          {loading ? "Processing..." : "Add Payment"}
         </button>
       </form>
     </PDiv>

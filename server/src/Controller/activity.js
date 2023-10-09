@@ -110,8 +110,13 @@ export const ActivityRoot = {
             };
 
       const totalProduct = (
-        await Activity.find({ ...queryType, user_id: user_id })
+        await Activity.find({
+          ...queryType,
+          user_id: user_id,
+          name: { $regex: regex },
+        })
       ).length;
+
       const transactions = await Activity.find({
         user_id: user_id,
         ...queryType,

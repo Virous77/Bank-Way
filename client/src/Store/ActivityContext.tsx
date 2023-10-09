@@ -38,12 +38,18 @@ type EditActivityType = {
   type_name: string;
 };
 
+const date = new Date();
+const month = date.getMonth();
+const day = date.getDate();
+
 const initialState: ActivityType = {
   name: "",
   type: "",
   amount: 0,
   note: "",
-  date: "",
+  date: `${date.getFullYear()}-${month <= 9 ? `0${month}` : month}-${
+    day <= 9 ? `0${day}` : day
+  }`,
   other: "",
 };
 

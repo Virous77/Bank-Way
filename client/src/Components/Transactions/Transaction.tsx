@@ -42,12 +42,7 @@ const Transactions = () => {
   const { loading } = useQuery(GET_PAGINATED_ACTIVITY, {
     variables: { input },
     onCompleted: (data) => {
-      if (state.search.length > 0) {
-        setTransactions(data.getPaginatedActivity.data);
-      } else {
-        setTransactions(transactions.concat(data.getPaginatedActivity.data));
-      }
-
+      setTransactions(transactions.concat(data.getPaginatedActivity.data));
       setTotal(data.getPaginatedActivity.total);
     },
     onError: (error) => {
@@ -70,6 +65,7 @@ const Transactions = () => {
   useEffect(() => {
     if (state.search.length > 3) {
       setTransactions([]);
+      setPageNumber(1);
     }
   }, [state.search]);
 

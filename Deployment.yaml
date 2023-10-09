@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-app
+spec:
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+        - name: server
+          image: virous77/bank-server
+          env:
+            - name: EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: EMAIL
+            - name: PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: PASSWORD
+            - name: REDIS_PASS
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: REDIS_PASS
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: REDIS_PORT
+            - name: IMAGE_API_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: IMAGE_API_SECRET
+            - name: CLOUD_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: CLOUD_NAME
+            - name: IMAGE_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: IMAGE_API_KEY
+            - name: JWT_PRIVATE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: JWT_PRIVATE_KEY
+            - name: MONGO_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: MONGO_URI
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: PORT

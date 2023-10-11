@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: server-service
+  name: client-service
 spec:
   type: LoadBalancer
   selector:
@@ -9,4 +9,18 @@ spec:
   ports:
     - port: 4000
       targetPort: 4000
+      protocol: "TCP"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: bank-client
+  ports:
+    - port: 80
+      targetPort: 80
       protocol: "TCP"

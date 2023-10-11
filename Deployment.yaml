@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: virous77/bank-server
+          image: virous77/bank-server:1
           env:
             - name: EMAIL
               valueFrom:
@@ -70,3 +70,27 @@ spec:
                 configMapKeyRef:
                   name: server-config
                   key: PORT
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-app
+spec:
+  selector:
+    matchLabels:
+      app: bank-client
+  template:
+    metadata:
+      labels:
+        app: bank-client
+    spec:
+      containers:
+        - name: bank-client
+          image: virous77/client-bank:12
+          env:
+            - name: VITE_RAPID_APIKEY
+              valueFrom:
+                configMapKeyRef:
+                  name: server-config
+                  key: VITE_RAPID_APIKEY

@@ -4,6 +4,8 @@ import { TbReportMoney } from "react-icons/tb";
 import { FiSettings } from "react-icons/fi";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { BiTransfer } from "react-icons/bi";
+import React from "react";
+import { stateType } from "../Store/globalContext";
 
 export const navLink = [
   {
@@ -226,5 +228,29 @@ export const validateTokenMessage = (error: string) => {
     return true;
   } else {
     return false;
+  }
+};
+
+type GlobalParams = {
+  error: string;
+  handleSetNotification: ({
+    message,
+    status,
+  }: {
+    message: string;
+    status: string;
+  }) => void;
+  setState: React.Dispatch<React.SetStateAction<stateType>>;
+};
+
+export const handleGlobalError = ({
+  error,
+  handleSetNotification,
+  setState,
+}: GlobalParams) => {
+  if (error === "Failed to fetch") {
+    setState((prev) => ({ ...prev, networkConnection: true }));
+  } else {
+    handleSetNotification({ message: error, status: "error" });
   }
 };

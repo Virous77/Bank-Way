@@ -8,6 +8,7 @@ import { useGlobalContext } from "./Store/globalContext";
 import useWorker from "./hooks/useWorker";
 import useAppInstallApi from "./hooks/useAppInstallApi";
 import { getLocalData } from "./Utils/data";
+import Offline from "./Components/Offline/Offline";
 
 const App = () => {
   const id = getLocalData("bankId");
@@ -31,6 +32,7 @@ const App = () => {
         <Router />
       </PublicRoutes>
       <Notification />
+      <Offline />
     </React.Fragment>
   );
 };

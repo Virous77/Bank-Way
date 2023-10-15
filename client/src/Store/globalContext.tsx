@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import {
   getLocalData,
   handleAction,
+  handleGlobalError,
   validateTokenMessage,
 } from "../Utils/data";
 import { Setting, Payments } from "../Interface/interface";
@@ -14,7 +15,7 @@ type notificationType = {
   status: string;
 };
 
-type stateType = {
+export type stateType = {
   show: string;
   isLoggedIn: boolean;
   active: string;
@@ -27,6 +28,7 @@ type stateType = {
   payment: Payments[] | undefined;
   service: any | null;
   install: string;
+  networkConnection: boolean;
 };
 
 type settingType = {
@@ -69,6 +71,7 @@ const stateInitialValueTwo: stateType = {
   payment: [],
   service: null,
   install: "banner",
+  networkConnection: false,
 };
 
 const initialValue: GlobalType = {
@@ -123,7 +126,11 @@ export const GlobalContextProvider = ({
       if (validateError) {
         logoutUser();
       }
-      handleSetNotification({ message: error.message, status: "error" });
+       handleGlobalError({
+         error: error.message,
+         handleSetNotification: handleSetNotification,
+         setState: setState,
+       });
     },
     onCompleted: (data) => {
       setState({

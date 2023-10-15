@@ -14,6 +14,7 @@ import useAppTitle from "../../hooks/useAppTitle";
 import {
   filterAllTransactionData,
   getLocalData,
+  handleGlobalError,
   validateTokenMessage,
 } from "../../Utils/data";
 import { useAuthContext } from "../../Store/AuthContext";
@@ -50,7 +51,11 @@ const Transactions = () => {
       if (validateError) {
         logoutUser();
       }
-      handleSetNotification({ message: error.message, status: "error" });
+      handleGlobalError({
+        error: error.message,
+        handleSetNotification: handleSetNotification,
+        setState: setState,
+      });
     },
     fetchPolicy: "network-only",
   });

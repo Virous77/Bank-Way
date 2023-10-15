@@ -9,7 +9,7 @@ import {
 } from "../graphql/user";
 import { useGlobalContext } from "./globalContext";
 import { useNavigate } from "react-router-dom";
-import { getLocalData, handleAction } from "../Utils/data";
+import { getLocalData, handleAction, handleGlobalError } from "../Utils/data";
 import { User } from "../Interface/interface";
 import {
   contextState,
@@ -60,7 +60,11 @@ export const AuthContextProvider = ({
         logoutUser();
       }
 
-      handleSetNotification({ message: error.message, status: "error" });
+      handleGlobalError({
+        error: error.message,
+        handleSetNotification: handleSetNotification,
+        setState: setState,
+      });
     },
     fetchPolicy: id ? "cache-and-network" : "standby",
   });

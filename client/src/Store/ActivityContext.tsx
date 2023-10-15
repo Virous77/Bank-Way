@@ -10,6 +10,7 @@ import { useGlobalContext } from "./globalContext";
 import {
   getLocalData,
   handleAction,
+  handleGlobalError,
   validateTokenMessage,
 } from "../Utils/data";
 import { Transaction } from "../Interface/interface";
@@ -142,7 +143,11 @@ export const ActivityContextProvider = ({
       if (validateError) {
         logoutUser();
       }
-      handleSetNotification({ message: error.message, status: "error" });
+      handleGlobalError({
+        error: error.message,
+        handleSetNotification: handleSetNotification,
+        setState: setState,
+      });
     },
     fetchPolicy: id && state.days ? "cache-and-network" : "standby",
   });

@@ -10,7 +10,11 @@ import Filter from "./Filter";
 import FilterComp from "./FilterComp";
 import { useQuery } from "@apollo/client";
 import { FILTER_ACTIVITY } from "../../graphql/activity";
-import { getLocalData, transactionTimeFrame } from "../../Utils/data";
+import {
+  getLocalData,
+  handleGlobalError,
+  transactionTimeFrame,
+} from "../../Utils/data";
 
 type Result = {
   filterActivity: {
@@ -39,7 +43,11 @@ const TransactionSidebar = () => {
   const { data } = useQuery<Result>(FILTER_ACTIVITY, {
     variables: { input },
     onError: (error) => {
-      handleSetNotification({ message: error.message, status: "error" });
+      handleGlobalError({
+        error: error.message,
+        handleSetNotification: handleSetNotification,
+        setState: setState,
+      });
     },
     fetchPolicy: "network-only",
   });

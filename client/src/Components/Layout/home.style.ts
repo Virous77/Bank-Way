@@ -7,6 +7,7 @@ export const Main = styled.main<{ $style: string }>`
   color: var(--body-color);
   grid-template-columns: 300px 1fr 300px;
   gap: 1rem;
+  margin-bottom: 3.5rem;
 
   @media (max-width: 992px) {
     grid-template-columns: 1fr;

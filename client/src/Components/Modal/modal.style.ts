@@ -30,8 +30,12 @@ export const ModalContent = styled.main<{ $modalSize?: string }>`
   }
 
   @media (max-width: 768px) {
-    width: 97%;
+    position: absolute;
+    width: 100%;
     padding: 2rem 1rem;
+    bottom: 0;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
 `;
 

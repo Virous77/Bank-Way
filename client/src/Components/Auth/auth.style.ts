@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 export const Main = styled.section`
   margin-top: 1rem;
+  margin-bottom: 1rem;
 `;
 
 export const Heading = styled.h2`

@@ -28,18 +28,6 @@ export const LogoConta = styled.div<{ $style: string }>`
   gap: 17px;
 `;
 
-// export const Menu = styled.button`
-//   display: none;
-//   background-color: transparent;
-//   color: var(--exact-font-color);
-//   margin-top: 2px;
-//   cursor: pointer;
-
-//   @media (max-width: 992px) {
-//     display: block;
-//   }
-// `;
-
 export const Logo = styled.h1`
   font-size: 1.5rem;
   color: var(--modal-color);

@@ -4,7 +4,6 @@ import {
   RightContainer,
   Circle,
   Img,
-  // Menu,
   LogoConta,
   AuthB,
 } from "./navbar.style";
@@ -18,23 +17,16 @@ import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import defaultUser from "../../assets/user.avif";
-// import { ImMenu } from "react-icons/im";
 
 const Navbar = () => {
   const { state } = useGlobalContext();
   const active = getLocalData("bankId");
   const { userData, logoutUser } = useAuthContext();
   const navigate = useNavigate();
-  // const { pathname } = useLocation();
 
   return (
     <NavbarMain $displayCenter={displayCenter}>
       <LogoConta $style={displayCenter}>
-        {/* {pathname !== "/landing" && (
-          <Menu onClick={() => setState({ ...state, menu: "yes" })}>
-            <ImMenu size={20} />
-          </Menu>
-        )} */}
         <Link to="/">
           <Logo>Expensify</Logo>
         </Link>

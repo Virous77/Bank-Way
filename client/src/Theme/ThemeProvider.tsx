@@ -38,7 +38,6 @@ const ThemeProvider = () => {
           handleToggle(newColorScheme);
         });
     }
-    setTheme(activeTheme);
   }, [state.active, activeTheme]);
 
   return (

@@ -53,6 +53,7 @@ export const List = styled.div`
 export const Section = styled.section`
   margin-top: 1rem;
   position: relative;
+  margin-bottom: 2.5rem;
 
   b {
     position: absolute;

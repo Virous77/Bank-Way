@@ -85,6 +85,12 @@ export const Tabs = [
     value: "trans",
     message: "Download Transaction data.",
   },
+  {
+    id: 5,
+    name: "Logout",
+    value: "log",
+    message: "",
+  },
 ];
 
 export const currentMoment = (date: Date) => {

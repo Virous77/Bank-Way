@@ -18,6 +18,7 @@ import { expenseType, incomeType } from "../Utils/activity";
 import { useLocation } from "react-router-dom";
 import { daysAgo } from "../Utils/data";
 import { useAuthContext } from "./AuthContext";
+import Loader from "../Components/Shimmers/Loader";
 
 export type ActivityType = {
   name: string;
@@ -221,6 +222,7 @@ export const ActivityContextProvider = ({
         action: createActivity,
         formData: data,
       });
+      setState((prev) => ({ ...prev, fetch: "mutate" }));
     } catch (error: any) {
       handleError(error.message);
     }
@@ -248,6 +250,7 @@ export const ActivityContextProvider = ({
         action: updateActivity,
         formData: data,
       });
+      setState((prev) => ({ ...prev, fetch: "mutate" }));
     } catch (error: any) {
       handleError(error.message);
     }
@@ -269,7 +272,7 @@ export const ActivityContextProvider = ({
         handleUpdateData,
       }}
     >
-      {children}
+      {loading ? <Loader /> : children}
     </ActivityContext.Provider>
   );
 };

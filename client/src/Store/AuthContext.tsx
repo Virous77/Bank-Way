@@ -17,6 +17,7 @@ import {
 } from "../contextSuggestionType/contextType";
 import axios from "axios";
 import { validateTokenMessage } from "../Utils/data";
+import Loader from "../Components/Shimmers/Loader";
 
 type UserResponse = {
   getUser: {
@@ -52,7 +53,11 @@ export const AuthContextProvider = ({
   };
 
   // * All the DB related services are below
-  const { data, refetch } = useQuery<UserResponse | undefined>(GET_USER, {
+  const {
+    data,
+    refetch,
+    loading: userLoading,
+  } = useQuery<UserResponse | undefined>(GET_USER, {
     variables: { input },
     onError: (error) => {
       const validateError = validateTokenMessage(error.message);
@@ -219,7 +224,7 @@ export const AuthContextProvider = ({
         logoutUser,
       }}
     >
-      {children}
+      {userLoading ? <Loader /> : children}
     </AuthContext.Provider>
   );
 };

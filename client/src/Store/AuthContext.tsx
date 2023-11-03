@@ -66,7 +66,7 @@ export const AuthContextProvider = ({
         setState: setState,
       });
     },
-    fetchPolicy: id ? "cache-and-network" : "standby",
+    fetchPolicy: id ? "cache-first" : "standby",
   });
 
   const [createUser, { loading }] = useMutation(CREATE_USER, {

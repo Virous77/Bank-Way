@@ -6,7 +6,11 @@ import AddPayment from "./AddPayment";
 import { Modal } from "../Modal/Modal";
 import ModalHeader from "../Modal/ModalHeader";
 import PaymentTransaction from "./PaymentTransaction";
-import { getLocalData, handleGlobalError, validateTokenMessage } from "../../Utils/data";
+import {
+  getLocalData,
+  handleGlobalError,
+  validateTokenMessage,
+} from "../../Utils/data";
 import { GET_ALL_TRANSFER } from "../../graphql/transfer";
 import { useQuery } from "@apollo/client";
 import { Payments } from "../../Interface/interface";
@@ -40,11 +44,11 @@ const MoneyPaid = () => {
         if (validateError) {
           logoutUser();
         }
-         handleGlobalError({
-           error: error.message,
-           handleSetNotification: handleSetNotification,
-           setState: setState,
-         });
+        handleGlobalError({
+          error: error.message,
+          handleSetNotification: handleSetNotification,
+          setState: setState,
+        });
       },
       onCompleted: (data) => {
         if (data) {
@@ -53,7 +57,7 @@ const MoneyPaid = () => {
           }, 100);
         }
       },
-      fetchPolicy: id ? "cache-and-network" : "standby",
+      fetchPolicy: id ? "cache-first" : "standby",
     }
   );
 

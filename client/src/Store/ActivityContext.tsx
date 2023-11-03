@@ -149,7 +149,7 @@ export const ActivityContextProvider = ({
         setState: setState,
       });
     },
-    fetchPolicy: id && state.days ? "cache-and-network" : "standby",
+    fetchPolicy: id && state.days ? "cache-first" : "standby",
   });
 
   const [createActivity, { loading: isLoading }] = useMutation(

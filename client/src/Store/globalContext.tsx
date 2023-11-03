@@ -126,11 +126,11 @@ export const GlobalContextProvider = ({
       if (validateError) {
         logoutUser();
       }
-       handleGlobalError({
-         error: error.message,
-         handleSetNotification: handleSetNotification,
-         setState: setState,
-       });
+      handleGlobalError({
+        error: error.message,
+        handleSetNotification: handleSetNotification,
+        setState: setState,
+      });
     },
     onCompleted: (data) => {
       setState({
@@ -138,7 +138,7 @@ export const GlobalContextProvider = ({
         days: data?.getUserSetting.data.home_transaction_duration || "7",
       });
     },
-    fetchPolicy: id ? "cache-and-network" : "standby",
+    fetchPolicy: id ? "cache-first" : "standby",
   });
 
   const [updateSetting, { loading }] = useMutation(UPDATE_SETTING, {

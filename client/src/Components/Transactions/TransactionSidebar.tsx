@@ -49,7 +49,7 @@ const TransactionSidebar = () => {
         setState: setState,
       });
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-first",
   });
 
   const expense = useMemo(() => {

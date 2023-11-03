@@ -57,7 +57,7 @@ const Transactions = () => {
         setState: setState,
       });
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: "cache-first",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

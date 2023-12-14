@@ -1,9 +1,9 @@
 import React from "react";
 import { Select } from "./activity.style";
-import { MainFormType } from "./MainForm";
+import { TMainForm } from "./MainForm";
 import { useActivity } from "../../../Store/ActivityContext";
 
-const SelectComp: React.FC<MainFormType> = ({ types, title, activityData }) => {
+const SelectComp: React.FC<TMainForm> = ({ types, title, activityData }) => {
   const { setActivityData, setEditData, editData } = useActivity();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

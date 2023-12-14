@@ -45,12 +45,12 @@ export const getLocalData = (name: string) => {
   return result ? JSON.parse(result) : undefined;
 };
 
-type actionType = {
+type TAction = {
   action: any;
   formData: any;
 };
 
-export const handleAction = ({ action, formData }: actionType) => {
+export const handleAction = ({ action, formData }: TAction) => {
   action({
     variables: {
       input: {
@@ -213,11 +213,11 @@ export const filterTransactionData = [
   },
 ];
 
-type TransType = {
+type TTrans = {
   [key: string]: string;
 };
 
-export const transactionTimeFrame: TransType = {
+export const transactionTimeFrame: TTrans = {
   "30": "Last 30 Days Transaction",
   all: "All Time Transaction",
   "3": "Last 3 Month Transaction",
@@ -237,7 +237,7 @@ export const validateTokenMessage = (error: string) => {
   }
 };
 
-type GlobalParams = {
+type TGlobalParams = {
   error: string;
   handleSetNotification: ({
     message,
@@ -253,7 +253,8 @@ export const handleGlobalError = ({
   error,
   handleSetNotification,
   setState,
-}: GlobalParams) => {
+}: TGlobalParams) => {
+  console.log(error);
   if (error === "Failed to fetch") {
     setState((prev) => ({ ...prev, networkConnection: true }));
   } else {

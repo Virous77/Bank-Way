@@ -16,7 +16,7 @@ import {
   transactionTimeFrame,
 } from "../../Utils/data";
 
-type Result = {
+type TResult = {
   filterActivity: {
     data: {
       amount: number;
@@ -40,7 +40,7 @@ const TransactionSidebar = () => {
     token,
   };
 
-  const { data } = useQuery<Result>(FILTER_ACTIVITY, {
+  const { data } = useQuery<TResult>(FILTER_ACTIVITY, {
     variables: { input },
     onError: (error) => {
       handleGlobalError({

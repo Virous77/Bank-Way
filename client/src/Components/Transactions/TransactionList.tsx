@@ -1,4 +1,4 @@
-import { Transaction } from "../../Interface/interface";
+import { ITransaction } from "../../Interface/interface";
 import {
   LI,
   SvgDiv,
@@ -17,12 +17,12 @@ import { useState } from "react";
 import { useGlobalContext } from "../../Store/globalContext";
 import { daysAgo } from "../../Utils/data";
 
-type TransactionListType = {
-  transaction: Transaction;
+type TTransactionList = {
+  transaction: ITransaction;
   title?: string;
 };
 
-const TransactionList: React.FC<TransactionListType> = ({
+const TransactionList: React.FC<TTransactionList> = ({
   transaction,
   title,
 }) => {
@@ -30,7 +30,7 @@ const TransactionList: React.FC<TransactionListType> = ({
   const { editData, setEditData } = useActivity();
   const { handleSetNotification, data } = useGlobalContext();
 
-  const handleUpdate = (data: Transaction) => {
+  const handleUpdate = (data: ITransaction) => {
     const DaysAgo = daysAgo(1);
     const date = new Date(Number(data.createdAt));
 

@@ -5,7 +5,7 @@ import { useGlobalContext } from "../../Store/globalContext";
 import { useQuery } from "@apollo/client";
 import { GET_PAGINATED_ACTIVITY } from "../../graphql/activity";
 import { useEffect, useState } from "react";
-import { Transaction } from "../../Interface/interface";
+import { ITransaction } from "../../Interface/interface";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PaginatedTransactionList from "./PaginatedTransactionList";
 import { TransactionShimmer } from "../Shimmers/TextShimmer";
@@ -18,11 +18,12 @@ import {
   validateTokenMessage,
 } from "../../Utils/data";
 import { useAuthContext } from "../../Store/AuthContext";
+import PullToRefresh from "react-simple-pull-to-refresh";
 
 const Transactions = () => {
   useAppTitle({ name: "Transaction" });
   const { handleSetNotification, state, setState } = useGlobalContext();
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [transactionType, setTransactionType] = useState("all");
   const [total, setTotal] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
@@ -40,7 +41,7 @@ const Transactions = () => {
     token,
   };
 
-  const { loading } = useQuery(GET_PAGINATED_ACTIVITY, {
+  const { loading, refetch } = useQuery(GET_PAGINATED_ACTIVITY, {
     variables: { input },
     onCompleted: (data) => {
       setTransactions(transactions.concat(data.getPaginatedActivity.data));
@@ -67,6 +68,10 @@ const Transactions = () => {
     setTransactions([]);
   };
 
+  const handleRefresh = async () => {
+    refetch();
+  };
+
   useEffect(() => {
     if (state.search.length > 3) {
       setTransactions([]);
@@ -75,46 +80,51 @@ const Transactions = () => {
   }, [state.search]);
 
   return (
-    <Main $style={displayFlex}>
-      <header>
-        <h2>Transaction</h2>
-        <Header
-          transactionType={transactionType}
-          handleChange={handleChange}
-          data={filterAllTransactionData}
-        />
-      </header>
-      <section>
-        {transactions.length === 0 && loading ? (
-          <TransactionShimmer />
-        ) : (
-          <InfiniteScroll
-            dataLength={transactions?.length + 1}
-            next={() => setPageNumber(pageNumber + 1)}
-            hasMore={transactions?.length === total ? false : true}
-            loader={transactions.length > 1 && <TransactionShimmer />}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                {transactions?.length > 0 && <b></b>}
-              </p>
-            }
-          >
-            {transactions.length > 0 ? (
-              <PUL $style={displayCol}>
-                {transactions.map((tran) => (
-                  <PaginatedTransactionList key={tran._id} transaction={tran} />
-                ))}
-              </PUL>
-            ) : (
-              <NDiv>
-                <img src={noTransaction} alt="no-transaction" />
-                <p>Start tracking your daily spend.</p>
-              </NDiv>
-            )}
-          </InfiniteScroll>
-        )}
-      </section>
-    </Main>
+    <PullToRefresh onRefresh={handleRefresh} fetchMoreThreshold={3}>
+      <Main $style={displayFlex}>
+        <header>
+          <h2>Transaction</h2>
+          <Header
+            transactionType={transactionType}
+            handleChange={handleChange}
+            data={filterAllTransactionData}
+          />
+        </header>
+        <section>
+          {transactions.length === 0 && loading ? (
+            <TransactionShimmer />
+          ) : (
+            <InfiniteScroll
+              dataLength={transactions?.length + 1}
+              next={() => setPageNumber(pageNumber + 1)}
+              hasMore={transactions?.length === total ? false : true}
+              loader={transactions.length > 1 && <TransactionShimmer />}
+              endMessage={
+                <p style={{ textAlign: "center" }}>
+                  {transactions?.length > 0 && <b></b>}
+                </p>
+              }
+            >
+              {transactions.length > 0 ? (
+                <PUL $style={displayCol}>
+                  {transactions.map((tran) => (
+                    <PaginatedTransactionList
+                      key={tran._id}
+                      transaction={tran}
+                    />
+                  ))}
+                </PUL>
+              ) : (
+                <NDiv>
+                  <img src={noTransaction} alt="no-transaction" />
+                  <p>Start tracking your daily spend.</p>
+                </NDiv>
+              )}
+            </InfiniteScroll>
+          )}
+        </section>
+      </Main>
+    </PullToRefresh>
   );
 };
 

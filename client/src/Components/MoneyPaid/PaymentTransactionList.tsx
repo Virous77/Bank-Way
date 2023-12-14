@@ -1,4 +1,4 @@
-import { Payments } from "../../Interface/interface";
+import { IPayments } from "../../Interface/interface";
 import { displayFlex } from "../Common/variable.style";
 import { PList, Wrap, PAction } from "./money.style";
 import { RiSecurePaymentLine } from "react-icons/ri";
@@ -14,12 +14,12 @@ import { useMutation } from "@apollo/client";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
 
-type PaymentList = {
-  payment: Payments;
+type TPaymentList = {
+  payment: IPayments;
   refetch: () => void;
 };
 
-const PaymentTransactionList: React.FC<PaymentList> = ({
+const PaymentTransactionList: React.FC<TPaymentList> = ({
   payment,
   refetch,
 }) => {
@@ -82,7 +82,7 @@ const PaymentTransactionList: React.FC<PaymentList> = ({
     }
   };
 
-  const handleUpdate = (params: Payments) => {
+  const handleUpdate = (params: IPayments) => {
     const isConfirm = window.confirm(
       "Are you sure have received this payment?"
     );

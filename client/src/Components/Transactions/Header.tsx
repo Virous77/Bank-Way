@@ -1,6 +1,6 @@
 import React from "react";
 
-type HeaderType = {
+type THeader = {
   transactionType: string;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   data: {
@@ -10,11 +10,7 @@ type HeaderType = {
   }[];
 };
 
-const Header: React.FC<HeaderType> = ({
-  transactionType,
-  handleChange,
-  data,
-}) => {
+const Header: React.FC<THeader> = ({ transactionType, handleChange, data }) => {
   return (
     <select value={transactionType} onChange={handleChange}>
       {data.map((type) => (

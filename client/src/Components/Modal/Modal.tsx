@@ -2,14 +2,14 @@ import ReactDOM from "react-dom";
 import React, { ReactNode } from "react";
 import { ModalContent, Main } from "./modal.style";
 
-type ModalType = {
+type TModal = {
   isOpen: string;
   onClose: () => void;
   children: ReactNode;
   size?: string;
 };
 
-export const Modal: React.FC<ModalType> = ({
+export const Modal: React.FC<TModal> = ({
   isOpen,
   onClose,
   children,

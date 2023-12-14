@@ -1,5 +1,5 @@
 import PaymentTransactionList from "./PaymentTransactionList";
-import { Payments } from "../../Interface/interface";
+import { IPayments } from "../../Interface/interface";
 import { Main } from "./money.style";
 import { displayCol } from "../Common/variable.style";
 import { TransactionShimmer } from "../Shimmers/TextShimmer";
@@ -7,13 +7,13 @@ import React from "react";
 import { NDiv } from "../Transactions/transaction.style";
 import noTransaction from "../../assets/no-transaction.svg";
 
-type PaymentTransactionType = {
-  data: Payments[] | undefined;
+type TPaymentTransaction = {
+  data: IPayments[] | undefined;
   loading: boolean;
   refetch: () => void;
 };
 
-const PaymentTransaction: React.FC<PaymentTransactionType> = ({
+const PaymentTransaction: React.FC<TPaymentTransaction> = ({
   data,
   loading,
   refetch,

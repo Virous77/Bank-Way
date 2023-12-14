@@ -11,11 +11,11 @@ import { Input } from "../Auth/auth.style";
 import { Button } from "../Layout/navbar.style";
 import { getLocalData } from "../../Utils/data";
 
-type PasswordModalType = {
+type TPasswordModal = {
   setActive: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
-const PasswordModal: React.FC<PasswordModalType> = ({ setActive }) => {
+const PasswordModal: React.FC<TPasswordModal> = ({ setActive }) => {
   const [passwordData, setPasswordData] = useState({
     password: "",
     newPassword: "",

@@ -10,7 +10,7 @@ import {
 import { useGlobalContext } from "./globalContext";
 import { useNavigate } from "react-router-dom";
 import { getLocalData, handleAction, handleGlobalError } from "../Utils/data";
-import { User } from "../Interface/interface";
+import { IUser } from "../Interface/interface";
 import {
   contextState,
   initialState,
@@ -19,9 +19,9 @@ import axios from "axios";
 import { validateTokenMessage } from "../Utils/data";
 import Loader from "../Components/Shimmers/Loader";
 
-type UserResponse = {
+type TUserResponse = {
   getUser: {
-    data: User;
+    data: IUser;
   };
 };
 
@@ -44,7 +44,9 @@ export const AuthContextProvider = ({
     token,
   };
 
-  const [editUserData, setEditUserData] = useState<User | undefined>(undefined);
+  const [editUserData, setEditUserData] = useState<IUser | undefined>(
+    undefined
+  );
 
   const logoutUser = () => {
     localStorage.removeItem("bankId");
@@ -57,7 +59,7 @@ export const AuthContextProvider = ({
     data,
     refetch,
     loading: userLoading,
-  } = useQuery<UserResponse | undefined>(GET_USER, {
+  } = useQuery<TUserResponse | undefined>(GET_USER, {
     variables: { input },
     onError: (error) => {
       const validateError = validateTokenMessage(error.message);

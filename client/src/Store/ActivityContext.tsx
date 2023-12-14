@@ -13,14 +13,14 @@ import {
   handleGlobalError,
   validateTokenMessage,
 } from "../Utils/data";
-import { Transaction } from "../Interface/interface";
+import { ITransaction } from "../Interface/interface";
 import { expenseType, incomeType } from "../Utils/activity";
 import { useLocation } from "react-router-dom";
 import { daysAgo } from "../Utils/data";
 import { useAuthContext } from "./AuthContext";
 import Loader from "../Components/Shimmers/Loader";
 
-export type ActivityType = {
+export type TActivity = {
   name: string;
   type: string;
   amount: number;
@@ -29,7 +29,7 @@ export type ActivityType = {
   other: string;
 };
 
-type EditActivityType = {
+type TEditActivity = {
   id: string;
   name: string;
   type: string;
@@ -44,7 +44,7 @@ const date = new Date();
 const month = date.getMonth() + 1;
 const day = date.getDate();
 
-const initialState: ActivityType = {
+const initialState: TActivity = {
   name: "",
   type: "",
   amount: 0,
@@ -66,42 +66,42 @@ const EditInitialState = {
   type_name: "",
 };
 
-type Result = {
+type TResult = {
   getAllActivity: {
-    data: Transaction[];
+    data: ITransaction[];
     message: string;
     status: number;
   };
 };
 
-type ContextType = {
+type TContext = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  activityData: ActivityType;
-  setActivityData: React.Dispatch<React.SetStateAction<ActivityType>>;
+  activityData: TActivity;
+  setActivityData: React.Dispatch<React.SetStateAction<TActivity>>;
   handleCreateData: (type: string) => void;
   isLoading: boolean;
-  data: Result | undefined;
+  data: TResult | undefined;
   loading: boolean;
-  editData: EditActivityType | undefined;
-  setEditData: React.Dispatch<
-    React.SetStateAction<EditActivityType | undefined>
-  >;
+  editData: TEditActivity | undefined;
+  setEditData: React.Dispatch<React.SetStateAction<TEditActivity | undefined>>;
   updateLoading: boolean;
   handleUpdateData: () => void;
+  refetch: () => void;
 };
 
-const contextInitialState: ContextType = {
+const contextInitialState: TContext = {
   handleChange: () => {},
-  activityData: {} as ActivityType,
+  activityData: {} as TActivity,
   setActivityData: () => {},
   handleCreateData: () => {},
   isLoading: false,
-  data: {} as Result,
+  data: {} as TResult,
   loading: false,
-  editData: {} as EditActivityType,
+  editData: {} as TEditActivity,
   setEditData: () => {},
   updateLoading: false,
   handleUpdateData: () => {},
+  refetch: () => {},
 };
 
 const ActivityContext = createContext(contextInitialState);
@@ -112,7 +112,7 @@ export const ActivityContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [activityData, setActivityData] = useState(initialState);
-  const [editData, setEditData] = useState<EditActivityType | undefined>(
+  const [editData, setEditData] = useState<TEditActivity | undefined>(
     EditInitialState
   );
 
@@ -137,7 +137,7 @@ export const ActivityContextProvider = ({
       pathname === "/transaction" ? "all" : settingData?.home_transaction_type,
   };
 
-  const { refetch, data, loading } = useQuery<Result>(GET_ALL_ACTIVITY, {
+  const { refetch, data, loading } = useQuery<TResult>(GET_ALL_ACTIVITY, {
     variables: { input },
     onError: (error) => {
       const validateError = validateTokenMessage(error.message);
@@ -270,6 +270,7 @@ export const ActivityContextProvider = ({
         setEditData,
         updateLoading,
         handleUpdateData,
+        refetch,
       }}
     >
       {loading ? <Loader /> : children}

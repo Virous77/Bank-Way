@@ -5,13 +5,13 @@ import { Button } from "../Layout/navbar.style";
 import { useAuthContext } from "../../Store/AuthContext";
 import Action from "./Action";
 
-type AuthFormType = {
+type TAuthForm = {
   title: string;
   loading: boolean;
   handleAction: () => void;
 };
 
-const AuthForm: React.FC<AuthFormType> = ({ title, loading, handleAction }) => {
+const AuthForm: React.FC<TAuthForm> = ({ title, loading, handleAction }) => {
   const { handleChange, formData } = useAuthContext();
   return (
     <Main>

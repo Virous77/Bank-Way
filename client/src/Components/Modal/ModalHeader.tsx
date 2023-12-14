@@ -2,12 +2,12 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { ModalHead, MediumHeading, Button } from "./modal.style";
 
-type ModalHeaderType = {
+type TModalHeader = {
   name: string;
   onClose: () => void;
 };
 
-const ModalHeader: React.FC<ModalHeaderType> = ({ name, onClose }) => {
+const ModalHeader: React.FC<TModalHeader> = ({ name, onClose }) => {
   return (
     <ModalHead>
       <MediumHeading>{name}</MediumHeading>

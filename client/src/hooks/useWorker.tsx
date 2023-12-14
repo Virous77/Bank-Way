@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-var */
 import { useGlobalContext } from "../Store/globalContext";
 
 const useWorker = () => {

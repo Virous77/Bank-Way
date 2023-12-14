@@ -40,13 +40,13 @@ import others from "../assets/icon/others.jpeg";
 import trading from "../assets/icon/trading.jpeg";
 import refund from "../assets/icon/refund.jpeg";
 
-type SvgIconType = {
+type TSvgIcon = {
   [key: string]: {
     value: any;
   };
 };
 
-export const SvgIcon: SvgIconType = {
+export const SvgIcon: TSvgIcon = {
   salary: { value: GiMoneyStack },
   investing: { value: GiTakeMyMoney },
   freelancing: { value: ImUserTie },
@@ -67,13 +67,13 @@ export const SvgIcon: SvgIconType = {
   trading: { value: FcNeutralTrading },
 };
 
-type ImageIconType = {
+type TImageIcon = {
   [key: string]: {
     value: string;
   };
 };
 
-export const ImageIcon: ImageIconType = {
+export const ImageIcon: TImageIcon = {
   salary: { value: transactionIcon },
   investing: { value: investing },
   freelancing: { value: freelancing },

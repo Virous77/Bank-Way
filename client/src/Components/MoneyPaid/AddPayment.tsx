@@ -11,11 +11,11 @@ import {
 } from "../../Utils/data";
 import { useAuthContext } from "../../Store/AuthContext";
 
-type AddPaymentType = {
+type TAddPayment = {
   refetch: () => void;
 };
 
-const AddPayment: React.FC<AddPaymentType> = ({ refetch }) => {
+const AddPayment: React.FC<TAddPayment> = ({ refetch }) => {
   const initialState = {
     transfer_to: "",
     amount: 0,

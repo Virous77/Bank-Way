@@ -8,13 +8,13 @@ import PaymentSidebar from "../MoneyPaid/PaymentSidebar";
 const SideContent = () => {
   const { pathname } = useLocation();
 
-  type ActiveTab = {
+  type TActiveTab = {
     [key: string]: {
       value: React.ReactElement;
     };
   };
 
-  const Tabs: ActiveTab = {
+  const Tabs: TActiveTab = {
     "/account": {
       value: <Quotes />,
     },

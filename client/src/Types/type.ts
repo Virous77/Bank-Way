@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { User } from "../Interface/interface";
+import { IUser } from "../Interface/interface";
 
-export type formDataType = {
+export type TFormData = {
   name: string;
   email: string;
   password: string;
@@ -9,18 +9,18 @@ export type formDataType = {
   bio: string;
 };
 
-export type contextType = {
-  formData: formDataType;
-  setFormData: React.Dispatch<React.SetStateAction<formDataType>>;
+export type TContext = {
+  formData: TFormData;
+  setFormData: React.Dispatch<React.SetStateAction<TFormData>>;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCreateUser: () => void;
   loading: boolean;
   handleUpdateUser: () => void;
   handleLoginUser: () => void;
   loginLoading: boolean;
-  userData: User | undefined;
+  userData: IUser | undefined;
   updateLoading: boolean;
-  editUserData: User | undefined;
-  setEditUserData: React.Dispatch<React.SetStateAction<User | undefined>>;
+  editUserData: IUser | undefined;
+  setEditUserData: React.Dispatch<React.SetStateAction<IUser | undefined>>;
   logoutUser: () => void;
 };

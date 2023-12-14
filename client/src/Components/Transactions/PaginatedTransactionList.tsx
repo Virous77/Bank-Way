@@ -1,14 +1,12 @@
 import React from "react";
-import { Transaction } from "../../Interface/interface";
+import { ITransaction } from "../../Interface/interface";
 import TransactionList from "./TransactionList";
 
-type TransactionType = {
-  transaction: Transaction;
+type TTransaction = {
+  transaction: ITransaction;
 };
 
-const PaginatedTransactionList: React.FC<TransactionType> = ({
-  transaction,
-}) => {
+const PaginatedTransactionList: React.FC<TTransaction> = ({ transaction }) => {
   return <TransactionList transaction={transaction} />;
 };
 

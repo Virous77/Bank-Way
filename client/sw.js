@@ -1,4 +1,5 @@
-var CACHE_NAME = "expensify-service-worker-v1";
+var CACHE_NAME = "expensify-service-worker-v8";
+var DYNAMIC_CACHE_NAME = "expensify-dynamic-v8";
 var urlsToCache = [
   "/",
   "./index.html",
@@ -20,10 +21,7 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keyList) => {
       return Promise.all(
         keyList.map((key) => {
-          if (
-            key !== "expensify-service-worker-v1" &&
-            key !== "expensify-dynamic-v1"
-          ) {
+          if (key !== CACHE_NAME && key !== DYNAMIC_CACHE_NAME) {
             return caches.delete(key);
           }
         })
@@ -34,22 +32,29 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    caches
-      .match(event.request)
-      .then(function (response) {
-        return response || fetch(event.request);
-      })
-      .then((data) => {
-        return caches.open("expensify-dynamic-v1").then((cache) => {
-          cache.put(event.request.url, data.clone());
-          return data;
-        });
-      })
-      .catch((error) => {
-        if (error.message === "Failed to fetch") {
-          console.log("Network connection lost");
-        }
-      })
-  );
+  const excludedUrls = ["/quotes/random?limit=5"];
+
+  if (excludedUrls.some((url) => event.request.url.includes(url))) {
+    event.respondWith(fetch(event.request));
+  } else {
+    event.respondWith(
+      caches
+        .match(event.request)
+        .then(function (response) {
+          return response || fetch(event.request);
+        })
+        .then((data) => {
+          return caches.open(DYNAMIC_CACHE_NAME).then((cache) => {
+            cache.put(event.request.url, data.clone());
+            return data;
+          });
+        })
+        .catch((error) => {
+          if (error.message === "Failed to fetch") {
+            console.log("Network connection lost");
+            throw "Failed to fetch";
+          }
+        })
+    );
+  }
 });

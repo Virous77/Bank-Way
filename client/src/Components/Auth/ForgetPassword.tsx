@@ -7,14 +7,14 @@ import { useMutation } from "@apollo/client";
 import { handleAction } from "../../Utils/data";
 import { useGlobalContext } from "../../Store/globalContext";
 
-type OTPResponse = {
+type TOTPResponse = {
   forgetPassword: {
     message: string;
     status: boolean;
   };
 };
 
-type ResetResponse = {
+type TResetResponse = {
   resetPassword: {
     message: string;
     status: boolean;
@@ -31,7 +31,7 @@ const ForgetPassword = () => {
     confirmPassword: "",
   });
 
-  const [forgetPassword, { loading, data }] = useMutation<OTPResponse>(
+  const [forgetPassword, { loading, data }] = useMutation<TOTPResponse>(
     FORGET_PASSWORD,
     {
       onError: (data) => {
@@ -41,7 +41,7 @@ const ForgetPassword = () => {
   );
 
   const [resetPassword, { loading: isLoading, data: resetData }] =
-    useMutation<ResetResponse>(RESET_PASSWORD, {
+    useMutation<TResetResponse>(RESET_PASSWORD, {
       onError: (data) => {
         handleSetNotification({ message: data.message, status: "error" });
       },

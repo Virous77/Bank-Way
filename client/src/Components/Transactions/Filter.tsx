@@ -4,12 +4,12 @@ import { displayAllCenter } from "../Common/variable.style";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-type FilterTypes = {
+type TFilter = {
   setFilterOption: React.Dispatch<React.SetStateAction<boolean>>;
   filterOption: boolean;
 };
 
-const Filter: React.FC<FilterTypes> = ({ setFilterOption, filterOption }) => {
+const Filter: React.FC<TFilter> = ({ setFilterOption, filterOption }) => {
   return (
     <React.Fragment>
       <FButton

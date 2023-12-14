@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
   name: string;
   image: string;
   id: string;
@@ -6,7 +6,7 @@ export interface User {
   bio: string;
 }
 
-export interface QuotesType {
+export interface IQuotesType {
   id: string;
   content: string;
   author: string;
@@ -16,7 +16,7 @@ export interface QuotesType {
   dateModified: string;
 }
 
-export interface Transaction {
+export interface ITransaction {
   _id: string;
   name: string;
   type: string;
@@ -28,7 +28,7 @@ export interface Transaction {
   createdAt: string;
 }
 
-export interface Setting {
+export interface ISetting {
   _id: string;
   user_id: string;
   transaction_icon_type: boolean;
@@ -37,7 +37,7 @@ export interface Setting {
   updatedAt: string;
 }
 
-export interface Payments {
+export interface IPayments {
   _id: string;
   transfer_to: string;
   amount: number;

@@ -1,5 +1,5 @@
-import { contextType } from "../Types/type";
-import { User } from "../Interface/interface";
+import { TContext } from "../Types/type";
+import { IUser } from "../Interface/interface";
 
 // * Auth Context data
 export const initialState = {
@@ -10,7 +10,7 @@ export const initialState = {
   bio: "",
 };
 
-export const contextState: contextType = {
+export const contextState: TContext = {
   formData: initialState,
   setFormData: () => {},
   handleChange: () => {},
@@ -19,9 +19,9 @@ export const contextState: contextType = {
   handleUpdateUser: () => {},
   handleLoginUser: () => {},
   loginLoading: false,
-  userData: {} as User,
+  userData: {} as IUser,
   updateLoading: false,
-  editUserData: {} as User,
+  editUserData: {} as IUser,
   setEditUserData: () => {},
   logoutUser: () => {},
 };

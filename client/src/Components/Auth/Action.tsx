@@ -3,11 +3,11 @@ import { Link, P } from "./auth.style";
 import { useGlobalContext } from "../../Store/globalContext";
 import { useAuthContext } from "../../Store/AuthContext";
 
-type ActionType = {
+type TAction = {
   title: string;
 };
 
-const Action: React.FC<ActionType> = ({ title }) => {
+const Action: React.FC<TAction> = ({ title }) => {
   const { setState, state } = useGlobalContext();
   const { setFormData, formData } = useAuthContext();
 

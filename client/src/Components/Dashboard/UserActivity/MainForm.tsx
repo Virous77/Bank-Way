@@ -1,18 +1,18 @@
-import { ActivityType, useActivity } from "../../../Store/ActivityContext";
+import { TActivity, useActivity } from "../../../Store/ActivityContext";
 import { displayCol } from "../../Common/variable.style";
 import { Form, Input, Button } from "./activity.style";
 import Select from "./Select";
 
-export type MainFormType = {
+export type TMainForm = {
   types: {
     id: number;
     name: string;
   }[];
   title?: string;
-  activityData: ActivityType;
+  activityData: TActivity;
 };
 
-type AddFormType = {
+type TAddForm = {
   handleCreateData: (type: string) => void;
   isLoading: boolean;
   types: {
@@ -20,10 +20,10 @@ type AddFormType = {
     name: string;
   }[];
   title?: string;
-  activityData: ActivityType;
+  activityData: TActivity;
 };
 
-const MainForm: React.FC<AddFormType> = ({
+const MainForm: React.FC<TAddForm> = ({
   types,
   title,
   handleCreateData,

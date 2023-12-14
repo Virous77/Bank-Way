@@ -11,7 +11,7 @@ import { displayFlex } from "../Common/variable.style";
 import ModalHeader from "../Modal/ModalHeader";
 import { Modal } from "../Modal/Modal";
 import React from "react";
-import { User } from "../../Interface/interface";
+import { IUser } from "../../Interface/interface";
 import EditUser from "./EditUser";
 import { CircleShimmer, HeadingShimmer } from "../Shimmers/TextShimmer";
 import { useAuthContext } from "../../Store/AuthContext";
@@ -27,7 +27,7 @@ const UserProfile = () => {
   const { formData, setFormData, editUserData, setEditUserData } =
     useAuthContext();
 
-  const handleEditUser = (user: User | undefined) => {
+  const handleEditUser = (user: IUser | undefined) => {
     if (!user) return;
 
     setFormData({

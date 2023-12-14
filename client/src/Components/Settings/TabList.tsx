@@ -1,7 +1,7 @@
 import { useAuthContext } from "../../Store/AuthContext";
 import { List } from "./settings.style";
 
-type TabListType = {
+type TTabList = {
   data: {
     id: number;
     name: string;
@@ -11,7 +11,7 @@ type TabListType = {
   setActive: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
-const TabList: React.FC<TabListType> = ({ data, setActive }) => {
+const TabList: React.FC<TTabList> = ({ data, setActive }) => {
   const { logoutUser } = useAuthContext();
 
   return (

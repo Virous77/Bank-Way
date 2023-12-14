@@ -8,12 +8,12 @@ import {
 } from "react-shimmer-effects";
 import { ShimDiv } from "./shim.style";
 
-type TextShimmerType = {
+type TTextShimmer = {
   gap?: number;
   line: number;
 };
 
-export const TextShimmer: React.FC<TextShimmerType> = ({ line, gap }) => {
+export const TextShimmer: React.FC<TTextShimmer> = ({ line, gap }) => {
   return <ShimmerTitle line={line} gap={gap || 10} variant="primary" />;
 };
 

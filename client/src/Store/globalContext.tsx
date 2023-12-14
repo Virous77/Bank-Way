@@ -7,7 +7,7 @@ import {
   handleGlobalError,
   validateTokenMessage,
 } from "../Utils/data";
-import { Setting, Payments } from "../Interface/interface";
+import { ISetting, IPayments } from "../Interface/interface";
 import { useAuthContext } from "./AuthContext";
 
 type notificationType = {
@@ -25,7 +25,7 @@ export type stateType = {
   menu: string;
   csvDataType: string;
   error: boolean;
-  payment: Payments[] | undefined;
+  payment: IPayments[] | undefined;
   service: any | null;
   install: string;
   networkConnection: boolean;
@@ -41,15 +41,16 @@ type GlobalType = {
   handleSetNotification: ({ message, status }: notificationType) => void;
   state: stateType;
   setState: React.Dispatch<React.SetStateAction<stateType>>;
-  data: Setting | undefined;
+  data: ISetting | undefined;
   loading: boolean;
   handleUpdateSetting: (e: settingType) => void;
   handleError: (e: string) => void;
+  refetch: () => void;
 };
 
 type SettingResponse = {
   getUserSetting: {
-    data: Setting;
+    data: ISetting;
   };
 };
 
@@ -80,10 +81,11 @@ const initialValue: GlobalType = {
   handleSetNotification: () => {},
   state: stateInitialValueTwo,
   setState: () => {},
-  data: {} as Setting,
+  data: {} as ISetting,
   loading: false,
   handleUpdateSetting: () => {},
   handleError: () => {},
+  refetch: () => {},
 };
 
 const GlobalContext = createContext<GlobalType>(initialValue);
@@ -205,6 +207,7 @@ export const GlobalContextProvider = ({
         loading,
         handleUpdateSetting,
         handleError,
+        refetch,
       }}
     >
       {children}

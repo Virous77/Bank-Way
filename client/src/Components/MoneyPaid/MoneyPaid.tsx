@@ -13,19 +13,25 @@ import {
 } from "../../Utils/data";
 import { GET_ALL_TRANSFER } from "../../graphql/transfer";
 import { useQuery } from "@apollo/client";
-import { Payments } from "../../Interface/interface";
+import { IPayments } from "../../Interface/interface";
 import useAppTitle from "../../hooks/useAppTitle";
 import { useAuthContext } from "../../Store/AuthContext";
+import PullToRefresh from "react-simple-pull-to-refresh";
 
-type PaymentResponse = {
+type TPaymentResponse = {
   getTransferAll: {
-    data: Payments[];
+    data: IPayments[];
   };
 };
 
 const MoneyPaid = () => {
   useAppTitle({ name: "Transfer" });
-  const { setState, state, handleSetNotification } = useGlobalContext();
+  const {
+    setState,
+    state,
+    handleSetNotification,
+    refetch: stateRefetch,
+  } = useGlobalContext();
   const id = getLocalData("bankId");
   const token = getLocalData("bankToken");
   const { logoutUser } = useAuthContext();
@@ -35,7 +41,7 @@ const MoneyPaid = () => {
     token,
   };
 
-  const { data, loading, refetch } = useQuery<PaymentResponse | undefined>(
+  const { data, loading, refetch } = useQuery<TPaymentResponse | undefined>(
     GET_ALL_TRANSFER,
     {
       variables: { input },
@@ -61,34 +67,41 @@ const MoneyPaid = () => {
     }
   );
 
-  return (
-    <Main>
-      <PayHeader $style={displayFlex}>
-        <h2>Transfer</h2>
-        <button onClick={() => setState({ ...state, show: "payment" })}>
-          Add Payment
-        </button>
-      </PayHeader>
-      <PaymentTransaction
-        data={data?.getTransferAll.data}
-        loading={loading}
-        refetch={refetch}
-      />
+  const handleRefresh = async () => {
+    refetch();
+    stateRefetch();
+  };
 
-      {state.show === "payment" && (
-        <Modal
-          isOpen="isOpen"
-          onClose={() => setState({ ...state, show: "" })}
-          size="500px"
-        >
-          <ModalHeader
-            name="Add Payment"
+  return (
+    <PullToRefresh onRefresh={handleRefresh} fetchMoreThreshold={3}>
+      <Main>
+        <PayHeader $style={displayFlex}>
+          <h2>Transfer</h2>
+          <button onClick={() => setState({ ...state, show: "payment" })}>
+            Add Payment
+          </button>
+        </PayHeader>
+        <PaymentTransaction
+          data={data?.getTransferAll.data}
+          loading={loading}
+          refetch={refetch}
+        />
+
+        {state.show === "payment" && (
+          <Modal
+            isOpen="isOpen"
             onClose={() => setState({ ...state, show: "" })}
-          />
-          <AddPayment refetch={refetch} />
-        </Modal>
-      )}
-    </Main>
+            size="500px"
+          >
+            <ModalHeader
+              name="Add Payment"
+              onClose={() => setState({ ...state, show: "" })}
+            />
+            <AddPayment refetch={refetch} />
+          </Modal>
+        )}
+      </Main>
+    </PullToRefresh>
   );
 };
 
